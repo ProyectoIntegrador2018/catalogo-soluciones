@@ -55,8 +55,48 @@ You should ask for access to this tools if you don't have it already:
 
 ## Development
 
+The following instructions are for a Linux (Ubuntu) environment.
+
 ### Setup the project
+
+Install the node version manager with the following command:
+```
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash
+```
+
+Install the node version 12.18.4:
+```
+nvm install 12.18.4
+```
+```
+nvm use 12.18.4
+```
+
+Install the firebase CLI:
+```
+npm install -g firebase-tools
+```
+
+Clone the GitHub repository:
+```
+git clone https://github.com/ProyectoIntegrador2018/catalogo-soluciones.git
+```
+
+Install the project dependencies:
+
+*First cd into the project directory*
+```
+npm install
+```
 
 ### Running the stack for Development
 
-### Stop the project
+To run the project locally run the command:
+```
+firebase emulators:start
+```
+This will set up the following emulators:
+* Hosting emulator for the frontend.
+* Functions emulator for the backend.
+* Database emulator.
+* A UI to view logs, and database contents.
