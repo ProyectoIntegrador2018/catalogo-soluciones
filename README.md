@@ -72,9 +72,14 @@ nvm install 12.18.4
 nvm use 12.18.4
 ```
 
-Install the firebase CLI:
+Install the Firebase CLI:
 ```
 npm install -g firebase-tools
+```
+
+Login into Firebase
+```
+Firebase login
 ```
 
 Clone the GitHub repository:
