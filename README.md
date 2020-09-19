@@ -96,7 +96,12 @@ Firebase login
 
 ### Running the stack for Development
 
-First build the frontend with the command:
+To work on the frontend run the command:
+```
+npm start
+```
+
+To work on the backend, first build the frontend with the command:
 ```
 npm run build
 ```
