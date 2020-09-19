@@ -96,10 +96,16 @@ Firebase login
 
 ### Running the stack for Development
 
-To run the project locally run the command:
+First build the frontend with the command:
+```
+npm run build
+```
+
+Then run the Firebase emulators with the command:
 ```
 firebase emulators:start
 ```
+
 This will set up the following emulators:
 * Hosting emulator for the frontend.
 * Functions emulator for the backend.
