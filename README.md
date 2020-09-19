@@ -77,11 +77,6 @@ Install the Firebase CLI:
 npm install -g firebase-tools
 ```
 
-Login into Firebase
-```
-Firebase login
-```
-
 Clone the GitHub repository:
 ```
 git clone https://github.com/ProyectoIntegrador2018/catalogo-soluciones.git
@@ -92,6 +87,11 @@ Install the project dependencies:
 *First cd into the project directory*
 ```
 npm install
+```
+
+Login into Firebase (you must have been invited to the project to work on it): 
+```
+Firebase login
 ```
 
 ### Running the stack for Development
