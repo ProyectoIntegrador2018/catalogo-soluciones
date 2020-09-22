@@ -12,16 +12,16 @@ import Button from '@material-ui/core/Button';
 import './registro.styles.scss';
 
 const Registro = () => (
-  <Box className="registro">
-    <Typography variant="h4">Registro</Typography>
+  <Box className='registro'>
+    <Typography variant='h4'>Registro</Typography>
     <Box m={3}>
       <FormControl required className={'input'}>
-        <InputLabel htmlFor="correo">Correo</InputLabel>
+        <InputLabel htmlFor='correo'>Correo</InputLabel>
         <Input
-          type="email"
-          id="correo"
+          type='email'
+          id='correo'
           startAdornment={
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <AccountCircle />
             </InputAdornment>
           }
@@ -30,19 +30,19 @@ const Registro = () => (
     </Box>
     <Box m={3}>
       <FormControl required className={'input'}>
-        <InputLabel htmlFor="password">Contraseña</InputLabel>
+        <InputLabel htmlFor='password'>Contraseña</InputLabel>
         <Input
-          type="password"
-          id="password"
+          type='password'
+          id='password'
           startAdornment={
-            <InputAdornment position="start">
+            <InputAdornment position='start'>
               <Lock />
             </InputAdornment>
           }
         />
       </FormControl>
     </Box>
-    <Button variant="contained" color="primary">
+    <Button variant='contained' color='primary'>
       Registrar
     </Button>
   </Box>
