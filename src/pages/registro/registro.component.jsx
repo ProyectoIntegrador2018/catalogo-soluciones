@@ -15,9 +15,10 @@ const Registro = () => (
   <Box className="registro">
     <Typography variant="h4">Registro</Typography>
     <Box m={3}>
-      <FormControl required className={"input"}>
+      <FormControl required className={'input'}>
         <InputLabel htmlFor="correo">Correo</InputLabel>
         <Input
+          type="email"
           id="correo"
           startAdornment={
             <InputAdornment position="start">
@@ -28,9 +29,10 @@ const Registro = () => (
       </FormControl>
     </Box>
     <Box m={3}>
-      <FormControl required className={"input"}>
+      <FormControl required className={'input'}>
         <InputLabel htmlFor="password">Contraseña</InputLabel>
         <Input
+          type="password"
           id="password"
           startAdornment={
             <InputAdornment position="start">
