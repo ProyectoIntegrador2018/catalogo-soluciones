@@ -1,10 +1,10 @@
-import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import Typography from "@material-ui/core/Typography";
-import Button from "@material-ui/core/Button";
-import { useHistory } from "react-router-dom";
+import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import { useHistory } from 'react-router-dom';
 
 import './header.styles.scss';
 
@@ -26,23 +26,23 @@ export default function Header() {
   let history = useHistory();
 
   const goToHomePage = () => {
-    history.push("/");
+    history.push('/');
   };
 
   return (
     <div className={`classes.root logo`}>
-      <AppBar position="static">
+      <AppBar position='static'>
         <Toolbar>
           {/* TODO: Title element extends until the end of the header. Change the element width to only be
             the size of the logo/title. */}
           <Typography
-            variant="h6"
+            variant='h6'
             className={classes.title}
             onClick={goToHomePage}
           >
             CSOFTMTY
           </Typography>
-          <Button color="inherit">Login</Button>
+          <Button color='inherit'>Login</Button>
         </Toolbar>
       </AppBar>
     </div>
