@@ -1,5 +1,4 @@
 const { auth, actionCodeSettings } = require('../firebase');
-const emailer = require('./email');
 
 function signUp(req, res) {
   const body = req.body;
@@ -14,14 +13,7 @@ function signUp(req, res) {
       auth
         .generateEmailVerificationLink(body.email, actionCodeSettings)
         .then(function (link) {
-          emailer
-            .sendVerificationEmail(body.name, body.email, link)
-            .then(function (_) {
-              return res.send({ email: body.email });
-            })
-            .catch(function (err) {
-              res.status(500).send({ err: err });
-            });
+          return res.send({ email: body.email });
         })
         .catch(function (err) {
           res.status(400).send({ err: err.Code });
