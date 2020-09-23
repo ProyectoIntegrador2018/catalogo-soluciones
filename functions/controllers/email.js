@@ -1,4 +1,3 @@
-const nodemailer = require('nodemailer');
 const { transporter } = require('../config/email');
 
 function sendEmail(email, subject, html) {

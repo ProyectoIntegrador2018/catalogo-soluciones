@@ -17,7 +17,7 @@ function signUp(req, res) {
           emailer
             .sendVerificationEmail(body.name, body.email, link)
             .then(function (_) {
-              return res.send({ id: userRecord.uid });
+              return res.send({ email: body.email });
             })
             .catch(function (err) {
               res.status(500).send({ err: err });
