@@ -10,14 +10,7 @@ function signUp(req, res) {
     })
     .then(function (userRecord) {
       // Almacenar id de usuario y resto de los datos en base de datos.
-      auth
-        .generateEmailVerificationLink(body.email, actionCodeSettings)
-        .then(function (link) {
-          return res.send({ email: body.email });
-        })
-        .catch(function (err) {
-          res.status(400).send({ err: err.Code });
-        });
+      return res.send({ email: body.email });
     })
     .catch(function (err) {
       const errCode = err.code;
