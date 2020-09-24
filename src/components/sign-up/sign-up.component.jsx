@@ -25,7 +25,7 @@ class SignUp extends React.Component {
     const { displayName, email, password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
-      alert('Contraseñas no coinciden');
+      alert('Las contraseñas no coinciden');
       return;
     }
 
@@ -46,7 +46,12 @@ class SignUp extends React.Component {
         confirmPassword: '',
       });
     } catch (error) {
-      console.error(error);
+      console.log(error);
+      var errMssg = 'Error de inicio de sesión.';
+      if (error.code == 'auth/email-already-exists') {
+        errMssg = 'Ya existe una cuenta para este correo electrónico.';
+      }
+      alert(errMssg);
     }
   };
 
