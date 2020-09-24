@@ -1,0 +1,47 @@
+.content-sign-in {
+  width: 50%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  .sign-in {
+    padding: 60px;
+    border-radius: 15px;
+    flex-direction: column;
+    border: solid 1px black;
+    box-shadow: 10px 5px 5px black;
+    .title {
+      margin: 10px 0;
+    }
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}
+
+//Phones
+@media only screen and (max-width: 700px) {
+  .content-sign-in {
+    width: 100%;
+    .sign-in {
+      width: 380px;
+      padding: 20px;
+      margin-bottom: 20px;
+      .buttons {
+        .custom-button {
+          border-radius: 10px;
+          line-height: 15px;
+        }
+      }
+    }
+  }
+}
+//Tablets
+@media only screen and (min-width: 700px) and (max-width: 1050px) {
+  .content-sign-in {
+    width: 100%;
+    .sign-in {
+      margin-bottom: 20px;
+    }
+  }
+}
