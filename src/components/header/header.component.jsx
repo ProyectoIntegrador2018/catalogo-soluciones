@@ -25,9 +25,13 @@ export default function Header() {
 
   let history = useHistory();
 
-  const goToHomePage = () => {
-    history.push('/');
-  };
+  function goTo(page) {
+    if (page === 'home') {
+      history.push('/');
+    } else if (page === 'signin') {
+      history.push('signin');
+    }
+  }
 
   return (
     <div className={`classes.root logo`}>
@@ -38,11 +42,13 @@ export default function Header() {
           <Typography
             variant='h6'
             className={classes.title}
-            onClick={goToHomePage}
+            onClick={() => goTo('home')}
           >
             CSOFTMTY
           </Typography>
-          <Button color='inherit'>Login</Button>
+          <Button color='inherit' onClick={() => goTo('signin')}>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
     </div>
