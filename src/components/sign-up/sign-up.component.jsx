@@ -3,7 +3,7 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import { Button } from '@material-ui/core';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUp } from '../../firebase/sessions';
 
 import './sign-up.styles.scss';
 
@@ -29,30 +29,18 @@ class SignUp extends React.Component {
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password,
-      );
-
-      await user.sendEmailVerification();
-
-      await createUserProfileDocument(user, { displayName });
-
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+    signUp(email, password, displayName)
+      .then(() => {
+        this.setState({
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        });
+      })
+      .catch((errorMssg) => {
+        alert(errorMssg);
       });
-    } catch (error) {
-      console.log(error);
-      var errMssg = 'Error al registrar al usuario.';
-      if (error.code == 'auth/email-already-exists') {
-        errMssg = 'Ya existe una cuenta para este correo electrónico.';
-      }
-      alert(errMssg);
-    }
   };
 
   handleChange = (event) => {

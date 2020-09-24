@@ -10,7 +10,8 @@ import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { auth } from './firebase/firebase';
+import { createUserProfileDocument } from './firebase/sessions';
 import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends React.Component {

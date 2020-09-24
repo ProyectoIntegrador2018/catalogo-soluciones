@@ -3,7 +3,7 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import { Button } from '@material-ui/core';
 
-import { auth } from '../../firebase/firebase.utils';
+import { auth } from '../../firebase/firebase';
 
 import './sign-in.styles.scss';
 
@@ -28,9 +28,10 @@ class SignIn extends React.Component {
     } catch (error) {
       console.log(error);
       var errorMssg = 'Error de inicio de sesión';
-      if (error.code == 'auth/wrong-password') {
+      if (error.code === 'auth/wrong-password') {
         errorMssg = 'La contraseña proporcionada es incorrecta.';
       }
+      alert(errorMssg);
     }
   };
 
