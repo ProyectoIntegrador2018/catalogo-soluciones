@@ -47,7 +47,7 @@ class SignUp extends React.Component {
       });
     } catch (error) {
       console.log(error);
-      var errMssg = 'Error de inicio de sesión.';
+      var errMssg = 'Error al registrar al usuario.';
       if (error.code == 'auth/email-already-exists') {
         errMssg = 'Ya existe una cuenta para este correo electrónico.';
       }

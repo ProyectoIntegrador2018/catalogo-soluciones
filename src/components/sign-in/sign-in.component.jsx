@@ -27,6 +27,10 @@ class SignIn extends React.Component {
       this.setState({ email: '', password: '' });
     } catch (error) {
       console.log(error);
+      var errorMssg = 'Error de inicio de sesión';
+      if (error.code == 'auth/wrong-password') {
+        errorMssg = 'La contraseña proporcionada es incorrecta.';
+      }
     }
   };
 
