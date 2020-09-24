@@ -3,7 +3,7 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import { Button } from '@material-ui/core';
 
-import { auth } from '../../firebase/firebase.utils';
+import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
 
 import './sign-up.styles.scss';
 
@@ -22,7 +22,7 @@ class SignUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { email, password, confirmPassword } = this.state;
+    const { displayName, email, password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
       alert('Contraseñas no coinciden');
@@ -35,7 +35,7 @@ class SignUp extends React.Component {
         password,
       );
 
-      console.log(user);
+      await createUserProfileDocument(user, { displayName });
 
       this.setState({
         displayName: '',
