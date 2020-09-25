@@ -3,7 +3,7 @@ import React from 'react';
 import FormInput from '../form-input/form-input.component';
 import { Button } from '@material-ui/core';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUp } from '../../firebase/sessions';
 
 import './sign-up.styles.scss';
 
@@ -25,27 +25,22 @@ class SignUp extends React.Component {
     const { displayName, email, password, confirmPassword } = this.state;
 
     if (password !== confirmPassword) {
-      alert('Contraseñas no coinciden');
+      alert('Las contraseñas no coinciden');
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password,
-      );
-
-      await createUserProfileDocument(user, { displayName });
-
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
+    signUp(email, password, displayName)
+      .then(() => {
+        this.setState({
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+        });
+      })
+      .catch((errorMssg) => {
+        alert(errorMssg);
       });
-    } catch (error) {
-      console.error(error);
-    }
   };
 
   handleChange = (event) => {
