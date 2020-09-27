@@ -1,9 +1,14 @@
 const functions = require('firebase-functions');
+const { transport } = require('./email_credentials');
 
-// // Create and Deploy Your First Cloud Functions
-// // https://firebase.google.com/docs/functions/write-firebase-functions
-//
-// exports.helloWorld = functions.https.onRequest((request, response) => {
-//   functions.logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+exports.sendEmail = functions.https.onRequest((request, response) => {
+  // TODO(mauriciogm97): Por seguridad no recibir los emails del frontend.
+  // Por seguridad crear templates del texto en backend.
+  transport.sendMail({
+    from: 'Catálogo de Soluciones Digitales',
+    to: request.email,
+    subject: request.subject,
+    text: request.text,
+  });
+  response.send({});
+});
