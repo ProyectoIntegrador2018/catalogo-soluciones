@@ -40,13 +40,8 @@ const Header = ({ currentUser }) => {
       case 'home':
         history.push('/');
         break;
-      case 'signin':
-        history.push('signin');
-        break;
-      case 'admin':
-        history.push('admin');
-        break;
       default:
+        history.push(page);
         break;
     }
   }
@@ -61,14 +56,14 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
-          {currentUser && currentUser.adminAccount ? (
+          {currentUser && currentUser.adminAccount && (
             <Button
               className={classes.appBarButton}
               onClick={() => goTo('admin')}
             >
               Administrador
             </Button>
-          ) : null}
+          )}
           {currentUser ? (
             <Button
               className={classes.appBarButton}
