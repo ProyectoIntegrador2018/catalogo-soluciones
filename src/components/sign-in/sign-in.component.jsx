@@ -1,6 +1,7 @@
 import React from 'react';
 
 import FormInput from '../form-input/form-input.component';
+import FormError from '../form-input/form-error.component';
 import { Button } from '@material-ui/core';
 
 import { auth } from '../../firebase/firebase';
@@ -14,6 +15,7 @@ class SignIn extends React.Component {
     this.state = {
       email: '',
       password: '',
+      errorMssg: '',
     };
   }
 
@@ -31,14 +33,14 @@ class SignIn extends React.Component {
       if (error.code === 'auth/wrong-password') {
         errorMssg = 'La contraseña proporcionada es incorrecta.';
       }
-      alert(errorMssg);
+      this.setState({ errorMssg: errorMssg });
     }
   };
 
   handleChange = (event) => {
     const { value, name } = event.target;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, errorMssg: '' });
   };
 
   render() {
@@ -64,6 +66,10 @@ class SignIn extends React.Component {
               value={this.state.password}
               label='Contraseña'
               required
+            />
+            <FormError
+              onChange={this.clearError}
+              errorMssg={this.state.errorMssg}
             />
             <div className='buttons'>
               <Button variant='contained' color='primary' type='submit'>
