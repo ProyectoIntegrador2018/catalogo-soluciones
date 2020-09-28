@@ -1,5 +1,11 @@
 import { auth, firestore } from './firebase';
 
+export const getUserRef = async (userAuth) => {
+  if (!userAuth) return;
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  return userRef;
+};
+
 export const createUserProfileDocument = async (userAuth, additionalData) => {
   if (!userAuth) return;
   const userRef = firestore.doc(`users/${userAuth.uid}`);

@@ -11,7 +11,7 @@ import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 
 import { auth } from './firebase/firebase';
-import { createUserProfileDocument } from './firebase/sessions';
+import { getUserRef } from './firebase/sessions';
 import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends React.Component {
@@ -27,7 +27,7 @@ class App extends React.Component {
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+        const userRef = await getUserRef(userAuth);
 
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
