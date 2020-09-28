@@ -2,7 +2,7 @@ import React from 'react';
 
 import FormInput from '../form-input/form-input.component';
 import FormError from '../form-input/form-error.component';
-import { Button } from '@material-ui/core';
+import Button from '@material-ui/core/Button';
 
 import { auth } from '../../firebase/firebase';
 
@@ -16,6 +16,7 @@ class SignIn extends React.Component {
       email: '',
       password: '',
       errorMssg: '',
+      open: false,
     };
   }
 
@@ -34,13 +35,22 @@ class SignIn extends React.Component {
         errorMssg = 'La contraseña proporcionada es incorrecta.';
       }
       this.setState({ errorMssg: errorMssg });
+      this.setState({ open: true });
     }
   };
 
   handleChange = (event) => {
     const { value, name } = event.target;
 
-    this.setState({ [name]: value, errorMssg: '' });
+    this.setState({ [name]: value });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
   };
 
   render() {
@@ -68,8 +78,9 @@ class SignIn extends React.Component {
               required
             />
             <FormError
-              onChange={this.clearError}
+              open={this.state.open}
               errorMssg={this.state.errorMssg}
+              onClose={this.handleClose}
             />
             <div className='buttons'>
               <Button variant='contained' color='primary' type='submit'>
