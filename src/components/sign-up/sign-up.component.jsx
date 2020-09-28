@@ -28,6 +28,7 @@ class SignUp extends React.Component {
 
     if (password !== confirmPassword) {
       this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
+      this.setState({ open: true });
       return;
     }
 
@@ -39,6 +40,7 @@ class SignUp extends React.Component {
           password: '',
           confirmPassword: '',
           errorMssg: '',
+          open: false,
         });
       })
       .catch((errorMssg) => {
@@ -52,8 +54,12 @@ class SignUp extends React.Component {
     this.setState({ [name]: value, errorMssg: '' });
   };
 
-  clearError = (_) => {
-    this.setState({ errorMssg: '' });
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
   };
 
   render() {
@@ -63,6 +69,7 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       errorMssg,
+      open,
     } = this.state;
     return (
       <div className='content-sign-up'>
@@ -102,7 +109,11 @@ class SignUp extends React.Component {
               label='Confirmar contraseña'
               required
             />
-            <FormError onChange={this.clearError} errorMssg={errorMssg} />
+            <FormError
+              open={open}
+              errorMssg={errorMssg}
+              onClose={this.handleClose}
+            />
             <Button variant='contained' color='primary' type='submit'>
               Crear cuenta
             </Button>
