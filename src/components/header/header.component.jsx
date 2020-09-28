@@ -36,10 +36,18 @@ const Header = ({ currentUser }) => {
   let history = useHistory();
 
   function goTo(page) {
-    if (page === 'home') {
-      history.push('/');
-    } else if (page === 'signin') {
-      history.push('signin');
+    switch (page) {
+      case 'home':
+        history.push('/');
+        break;
+      case 'signin':
+        history.push('signin');
+        break;
+      case 'admin':
+        history.push('admin');
+        break;
+      default:
+        break;
     }
   }
 
@@ -53,10 +61,21 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
+          {currentUser && currentUser.adminAccount ? (
+            <Button
+              className={classes.appBarButton}
+              onClick={() => goTo('admin')}
+            >
+              Administrador
+            </Button>
+          ) : null}
           {currentUser ? (
             <Button
               className={classes.appBarButton}
-              onClick={() => auth.signOut()}
+              onClick={() => {
+                auth.signOut();
+                goTo('home');
+              }}
             >
               Cerrar sesion
             </Button>

@@ -9,6 +9,7 @@ import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
+import Administrador from './pages/administrador/administrador.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -60,6 +61,17 @@ class App extends React.Component {
                 <Redirect to='/' />
               ) : (
                 <SignInAndSignUpPage />
+              )
+            }
+          />
+          <Route
+            exact
+            path='/admin'
+            render={() =>
+              this.props.currentUser && this.props.currentUser.adminAccount ? (
+                <Administrador />
+              ) : (
+                <Redirect to='/' />
               )
             }
           />
