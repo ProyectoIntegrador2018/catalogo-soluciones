@@ -6,7 +6,8 @@ import './App.css';
 
 import Header from './components/header/header.component';
 
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import SignInPage from './pages/sign-in/sign-in.component';
+import SignUpPage from './pages/sign-up/sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 import Administrador from './pages/administrador/administrador.component';
@@ -17,11 +18,6 @@ import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
-
-  // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
@@ -57,11 +53,14 @@ class App extends React.Component {
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser ? (
-                <Redirect to='/' />
-              ) : (
-                <SignInAndSignUpPage />
-              )
+              this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
+            }
+          />
+          <Route
+            exact
+            path='/signup'
+            render={() =>
+              this.props.currentUser ? <Redirect to='/' /> : <SignUpPage />
             }
           />
           <Route
