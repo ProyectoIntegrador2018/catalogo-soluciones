@@ -1,11 +1,12 @@
 .content-sign-in {
   margin-left: auto;
-  margin-right: 30px;
-  width: 30%;
+  margin-right: auto;
+  width: 50%;
   height: 100%;
   display: flex;
   justify-content: center;
   .sign-in {
+    width: 600px;
     padding: 60px;
     border-radius: 15px;
     flex-direction: column;
@@ -14,9 +15,16 @@
     .title {
       margin: 10px 0;
     }
-    .buttons {
-      display: flex;
-      justify-content: space-between;
+    .sign-up {
+      margin-top: 20px;
+      .sign-up-button {
+        margin-left: 10px;
+        color: #0000ee;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
     }
   }
 }
@@ -30,12 +38,6 @@
       width: 380px;
       padding: 20px;
       margin-bottom: 20px;
-      .buttons {
-        .custom-button {
-          border-radius: 10px;
-          line-height: 15px;
-        }
-      }
     }
   }
 }
