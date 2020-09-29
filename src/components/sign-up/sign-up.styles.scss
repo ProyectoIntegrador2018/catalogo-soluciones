@@ -1,5 +1,7 @@
 .content-sign-up {
-  width: 50%;
+  margin-right: auto;
+  margin-left: 30px;
+  width: 30%;
   height: 100%;
   display: flex;
   justify-content: center;
@@ -19,6 +21,7 @@
 @media only screen and (max-width: 700px) {
   .content-sign-up {
     width: 100%;
+    margin-left: 0;
     .sign-up {
       width: 380px;
       padding: 20px;

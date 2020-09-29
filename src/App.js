@@ -9,9 +9,10 @@ import Header from './components/header/header.component';
 import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
+import Administrador from './pages/administrador/administrador.component';
 
 import { auth } from './firebase/firebase';
-import { createUserProfileDocument } from './firebase/sessions';
+import { getUserRef } from './firebase/sessions';
 import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends React.Component {
@@ -27,7 +28,7 @@ class App extends React.Component {
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+        const userRef = await getUserRef(userAuth);
 
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
@@ -60,6 +61,17 @@ class App extends React.Component {
                 <Redirect to='/' />
               ) : (
                 <SignInAndSignUpPage />
+              )
+            }
+          />
+          <Route
+            exact
+            path='/admin'
+            render={() =>
+              this.props.currentUser && this.props.currentUser.adminAccount ? (
+                <Administrador />
+              ) : (
+                <Redirect to='/' />
               )
             }
           />
