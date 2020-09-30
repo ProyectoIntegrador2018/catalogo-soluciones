@@ -1,4 +1,5 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
 import FormError from '../form-input/form-error.component';
@@ -53,13 +54,16 @@ class SignIn extends React.Component {
     this.setState({ open: false });
   };
 
+  goToSignUp = () => {
+    this.props.history.push('signup');
+  };
+
   render() {
     return (
       <div className='content-sign-in'>
         <div className='sign-in'>
           <h2>Iniciar sesión</h2>
           <span>Inicia sesión con tu correo y contraseña</span>
-
           <form onSubmit={this.handleSubmit}>
             <FormInput
               name='email'
@@ -88,10 +92,16 @@ class SignIn extends React.Component {
               </Button>
             </div>
           </form>
+          <div className='sign-up'>
+            Aún no tienes cuenta?
+            <span className='sign-up-button' onClick={this.goToSignUp}>
+              Crear cuenta
+            </span>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

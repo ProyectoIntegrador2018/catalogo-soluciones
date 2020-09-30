@@ -1,11 +1,11 @@
-.sign-in-and-sign-up {
+.sign-in {
   display: flex;
   padding: 15px;
 }
 
 //Phones and tablets
 @media only screen and (max-width: 1050px) {
-  .sign-in-and-sign-up {
+  .sign-in {
     display: block;
   }
 }
