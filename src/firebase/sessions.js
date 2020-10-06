@@ -32,13 +32,13 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const signUp = async (email, password, displayName) => {
+export const signUp = async (email, password, displayName, phoneNumber) => {
   return new Promise((resolve, reject) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
         user.sendEmailVerification();
-        createUserProfileDocument(user, { displayName });
+        createUserProfileDocument(user, { displayName, phoneNumber });
         resolve();
       })
       .catch((error) => {

@@ -18,6 +18,7 @@ class SignUp extends React.Component {
       email: '',
       password: '',
       confirmPassword: '',
+      phoneNumber: '',
       errorMssg: '',
     };
   }
@@ -25,7 +26,13 @@ class SignUp extends React.Component {
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { displayName, email, password, confirmPassword } = this.state;
+    const {
+      displayName,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber,
+    } = this.state;
 
     if (password !== confirmPassword) {
       this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
@@ -33,13 +40,20 @@ class SignUp extends React.Component {
       return;
     }
 
-    signUp(email, password, displayName)
+    if (phoneNumber < 1000000000 || phoneNumber > 9999999999) {
+      this.setState({ errorMssg: 'Formato de telefono no valido.' });
+      this.setState({ open: true });
+      return;
+    }
+
+    signUp(email, password, displayName, phoneNumber)
       .then(() => {
         this.setState({
           displayName: '',
           email: '',
           password: '',
           confirmPassword: '',
+          phoneNumber: '',
           errorMssg: '',
           open: false,
         });
@@ -73,6 +87,7 @@ class SignUp extends React.Component {
       email,
       password,
       confirmPassword,
+      phoneNumber,
       errorMssg,
       open,
     } = this.state;
@@ -87,7 +102,7 @@ class SignUp extends React.Component {
               name='displayName'
               value={displayName}
               onChange={this.handleChange}
-              label='Nombre'
+              label='Nombre comercial de la empresa'
               required
             />
             <FormInput
@@ -112,6 +127,14 @@ class SignUp extends React.Component {
               value={confirmPassword}
               onChange={this.handleChange}
               label='Confirmar contraseña'
+              required
+            />
+            <FormInput
+              type='number'
+              name='phoneNumber'
+              value={phoneNumber}
+              onChange={this.handleChange}
+              label='Telefono de contacto'
               required
             />
             <FormError
