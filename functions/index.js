@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const { transport } = require('./email_credentials');
+const { transport } = require('./util/email_credentials');
 
 exports.sendEmail = functions.https.onRequest((request, response) => {
   // TODO(mauriciogm97): Por seguridad no recibir los emails del frontend.

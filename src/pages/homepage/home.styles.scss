@@ -1,13 +1,23 @@
-.homepage {
-  padding: 40px;
+body {
+  font-family: Arial;
 }
 
-.photoCarrousel {
-  background-color: rgb(173, 170, 170);
+.homepage {
+  width: 100%;
+  padding: 40px 0 40px 0;
+  background-color: white;
+}
+
+.side-by-side {
+  display: flex;
+}
+
+.landing {
   text-align: center;
+  padding-top: 50px;
 }
 
 .catalogo-button {
-  margin-top: 50px;
+  margin-top: 40px;
   text-align: center;
 }
