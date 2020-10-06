@@ -16,6 +16,7 @@ const useStyles = makeStyles({
   },
   appBar: {
     backgroundColor: '#AAAAAA',
+    boxShadow: 'none',
   },
   logo: {
     marginRight: 'auto',
