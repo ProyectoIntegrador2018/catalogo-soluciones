@@ -116,10 +116,3 @@ This will set up the following emulators:
 * Functions emulator for the backend.
 * Database emulator.
 * A UI to view logs, and database contents.
-
-### Deploying project
-
-To deploy the project run the following command:
-```
-firebase deploy
-```
