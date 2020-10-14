@@ -1,4 +1,6 @@
 .content-sign-up {
+  margin-left: auto;
+  margin-right: auto;
   width: 50%;
   height: 100%;
   display: flex;
@@ -13,12 +15,24 @@
     .title {
       margin: 10px 0;
     }
+    .sign-in {
+      margin-top: 20px;
+      .sign-in-button {
+        margin-left: 10px;
+        color: #0000ee;
+
+        &:hover {
+          cursor: pointer;
+        }
+      }
+    }
   }
 }
 //Phones
 @media only screen and (max-width: 700px) {
   .content-sign-up {
     width: 100%;
+    margin-left: 0;
     .sign-up {
       width: 380px;
       padding: 20px;
@@ -29,6 +43,6 @@
 //Tablets
 @media only screen and (min-width: 700px) and (max-width: 1050px) {
   .content-sign-up {
-    width: 100%;
+    width: 66%;
   }
 }

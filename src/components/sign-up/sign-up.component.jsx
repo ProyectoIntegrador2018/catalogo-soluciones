@@ -1,9 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
+import FormError from '../form-input/form-error.component';
 import { Button } from '@material-ui/core';
 
-import { auth, createUserProfileDocument } from '../../firebase/firebase.utils';
+import { signUp } from '../../firebase/sessions';
 
 import './sign-up.styles.scss';
 
@@ -16,46 +18,79 @@ class SignUp extends React.Component {
       email: '',
       password: '',
       confirmPassword: '',
+      phoneNumber: '',
+      errorMssg: '',
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { displayName, email, password, confirmPassword } = this.state;
+    const {
+      displayName,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber,
+    } = this.state;
 
     if (password !== confirmPassword) {
-      alert('Contraseñas no coinciden');
+      this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
+      this.setState({ open: true });
       return;
     }
 
-    try {
-      const { user } = await auth.createUserWithEmailAndPassword(
-        email,
-        password,
-      );
-
-      await createUserProfileDocument(user, { displayName });
-
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-      });
-    } catch (error) {
-      console.error(error);
+    if (phoneNumber < 1000000000 || phoneNumber > 9999999999) {
+      this.setState({ errorMssg: 'Formato de telefono no valido.' });
+      this.setState({ open: true });
+      return;
     }
+
+    signUp(email, password, displayName, phoneNumber)
+      .then(() => {
+        this.setState({
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          phoneNumber: '',
+          errorMssg: '',
+          open: false,
+        });
+      })
+      .catch((errorMssg) => {
+        this.setState({ errorMssg: errorMssg });
+      });
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value });
+    this.setState({ [name]: value, errorMssg: '' });
+  };
+
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
+  goToSignIn = () => {
+    this.props.history.push('signin');
   };
 
   render() {
-    const { displayName, email, password, confirmPassword } = this.state;
+    const {
+      displayName,
+      email,
+      password,
+      confirmPassword,
+      phoneNumber,
+      errorMssg,
+      open,
+    } = this.state;
     return (
       <div className='content-sign-up'>
         <div className='sign-up'>
@@ -67,7 +102,7 @@ class SignUp extends React.Component {
               name='displayName'
               value={displayName}
               onChange={this.handleChange}
-              label='Nombre'
+              label='Nombre comercial de la empresa'
               required
             />
             <FormInput
@@ -94,14 +129,33 @@ class SignUp extends React.Component {
               label='Confirmar contraseña'
               required
             />
+            <FormInput
+              type='number'
+              name='phoneNumber'
+              value={phoneNumber}
+              onChange={this.handleChange}
+              label='Telefono de contacto'
+              required
+            />
+            <FormError
+              open={open}
+              errorMssg={errorMssg}
+              onClose={this.handleClose}
+            />
             <Button variant='contained' color='primary' type='submit'>
               Crear cuenta
             </Button>
           </form>
+          <div className='sign-in'>
+            Ya tienes cuenta?
+            <span className='sign-in-button' onClick={this.goToSignIn}>
+              Inicia sesión
+            </span>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default SignUp;
+export default withRouter(SignUp);

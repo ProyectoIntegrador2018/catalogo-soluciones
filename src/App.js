@@ -6,28 +6,25 @@ import './App.css';
 
 import Header from './components/header/header.component';
 
-import SignInAndSignUpPage from './pages/sign-in-and-sign-up/sign-in-and-sign-up.component';
+import SignInPage from './pages/sign-in/sign-in.component';
+import SignUpPage from './pages/sign-up/sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
-import Registro from './pages/registro/registro.component';
+import Administrador from './pages/administrador/administrador.component';
 
-import { auth, createUserProfileDocument } from './firebase/firebase.utils';
+import { auth } from './firebase/firebase';
+import { getUserRef } from './firebase/sessions';
 import { setCurrentUser } from './redux/user/user.actions';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
-
-  // eslint-disable-next-line no-useless-constructor
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     const { setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth) {
-        const userRef = await createUserProfileDocument(userAuth);
+        const userRef = await getUserRef(userAuth);
 
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
@@ -52,15 +49,28 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/catalogo' component={Catalogo} />
-          <Route exact path='/registro' component={Registro} />
           <Route
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser ? (
-                <Redirect to='/' />
+              this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
+            }
+          />
+          <Route
+            exact
+            path='/signup'
+            render={() =>
+              this.props.currentUser ? <Redirect to='/' /> : <SignUpPage />
+            }
+          />
+          <Route
+            exact
+            path='/admin'
+            render={() =>
+              this.props.currentUser && this.props.currentUser.adminAccount ? (
+                <Administrador />
               ) : (
-                <SignInAndSignUpPage />
+                <Redirect to='/' />
               )
             }
           />

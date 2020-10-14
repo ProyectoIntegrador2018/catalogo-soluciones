@@ -1,40 +1,86 @@
 import React, { Component } from 'react';
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import { Fade } from 'react-slideshow-image';
+import 'react-slideshow-image/dist/styles.css'
+
+import './carousel.styles.scss';
 
 export default class PhotoCarousel extends Component {
   render() {
     const settings = {
-      dots: true,
-      infinite: true,
-      speed: 500,
-      slidesToShow: 1,
-      slidesToScroll: 1,
+      duration: 2000,
+      pauseOnHover: true,
+      indicators: true,
+      arrows: false
     };
     return (
-      <div>
-        <h2> Single Item</h2>
-        <Slider {...settings}>
-          <div>
-            <h3>1</h3>
+      <div className='slide-container'>
+        <Fade {...settings}>
+          <div className='each-fade'>
+            <div className='image-container'>
+              <div className='card-orange'>
+                <h1 className='white-text'>Desarrollo de software</h1>
+                <ul className='white-text'>
+                  <li>Desarrollo web</li>
+                  <li>Soluciones tecnológicas</li>
+                  <li>Fintech</li>
+                  <li>Healthtech</li>
+                  <li>E-commerce</li>
+                  <li>Desarrollo a la medida</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3>2</h3>
+
+          <div className='each-fade'>
+            <div className='image-container'>
+              <div className='card-gray'>
+                <h1 className='white-text'>Servicios</h1>
+                <ul className='white-text'>
+                  <li>Facturación electrónica</li>
+                  <li>Staffing</li>
+                  <li>Software as a service</li>
+                  <li>Monitoreo de software y hardware</li>
+                  <li>Consultoría TIC</li>
+                  <li>Asesoría en propiedad intelectual en temas de tecnología</li>
+                  <li>Tratamiento de imagen</li>
+                  <li>Servicios de telecomunicaciones</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3>3</h3>
+
+          <div className='each-fade'>
+            <div className='image-container'>
+              <div className='card-orange'>
+                <h1 className='white-text'>Tecnología 4.0</h1>
+                <ul className='white-text'>
+                  <li>Realidad aumentada</li>
+                  <li>3D printing</li>
+                  <li>Business intelligence</li>
+                  <li>Big data y Analítica de datos</li>
+                  <li>Inteligencia artifial</li>
+                  <li>Robótica</li>
+                  <li>IoT</li>
+                  <li>Ciberseguridad</li>
+                  <li>Blockchain</li>
+                  <li>Nube</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3>4</h3>
+
+          <div className='each-fade'>
+            <div className='image-container'>
+              <div className='card-gray'>
+                <h1 className='white-text'>Desarrollo</h1>
+                <ul className='white-text'>
+                  <li>Uso de PLC</li>
+                  <li>Redes industriales</li>
+                </ul>
+              </div>
+            </div>
           </div>
-          <div>
-            <h3>5</h3>
-          </div>
-          <div>
-            <h3>6</h3>
-          </div>
-        </Slider>
+        </Fade>
       </div>
     );
   }

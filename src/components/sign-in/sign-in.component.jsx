@@ -1,9 +1,11 @@
 import React from 'react';
+import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
-import { Button } from '@material-ui/core';
+import FormError from '../form-input/form-error.component';
+import Button from '@material-ui/core/Button';
 
-import { auth } from '../../firebase/firebase.utils';
+import { auth } from '../../firebase/firebase';
 
 import './sign-in.styles.scss';
 
@@ -14,6 +16,8 @@ class SignIn extends React.Component {
     this.state = {
       email: '',
       password: '',
+      errorMssg: '',
+      open: false,
     };
   }
 
@@ -27,6 +31,12 @@ class SignIn extends React.Component {
       this.setState({ email: '', password: '' });
     } catch (error) {
       console.log(error);
+      var errorMssg = 'Error de inicio de sesión';
+      if (error.code === 'auth/wrong-password') {
+        errorMssg = 'La contraseña proporcionada es incorrecta.';
+      }
+      this.setState({ errorMssg: errorMssg });
+      this.setState({ open: true });
     }
   };
 
@@ -36,13 +46,24 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    this.setState({ open: false });
+  };
+
+  goToSignUp = () => {
+    this.props.history.push('signup');
+  };
+
   render() {
     return (
       <div className='content-sign-in'>
         <div className='sign-in'>
           <h2>Iniciar sesión</h2>
           <span>Inicia sesión con tu correo y contraseña</span>
-
           <form onSubmit={this.handleSubmit}>
             <FormInput
               name='email'
@@ -60,16 +81,27 @@ class SignIn extends React.Component {
               label='Contraseña'
               required
             />
+            <FormError
+              open={this.state.open}
+              errorMssg={this.state.errorMssg}
+              onClose={this.handleClose}
+            />
             <div className='buttons'>
               <Button variant='contained' color='primary' type='submit'>
                 Inicia sesión
               </Button>
             </div>
           </form>
+          <div className='sign-up'>
+            Aún no tienes cuenta?
+            <span className='sign-up-button' onClick={this.goToSignUp}>
+              Crear cuenta
+            </span>
+          </div>
         </div>
       </div>
     );
   }
 }
 
-export default SignIn;
+export default withRouter(SignIn);

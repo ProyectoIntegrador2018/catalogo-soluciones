@@ -14,15 +14,22 @@ const HomePage = () => {
 
   return (
     <div className='homepage'>
-      This is the HomePage.
-      <Container className='photoCarrousel' maxWidth='sm'>
-        <PhotoCarousel />
-      </Container>
-      <Container className='catalogo-button'>
-        <Button variant='contained' color='primary' onClick={goToCatalogo}>
-          Catalogo de soluciones
-        </Button>
-      </Container>
+      <div className='side-by-side'>
+        <Container className='photoCarrousel' maxWidth='sm'>
+          <PhotoCarousel />
+        </Container>
+        <Container className='landing' maxWidth='sm'>
+          <h1>Catálogo de Soluciones Digitales</h1>
+          <h3>
+            Consulta los servicios ofrecidos por las empresas de tecnología del
+            estado de Nuevo León.
+          </h3>
+          <br></br>
+          <Button variant='contained' color='primary' onClick={goToCatalogo}>
+            Accede al catálogo
+          </Button>
+        </Container>
+      </div>
     </div>
   );
 };

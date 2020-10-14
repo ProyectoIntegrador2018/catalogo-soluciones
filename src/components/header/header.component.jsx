@@ -3,25 +3,33 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
-import { auth } from '../../firebase/firebase.utils';
+import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles({
   root: {
     flexGrow: 1,
   },
-  menuButton: {
-    marginRight: theme.spacing(2),
+  appBar: {
+    backgroundColor: '#AAAAAA',
+    boxShadow: 'none',
   },
-  title: {
-    flexGrow: 1,
+  logo: {
+    marginRight: 'auto',
+    '&:hover': {
+      cursor: 'pointer',
+    },
   },
-}));
+  appBarButton: {
+    '&:hover': {
+      color: '#CC6600',
+    },
+  },
+});
 
 const Header = ({ currentUser }) => {
   const classes = useStyles();
@@ -29,32 +37,49 @@ const Header = ({ currentUser }) => {
   let history = useHistory();
 
   function goTo(page) {
-    if (page === 'home') {
-      history.push('/');
-    } else if (page === 'signin') {
-      history.push('signin');
+    switch (page) {
+      case 'home':
+        history.push('/');
+        break;
+      default:
+        history.push(page);
+        break;
     }
   }
 
   return (
-    <div className={`classes.root logo`}>
-      <AppBar position='static'>
+    <div className={classes.root}>
+      <AppBar className={classes.appBar} position='static'>
         <Toolbar>
-          {/* TODO: Title element extends until the end of the header. Change the element width to only be
-            the size of the logo/title. */}
-          <Typography
-            variant='h6'
-            className={classes.title}
+          <img
+            className={classes.logo}
+            src='./logoCSOFTMTY.png'
+            alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
-          >
-            CSOFTMTY
-          </Typography>
+          />
+          {currentUser && currentUser.adminAccount && (
+            <Button
+              className={classes.appBarButton}
+              onClick={() => goTo('admin')}
+            >
+              Administrador
+            </Button>
+          )}
           {currentUser ? (
-            <Button color='inherit' onClick={() => auth.signOut()}>
+            <Button
+              className={classes.appBarButton}
+              onClick={() => {
+                auth.signOut();
+                goTo('home');
+              }}
+            >
               Cerrar sesion
             </Button>
           ) : (
-            <Button color='inherit' onClick={() => goTo('signin')}>
+            <Button
+              className={classes.appBarButton}
+              onClick={() => goTo('signin')}
+            >
               Iniciar Sesion
             </Button>
           )}
