@@ -23,7 +23,7 @@ class App extends React.Component {
     const { setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth) {
+      if (userAuth && userAuth.emailVerified) {
         const userRef = await getUserRef(userAuth);
 
         userRef.onSnapshot((snapShot) => {
@@ -33,7 +33,7 @@ class App extends React.Component {
           });
         });
       } else {
-        setCurrentUser(userAuth);
+        setCurrentUser(null);
       }
     });
   }
@@ -70,8 +70,8 @@ class App extends React.Component {
               this.props.currentUser && this.props.currentUser.adminAccount ? (
                 <Administrador />
               ) : (
-                <Redirect to='/' />
-              )
+                  <Redirect to='/' />
+                )
             }
           />
         </Switch>
