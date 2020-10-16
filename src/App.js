@@ -15,6 +15,7 @@ import Administrador from './pages/administrador/administrador.component';
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
 import { setCurrentUser } from './redux/user/user.actions';
+import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -69,6 +70,18 @@ class App extends React.Component {
             render={() =>
               this.props.currentUser && this.props.currentUser.adminAccount ? (
                 <Administrador />
+              ) : (
+                <Redirect to='/' />
+              )
+            }
+          />
+          <Route
+            exact
+            path='/crear-solucion'
+            render={() =>
+              // agregar otra condicion? como validated user o adminAccount
+              !this.props.currentUser ? (
+                <CreateSolutionPage />
               ) : (
                 <Redirect to='/' />
               )
