@@ -1,11 +1,12 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import PhotoCarousel from '../../components/carousel/carousel.component';
 
 import './home.styles.scss';
 
-const HomePage = () => {
+const HomePage = ({ currentUser }) => {
   let history = useHistory();
 
   const goToCatalogo = () => {
@@ -15,6 +16,13 @@ const HomePage = () => {
   return (
     <div className='homepage'>
       <div className='side-by-side'>
+        {
+          currentUser && !currentUser.emailVerified ?
+            // TODO(mauriciogm): Mejorar la interfaz de mensaje.
+            <Container>
+              <center><h1>Se envió un correo electrónico para la verificación.</h1></center><br></br>
+            </Container> : null
+        }
         <Container className='photoCarrousel' maxWidth='sm'>
           <PhotoCarousel />
         </Container>
@@ -34,4 +42,11 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+
+const mapStateToProps = (state) => ({
+  currentUser: state.user.currentUser,
+});
+
+export default connect(mapStateToProps)(HomePage);
+
+

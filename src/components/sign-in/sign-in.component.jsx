@@ -5,7 +5,7 @@ import FormInput from '../form-input/form-input.component';
 import FormError from '../form-input/form-error.component';
 import Button from '@material-ui/core/Button';
 
-import { auth } from '../../firebase/firebase';
+import { signIn } from '../../firebase/sessions';
 
 import './sign-in.styles.scss';
 
@@ -26,18 +26,12 @@ class SignIn extends React.Component {
 
     const { email, password } = this.state;
 
-    try {
-      await auth.signInWithEmailAndPassword(email, password);
+    signIn(email, password).then(() => {
       this.setState({ email: '', password: '' });
-    } catch (error) {
-      console.log(error);
-      var errorMssg = 'Error de inicio de sesión';
-      if (error.code === 'auth/wrong-password') {
-        errorMssg = 'La contraseña proporcionada es incorrecta.';
-      }
+    }).catch((errorMssg) => {
       this.setState({ errorMssg: errorMssg });
       this.setState({ open: true });
-    }
+    })
   };
 
   handleChange = (event) => {

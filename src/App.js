@@ -30,6 +30,7 @@ class App extends React.Component {
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
             id: snapShot.id,
+            emailVerified: userAuth.emailVerified,
             ...snapShot.data(),
           });
         });
@@ -54,7 +55,8 @@ class App extends React.Component {
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
+              this.props.currentUser && this.props.currentUser.emailVerified ?
+                <Redirect to='/' /> : <SignInPage />
             }
           />
           <Route
@@ -71,8 +73,8 @@ class App extends React.Component {
               this.props.currentUser && this.props.currentUser.adminAccount ? (
                 <Administrador />
               ) : (
-                <Redirect to='/' />
-              )
+                  <Redirect to='/' />
+                )
             }
           />
           <Route
