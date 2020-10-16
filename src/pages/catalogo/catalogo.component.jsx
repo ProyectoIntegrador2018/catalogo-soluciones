@@ -4,10 +4,24 @@ import CatalogList from '../../components/catalog-list/catalog-list.component';
 
 import './catalogo.styles.scss';
 
+const testData = [
+  {
+    name: 'David',
+    lastName: 'Souza',
+  },
+  {
+    name: 'Mauricio',
+    lastName: 'Guadiana',
+  },
+  {
+    name: 'Enrique',
+    lastName: 'Villa',
+  },
+];
+
 const Catalogo = () => (
   <div className='catalogo'>
-    Esta es la pagina de catalogo.
-    <CatalogList></CatalogList>
+    <CatalogList data={testData}></CatalogList>
   </div>
 );
 
