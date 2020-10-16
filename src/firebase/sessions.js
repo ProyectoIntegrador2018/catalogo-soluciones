@@ -51,3 +51,22 @@ export const signUp = async (email, password, displayName, phoneNumber) => {
       });
   });
 };
+
+export const signIn = async (email, password) => {
+  return new Promise((resolve, reject) => {
+    auth.signInWithEmailAndPassword(email, password).then(() => {
+      if (auth.currentUser.emailVerified) {
+        resolve();
+      } else {
+        reject('Se debe verificar la cuenta desde el correo electrónico de verificación.');
+      }
+    }).catch((error) => {
+      console.log(error);
+      var errorMssg = 'Error de inicio de sesión.';
+      if (error.code === 'auth/wrong-password') {
+        errorMssg = 'La contraseña proporcionada es incorrecta.';
+      }
+      reject(errorMssg);
+    });
+  });
+}
