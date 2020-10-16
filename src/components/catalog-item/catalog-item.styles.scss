@@ -11,7 +11,20 @@
     width: 100%;
     min-height: 80px;
 
-    .organization,
+    .image-container {
+      width: 5%;
+      padding-right: 15px;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .organization {
+      width: 35%;
+    }
+
     .solution-name {
       width: 40%;
     }

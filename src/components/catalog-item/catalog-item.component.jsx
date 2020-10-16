@@ -6,7 +6,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './catalog-item.styles.scss';
 
 const CatalogItem = ({ data }) => {
-  const { organization, solutionName, price } = data;
+  const { imageUrl, organization, solutionName, price } = data;
 
   return (
     <div className='catalog-item'>
@@ -16,6 +16,9 @@ const CatalogItem = ({ data }) => {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
+          <div className='image-container'>
+            <img src={imageUrl} alt='logo' />
+          </div>
           <span className='organization'>{organization}</span>
           <span className='solution-name'>{solutionName}</span>
           <span className='price'>${price}</span>
