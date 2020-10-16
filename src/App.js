@@ -23,17 +23,18 @@ class App extends React.Component {
     const { setCurrentUser } = this.props;
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-      if (userAuth && userAuth.emailVerified) {
+      if (userAuth) {
         const userRef = await getUserRef(userAuth);
 
         userRef.onSnapshot((snapShot) => {
           setCurrentUser({
             id: snapShot.id,
+            emailVerified: userAuth.emailVerified,
             ...snapShot.data(),
           });
         });
       } else {
-        setCurrentUser(null);
+        setCurrentUser(userAuth);
       }
     });
   }
@@ -53,7 +54,8 @@ class App extends React.Component {
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
+              this.props.currentUser && this.props.currentUser.emailVerified ?
+                <Redirect to='/' /> : <SignInPage />
             }
           />
           <Route
