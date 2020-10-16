@@ -5,9 +5,6 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './catalog-item.styles.scss';
 
-// <span className='name'>{data.name}</span>
-//     <span className='quantity'>{data.lastName}</span>
-
 const CatalogItem = ({ data }) => {
   const { organization, solutionName, price } = data;
 
