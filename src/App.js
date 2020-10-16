@@ -55,8 +55,11 @@ class App extends React.Component {
             exact
             path='/signin'
             render={() =>
-              this.props.currentUser && this.props.currentUser.emailVerified ?
-                <Redirect to='/' /> : <SignInPage />
+              this.props.currentUser && this.props.currentUser.emailVerified ? (
+                <Redirect to='/' />
+              ) : (
+                <SignInPage />
+              )
             }
           />
           <Route
@@ -73,8 +76,8 @@ class App extends React.Component {
               this.props.currentUser && this.props.currentUser.adminAccount ? (
                 <Administrador />
               ) : (
-                  <Redirect to='/' />
-                )
+                <Redirect to='/' />
+              )
             }
           />
           <Route
@@ -82,7 +85,7 @@ class App extends React.Component {
             path='/crear-solucion'
             render={() =>
               // agregar otra condicion? como validated user o adminAccount
-              !this.props.currentUser ? (
+              this.props.currentUser ? (
                 <CreateSolutionPage />
               ) : (
                 <Redirect to='/' />
