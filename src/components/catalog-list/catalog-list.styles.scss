@@ -1,5 +1,5 @@
 .catalog-list {
-  width: 55%;
+  width: 75%;
   min-height: 90vh;
   display: flex;
   flex-direction: column;
@@ -15,7 +15,12 @@
 
     .header-block {
       text-transform: capitalize;
-      width: 50%;
+      width: 40%;
+    }
+
+    .header-block-small {
+      text-transform: capitalize;
+      width: 20%;
     }
   }
 }

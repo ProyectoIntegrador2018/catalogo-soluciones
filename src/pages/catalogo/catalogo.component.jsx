@@ -6,16 +6,19 @@ import './catalogo.styles.scss';
 
 const testData = [
   {
-    name: 'David',
-    lastName: 'Souza',
+    organization: 'FEMSA',
+    solutionName: 'Pago de servicios en OXXO',
+    price: 120000,
   },
   {
-    name: 'Mauricio',
-    lastName: 'Guadiana',
+    organization: 'Techguys',
+    solutionName: 'Creacion de sitios web',
+    price: 50000,
   },
   {
-    name: 'Enrique',
-    lastName: 'Villa',
+    organization: 'Strawberry design',
+    solutionName: 'Creacion de imagen corporativa',
+    price: 45000,
   },
 ];
 

@@ -8,10 +8,13 @@ const CatalogList = ({ data }) => (
   <div className='catalog-list'>
     <div className='catalog-header'>
       <div className='header-block'>
-        <span>Name</span>
+        <span>Organizacion</span>
       </div>
       <div className='header-block'>
-        <span>Last name</span>
+        <span>Solucion</span>
+      </div>
+      <div className='header-block-small'>
+        <span>Precio</span>
       </div>
     </div>
     {data.map((value, index) => {
