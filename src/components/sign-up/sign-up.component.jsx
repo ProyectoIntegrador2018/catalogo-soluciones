@@ -57,6 +57,7 @@ class SignUp extends React.Component {
           errorMssg: '',
           open: false,
         });
+        this.props.history.push('/');
       })
       .catch((errorMssg) => {
         this.setState({ errorMssg: errorMssg });

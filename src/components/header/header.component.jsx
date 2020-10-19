@@ -65,7 +65,7 @@ const Header = ({ currentUser }) => {
               Administrador
             </Button>
           )}
-          {currentUser && currentUser.emailVerified ? (
+          {currentUser ? (
             <Button
               className={classes.appBarButton}
               onClick={() => {
