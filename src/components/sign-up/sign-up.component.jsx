@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import FormInput from '../form-input/form-input.component';
+import { FormInput, FormSelect, FormTextarea } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
@@ -20,6 +19,9 @@ class SignUp extends React.Component {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
+      orgName: '',
+      orgType: '',
+      description: '',
     };
   }
 
@@ -32,6 +34,9 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
+      orgName,
+      orgType,
+      description,
     } = this.state;
 
     if (password !== confirmPassword) {
@@ -52,6 +57,9 @@ class SignUp extends React.Component {
           password: '',
           confirmPassword: '',
           phoneNumber: '',
+          orgName: '',
+          orgType: '',
+          description: '',
           errorMssg: 'Se ha enviado un correo para confirmar la cuenta.',
         });
         this.props.history.push({
@@ -93,19 +101,62 @@ class SignUp extends React.Component {
       confirmPassword,
       phoneNumber,
       errorMssg,
+      orgName,
+      orgType,
+      description,
     } = this.state;
     return (
       <div className='content-sign-up'>
         <div className='sign-up'>
           <h2 className='title'>Crear nueva cuenta</h2>
-          <span>Registrate con tu correo y contraseña</span>
+          <p>Registrate con tu correo y contraseña</p>
           <form className='sign-up-form' onSubmit={this.handleSubmit}>
+            <h3 className='title'>Datos de la organización</h3>
+            <FormInput
+              type='text'
+              name='orgName'
+              value={orgName}
+              onChange={this.handleChange}
+              label='Nombre de la organización'
+              required
+            />
+            <FormSelect
+              type='text'
+              name='orgType'
+              value={orgType}
+              onChange={this.handleChange}
+              label='Tipo de empresa'
+              required
+            >
+              <option value="" selected disabled hidden>Tipo de empresa</option>
+              <option value='micro'>Micro</option>
+              <option value='pequeña'>Pequeña</option>
+              <option value='mediana'>Mediana</option>
+              <option value='grande'>Grande</option>
+            </FormSelect>
+            <FormTextarea
+              type='text'
+              name='description'
+              value={description}
+              onChange={this.handleChange}
+              label='Describe tu empresa, su giro y actividades brevemente.'
+              required
+            />
+            <input
+              type='file'
+              name='orgName'
+              onChange={this.handleChange}
+              label='Logotipo'
+              required
+            />
+
+            <h3 className='title'>Datos del usuario</h3>
             <FormInput
               type='text'
               name='displayName'
               value={displayName}
               onChange={this.handleChange}
-              label='Nombre comercial de la empresa'
+              label='Nombre del administrador de la cuenta'
               required
             />
             <FormInput
@@ -140,11 +191,6 @@ class SignUp extends React.Component {
               label='Telefono de contacto'
               required
             />
-            <Notification
-              severity='error'
-              mssg={errorMssg}
-              onClose={this.handleClose}
-            />
             <Button variant='contained' color='primary' type='submit'>
               Crear cuenta
             </Button>
@@ -155,6 +201,11 @@ class SignUp extends React.Component {
               Inicia sesión
             </span>
           </div>
+          <Notification
+            severity='error'
+            mssg={errorMssg}
+            onClose={this.handleClose}
+          />
         </div>
       </div>
     );

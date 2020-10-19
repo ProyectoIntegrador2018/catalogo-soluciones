@@ -2,7 +2,7 @@ import React from 'react';
 
 import './form-input.styles.scss';
 
-const FormInput = ({ handleChange, label, ...otherProps }) => (
+export const FormInput = ({ handleChange, label, ...otherProps }) => (
   <div className='group'>
     <input className='form-input' onChange={handleChange} {...otherProps} />
     {label && (
@@ -15,4 +15,15 @@ const FormInput = ({ handleChange, label, ...otherProps }) => (
   </div>
 );
 
-export default FormInput;
+export const FormSelect = ({ handleChange, label, ...otherProps }) => (
+  <div className='group'>
+    {label && otherProps.value.length ?
+      <label className={`${'shrink'} form-input-label`}>{label}</label>
+      : null}
+    <select className='form-input' onChange={handleChange} {...otherProps} />
+  </div>
+);
+
+export const FormTextarea = ({ label, handleChange, ...otherProps }) => (
+  <div className='group'></div>
+);
