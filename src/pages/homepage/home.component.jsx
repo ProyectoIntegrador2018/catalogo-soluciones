@@ -16,13 +16,6 @@ const HomePage = ({ currentUser }) => {
   return (
     <div className='homepage'>
       <div className='side-by-side'>
-        {
-          currentUser && !currentUser.emailVerified ?
-            // TODO(mauriciogm): Mejorar la interfaz de mensaje.
-            <Container>
-              <center><h1>Se envió un correo electrónico para la verificación.</h1></center><br></br>
-            </Container> : null
-        }
         <Container className='photoCarrousel' maxWidth='sm'>
           <PhotoCarousel />
         </Container>
