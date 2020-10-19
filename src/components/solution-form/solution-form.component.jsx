@@ -34,7 +34,6 @@ class SolutionForm extends React.Component {
 
     if (price < 0) {
       this.setState({ errorMssg: 'Precio inválido.' });
-      this.setState({ open: true });
       return;
     }
 
@@ -42,7 +41,6 @@ class SolutionForm extends React.Component {
       this.setState({
         errorMssg: 'La longitud de la descripción es mayor a 500 caracteres.',
       });
-      this.setState({ open: true });
       return;
     }
   };
@@ -58,7 +56,7 @@ class SolutionForm extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ errorMssg: '' });
   };
 
   render() {
@@ -68,7 +66,6 @@ class SolutionForm extends React.Component {
       descriptionSuccess,
       price,
       errorMssg,
-      open,
     } = this.state;
     return (
       <div className='content-solution-form'>
@@ -108,7 +105,6 @@ class SolutionForm extends React.Component {
               required
             />
             <FormError
-              open={open}
               errorMssg={errorMssg}
               onClose={this.handleClose}
             />

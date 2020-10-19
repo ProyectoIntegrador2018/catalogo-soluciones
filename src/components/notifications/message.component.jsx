@@ -8,7 +8,7 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 };
 
-const FormError = ({ errorMssg, open, onClose, ...otherProps }) => (
+const Message = ({ errorMssg, open, onClose, ...otherProps }) => (
   <Snackbar
     autoHideDuration={5000}
     anchorOrigin={{
@@ -24,4 +24,4 @@ const FormError = ({ errorMssg, open, onClose, ...otherProps }) => (
   </Snackbar>
 );
 
-export default FormError;
+export default Message;

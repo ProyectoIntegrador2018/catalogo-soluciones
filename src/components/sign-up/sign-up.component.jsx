@@ -36,13 +36,11 @@ class SignUp extends React.Component {
 
     if (password !== confirmPassword) {
       this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
-      this.setState({ open: true });
       return;
     }
 
     if (phoneNumber < 1000000000 || phoneNumber > 9999999999) {
       this.setState({ errorMssg: 'Formato de telefono no valido.' });
-      this.setState({ open: true });
       return;
     }
 
@@ -55,7 +53,6 @@ class SignUp extends React.Component {
           confirmPassword: '',
           phoneNumber: '',
           errorMssg: '',
-          open: false,
         });
         this.props.history.push('/');
       })
@@ -75,7 +72,7 @@ class SignUp extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ errorMssg: '' });
   };
 
   goToSignIn = () => {
@@ -90,7 +87,6 @@ class SignUp extends React.Component {
       confirmPassword,
       phoneNumber,
       errorMssg,
-      open,
     } = this.state;
     return (
       <div className='content-sign-up'>
@@ -139,7 +135,6 @@ class SignUp extends React.Component {
               required
             />
             <FormError
-              open={open}
               errorMssg={errorMssg}
               onClose={this.handleClose}
             />

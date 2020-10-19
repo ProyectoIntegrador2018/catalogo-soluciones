@@ -17,7 +17,6 @@ class SignIn extends React.Component {
       email: '',
       password: '',
       errorMssg: '',
-      open: false,
     };
   }
 
@@ -30,7 +29,6 @@ class SignIn extends React.Component {
       this.setState({ email: '', password: '' });
     }).catch((errorMssg) => {
       this.setState({ errorMssg: errorMssg });
-      this.setState({ open: true });
     })
   };
 
@@ -45,7 +43,7 @@ class SignIn extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ errorMssg: '' });
   };
 
   goToSignUp = () => {
@@ -76,7 +74,6 @@ class SignIn extends React.Component {
               required
             />
             <FormError
-              open={this.state.open}
               errorMssg={this.state.errorMssg}
               onClose={this.handleClose}
             />
