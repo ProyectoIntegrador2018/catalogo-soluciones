@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
-import { FormError } from '../notifications/notification.component';
+import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
@@ -19,7 +20,6 @@ class SignUp extends React.Component {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
-      errorMssg: '',
     };
   }
 
@@ -52,9 +52,15 @@ class SignUp extends React.Component {
           password: '',
           confirmPassword: '',
           phoneNumber: '',
-          errorMssg: '',
+          errorMssg: 'Se ha enviado un correo para confirmar la cuenta.',
         });
-        this.props.history.push('/');
+        this.props.history.push({
+          pathname: 'signin',
+          state: {
+            severity: 'info',
+            notificationMssg: 'Se ha enviado un correo para confirmar la cuenta.'
+          }
+        });
       })
       .catch((errorMssg) => {
         this.setState({ errorMssg: errorMssg });
@@ -134,8 +140,9 @@ class SignUp extends React.Component {
               label='Telefono de contacto'
               required
             />
-            <FormError
-              errorMssg={errorMssg}
+            <Notification
+              severity='error'
+              mssg={errorMssg}
               onClose={this.handleClose}
             />
             <Button variant='contained' color='primary' type='submit'>

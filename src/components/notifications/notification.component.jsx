@@ -8,23 +8,7 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 };
 
-export const FormError = ({ errorMssg, onClose, ...otherProps }) => (
-  <Snackbar
-    autoHideDuration={5000}
-    anchorOrigin={{
-      vertical: 'bottom',
-      horizontal: 'left',
-    }}
-    open={errorMssg ? true : false}
-    onClose={onClose}
-  >
-    <Alert severity='error' onClose={onClose}>
-      {errorMssg}
-    </Alert>
-  </Snackbar >
-);
-
-export const Message = ({ mssg, onClose, ...otherProps }) => (
+export const Notification = ({ severity, mssg, onClose, ...otherProps }) => (
   <Snackbar
     autoHideDuration={5000}
     anchorOrigin={{
@@ -34,7 +18,7 @@ export const Message = ({ mssg, onClose, ...otherProps }) => (
     open={mssg ? true : false}
     onClose={onClose}
   >
-    <Alert severity='info' onClose={onClose}>
+    <Alert severity={severity} onClose={onClose}>
       {mssg}
     </Alert>
   </Snackbar >

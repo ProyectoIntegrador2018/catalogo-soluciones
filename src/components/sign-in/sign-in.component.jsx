@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
-import { FormError } from '../notifications/notification.component';
+import { Notification } from '../notifications/notification.component';
 import Button from '@material-ui/core/Button';
 
 import { signIn } from '../../firebase/sessions';
@@ -13,10 +13,17 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
+    var severity, notificationMssg;
+    if (this.props.location.state) {
+      severity = this.props.location.state.severity;
+      notificationMssg = this.props.location.state.notificationMssg;
+    }
+
     this.state = {
       email: '',
       password: '',
-      errorMssg: '',
+      severity: severity,
+      notificationMssg: notificationMssg,
     };
   }
 
@@ -28,7 +35,10 @@ class SignIn extends React.Component {
     signIn(email, password).then(() => {
       this.setState({ email: '', password: '' });
     }).catch((errorMssg) => {
-      this.setState({ errorMssg: errorMssg });
+      this.setState({
+        severity: 'error',
+        notificationMssg: errorMssg
+      });
     })
   };
 
@@ -43,7 +53,7 @@ class SignIn extends React.Component {
       return;
     }
 
-    this.setState({ errorMssg: '' });
+    this.setState({ notificationMssg: '' });
   };
 
   goToSignUp = () => {
@@ -73,8 +83,9 @@ class SignIn extends React.Component {
               label='Contraseña'
               required
             />
-            <FormError
-              errorMssg={this.state.errorMssg}
+            <Notification
+              severity={this.state.severity}
+              mssg={this.state.notificationMssg}
               onClose={this.handleClose}
             />
             <div className='buttons'>

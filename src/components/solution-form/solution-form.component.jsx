@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
-import { FormError } from '../notifications/notification.component';
+import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import './solution-form.styles.scss';
@@ -104,8 +104,9 @@ class SolutionForm extends React.Component {
               label='Precio'
               required
             />
-            <FormError
-              errorMssg={errorMssg}
+            <Notification
+              severity='error'
+              mssg={errorMssg}
               onClose={this.handleClose}
             />
             <Button variant='contained' color='primary' type='submit'>

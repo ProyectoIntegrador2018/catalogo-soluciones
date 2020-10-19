@@ -6,7 +6,7 @@ import PhotoCarousel from '../../components/carousel/carousel.component';
 
 import './home.styles.scss';
 
-const HomePage = ({ currentUser }) => {
+const HomePage = () => {
   let history = useHistory();
 
   const goToCatalogo = () => {
@@ -35,11 +35,6 @@ const HomePage = ({ currentUser }) => {
   );
 };
 
-
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;
 
 
