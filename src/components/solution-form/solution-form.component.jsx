@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
-import FormError from '../form-input/form-error.component';
+import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import './solution-form.styles.scss';
@@ -34,7 +34,6 @@ class SolutionForm extends React.Component {
 
     if (price < 0) {
       this.setState({ errorMssg: 'Precio inválido.' });
-      this.setState({ open: true });
       return;
     }
 
@@ -42,7 +41,6 @@ class SolutionForm extends React.Component {
       this.setState({
         errorMssg: 'La longitud de la descripción es mayor a 500 caracteres.',
       });
-      this.setState({ open: true });
       return;
     }
   };
@@ -58,7 +56,7 @@ class SolutionForm extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ errorMssg: '' });
   };
 
   render() {
@@ -68,7 +66,6 @@ class SolutionForm extends React.Component {
       descriptionSuccess,
       price,
       errorMssg,
-      open,
     } = this.state;
     return (
       <div className='content-solution-form'>
@@ -107,9 +104,9 @@ class SolutionForm extends React.Component {
               label='Precio'
               required
             />
-            <FormError
-              open={open}
-              errorMssg={errorMssg}
+            <Notification
+              severity='error'
+              mssg={errorMssg}
               onClose={this.handleClose}
             />
             <Button variant='contained' color='primary' type='submit'>

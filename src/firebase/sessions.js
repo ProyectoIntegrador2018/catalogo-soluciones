@@ -68,9 +68,17 @@ export const signIn = async (email, password) => {
       })
       .catch((error) => {
         console.log(error);
-        var errorMssg = 'Error de inicio de sesión.';
-        if (error.code === 'auth/wrong-password') {
-          errorMssg = 'La contraseña proporcionada es incorrecta.';
+        var errorMssg;
+        switch (error.code) {
+          case 'auth/wrong-password':
+            errorMssg = 'La contraseña proporcionada es incorrecta.';
+            break;
+          case 'auth/user-not-found':
+            errorMssg = 'No existe una cuenta para este correo.'
+            break;
+          default:
+            errorMssg = 'Error de inicio de sesión';
+            break;
         }
         reject(errorMssg);
       });

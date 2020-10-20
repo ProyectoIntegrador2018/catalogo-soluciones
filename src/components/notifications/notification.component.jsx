@@ -2,26 +2,24 @@ import React from 'react';
 import Snackbar from '@material-ui/core/Snackbar';
 import MuiAlert from '@material-ui/lab/Alert';
 
-import './form-error.styles.scss';
+import './notification.styles.scss';
 
 const Alert = (props) => {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 };
 
-const FormError = ({ errorMssg, open, onClose, ...otherProps }) => (
+export const Notification = ({ severity, mssg, onClose, ...otherProps }) => (
   <Snackbar
     autoHideDuration={5000}
     anchorOrigin={{
       vertical: 'bottom',
       horizontal: 'left',
     }}
-    open={open}
+    open={mssg ? true : false}
     onClose={onClose}
   >
-    <Alert severity='error' onClose={onClose}>
-      {errorMssg}
+    <Alert severity={severity} onClose={onClose}>
+      {mssg}
     </Alert>
-  </Snackbar>
+  </Snackbar >
 );
-
-export default FormError;

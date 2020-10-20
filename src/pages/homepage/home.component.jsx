@@ -6,7 +6,7 @@ import PhotoCarousel from '../../components/carousel/carousel.component';
 
 import './home.styles.scss';
 
-const HomePage = ({ currentUser }) => {
+const HomePage = () => {
   let history = useHistory();
 
   const goToCatalogo = () => {
@@ -16,13 +16,6 @@ const HomePage = ({ currentUser }) => {
   return (
     <div className='homepage'>
       <div className='side-by-side'>
-        {
-          currentUser && !currentUser.emailVerified ?
-            // TODO(mauriciogm): Mejorar la interfaz de mensaje.
-            <Container>
-              <center><h1>Se envió un correo electrónico para la verificación.</h1></center><br></br>
-            </Container> : null
-        }
         <Container className='photoCarrousel' maxWidth='sm'>
           <PhotoCarousel />
         </Container>
@@ -42,11 +35,6 @@ const HomePage = ({ currentUser }) => {
   );
 };
 
-
-const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
-});
-
-export default connect(mapStateToProps)(HomePage);
+export default HomePage;
 
 

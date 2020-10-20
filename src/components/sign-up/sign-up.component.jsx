@@ -1,8 +1,9 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 import FormInput from '../form-input/form-input.component';
-import FormError from '../form-input/form-error.component';
+import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
@@ -19,7 +20,6 @@ class SignUp extends React.Component {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
-      errorMssg: '',
     };
   }
 
@@ -36,13 +36,11 @@ class SignUp extends React.Component {
 
     if (password !== confirmPassword) {
       this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
-      this.setState({ open: true });
       return;
     }
 
     if (phoneNumber < 1000000000 || phoneNumber > 9999999999) {
       this.setState({ errorMssg: 'Formato de telefono no valido.' });
-      this.setState({ open: true });
       return;
     }
 
@@ -54,8 +52,14 @@ class SignUp extends React.Component {
           password: '',
           confirmPassword: '',
           phoneNumber: '',
-          errorMssg: '',
-          open: false,
+          errorMssg: 'Se ha enviado un correo para confirmar la cuenta.',
+        });
+        this.props.history.push({
+          pathname: 'signin',
+          state: {
+            severity: 'info',
+            notificationMssg: 'Se ha enviado un correo para confirmar la cuenta.'
+          }
         });
       })
       .catch((errorMssg) => {
@@ -74,7 +78,7 @@ class SignUp extends React.Component {
       return;
     }
 
-    this.setState({ open: false });
+    this.setState({ errorMssg: '' });
   };
 
   goToSignIn = () => {
@@ -89,7 +93,6 @@ class SignUp extends React.Component {
       confirmPassword,
       phoneNumber,
       errorMssg,
-      open,
     } = this.state;
     return (
       <div className='content-sign-up'>
@@ -137,9 +140,9 @@ class SignUp extends React.Component {
               label='Telefono de contacto'
               required
             />
-            <FormError
-              open={open}
-              errorMssg={errorMssg}
+            <Notification
+              severity='error'
+              mssg={errorMssg}
               onClose={this.handleClose}
             />
             <Button variant='contained' color='primary' type='submit'>
