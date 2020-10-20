@@ -109,9 +109,15 @@ class SignUp extends React.Component {
       <div className='content-sign-up'>
         <div className='sign-up'>
           <h2 className='title'>Crear nueva cuenta</h2>
-          <p>Registrate con tu correo y contraseña</p>
+          <span>Registrate tu organización con tu correo y contraseña</span>
+          <div className='sign-in'>
+            ¿Ya tienes cuenta?
+            <span className='sign-in-button' onClick={this.goToSignIn}>
+              Inicia sesión
+            </span>
+          </div>
           <form className='sign-up-form' onSubmit={this.handleSubmit}>
-            <h3 className='title'>Datos de la organización</h3>
+            <h3>Datos de la organización</h3>
             <FormInput
               type='text'
               name='orgName'
@@ -150,7 +156,7 @@ class SignUp extends React.Component {
               required
             />
 
-            <h3 className='title'>Datos del usuario</h3>
+            <h3>Datos del usuario</h3>
             <FormInput
               type='text'
               name='displayName'
@@ -195,12 +201,6 @@ class SignUp extends React.Component {
               Crear cuenta
             </Button>
           </form>
-          <div className='sign-in'>
-            Ya tienes cuenta?
-            <span className='sign-in-button' onClick={this.goToSignIn}>
-              Inicia sesión
-            </span>
-          </div>
           <Notification
             severity='error'
             mssg={errorMssg}
