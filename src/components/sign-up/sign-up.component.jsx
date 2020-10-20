@@ -60,7 +60,6 @@ class SignUp extends React.Component {
           orgName: '',
           orgType: '',
           description: '',
-          errorMssg: 'Se ha enviado un correo para confirmar la cuenta.',
         });
         this.props.history.push({
           pathname: 'signin',
@@ -145,7 +144,7 @@ class SignUp extends React.Component {
               name='description'
               value={description}
               onChange={this.handleChange}
-              label='Describe tu empresa, su giro y actividades brevemente.'
+              label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
               required
             />
             <FormFile

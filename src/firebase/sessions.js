@@ -62,7 +62,7 @@ export const signIn = async (email, password) => {
         } else {
           auth.currentUser.sendEmailVerification();
           reject(
-            'Se debe verificar la cuenta desde el correo electrónico de verificación. Hemos enviado el correo nuevamente',
+            'Se debe verificar la cuenta desde el correo electrónico de verificación. Hemos enviado el correo nuevamente.',
           );
         }
       })
