@@ -17,6 +17,7 @@ export const FormInput = ({ handleChange, label, ...otherProps }) => (
 
 export const FormSelect = ({ handleChange, label, ...otherProps }) => (
   <div className='group'>
+    <select className='form-input' onChange={handleChange} {...otherProps} />
     {label && (
       <label
         className={`${otherProps.value.length && 'shrink'} form-input-label`}
@@ -24,7 +25,6 @@ export const FormSelect = ({ handleChange, label, ...otherProps }) => (
         {label}
       </label>
     )}
-    <select className='form-input' onChange={handleChange} {...otherProps} />
   </div>
 );
 
@@ -44,3 +44,17 @@ export const FormTextarea = ({ label, handleChange, ...otherProps }) => (
     )}
   </div>
 );
+
+export const FormFile = ({ label, handleChange, ...otherProps }) => (
+  <div className='group'>
+    <input className='form-input' type='file' onChange={handleChange}
+      {...otherProps} />
+    {label && (
+      <label
+        className={`${'shrink'} form-input-label`}
+      >
+        {label}
+      </label>
+    )}
+  </div>
+)

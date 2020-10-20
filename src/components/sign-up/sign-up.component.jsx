@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput, FormSelect, FormOption, FormTextarea } from '../form-input/form-input.component';
+import { FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
@@ -142,11 +142,11 @@ class SignUp extends React.Component {
               label='Describe tu empresa, su giro y actividades brevemente.'
               required
             />
-            <input
-              type='file'
-              name='orgName'
+            <FormFile
+              id='orgLogo'
               onChange={this.handleChange}
-              label='Logotipo'
+              label='Logotipo de la organización'
+              accept='image/jpeg'
               required
             />
 
