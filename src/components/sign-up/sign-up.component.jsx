@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput, FormSelect, FormTextarea } from '../form-input/form-input.component';
+import { FormInput, FormSelect, FormOption, FormTextarea } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
@@ -128,11 +128,11 @@ class SignUp extends React.Component {
               label='Tipo de empresa'
               required
             >
-              <option value="" selected disabled hidden>Tipo de empresa</option>
-              <option value='micro'>Micro</option>
-              <option value='pequeña'>Pequeña</option>
-              <option value='mediana'>Mediana</option>
-              <option value='grande'>Grande</option>
+              <FormOption value='' label='' selected disabled hidden />
+              <FormOption value='micro' label='Micro' />
+              <FormOption value='pequeña' label='Pequeña' />
+              <FormOption value='mediana' label='Mediana' />
+              <FormOption value='grande' label='Grande' />
             </FormSelect>
             <FormTextarea
               type='text'

@@ -17,13 +17,30 @@ export const FormInput = ({ handleChange, label, ...otherProps }) => (
 
 export const FormSelect = ({ handleChange, label, ...otherProps }) => (
   <div className='group'>
-    {label && otherProps.value.length ?
-      <label className={`${'shrink'} form-input-label`}>{label}</label>
-      : null}
+    {label && (
+      <label
+        className={`${otherProps.value.length && 'shrink'} form-input-label`}
+      >
+        {label}
+      </label>
+    )}
     <select className='form-input' onChange={handleChange} {...otherProps} />
   </div>
 );
 
+export const FormOption = ({ label, ...otherProps }) => (
+  <option className='form-input-label' {...otherProps}>{label}</option>
+);
+
 export const FormTextarea = ({ label, handleChange, ...otherProps }) => (
-  <div className='group'></div>
+  <div className='group'>
+    <textarea className='form-input' onChange={handleChange} {...otherProps} />
+    {label && (
+      <label
+        className={`${otherProps.value.length && 'shrink'} form-input-label`}
+      >
+        {label}
+      </label>
+    )}
+  </div>
 );
