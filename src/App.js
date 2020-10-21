@@ -34,7 +34,6 @@ class App extends React.Component {
           });
         });
       } else {
-        auth.signOut();
         setCurrentUser(null);
       }
     });

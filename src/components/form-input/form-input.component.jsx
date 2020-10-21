@@ -17,7 +17,7 @@ export const FormInput = ({ handleChange, label, ...otherProps }) => (
 
 export const FormSelect = ({ handleChange, label, ...otherProps }) => (
   <div className='group'>
-
+    <select className='form-input' onChange={handleChange} {...otherProps} />
     {label && (
       <label
         className={`${otherProps.value.length && 'shrink'} form-input-label`}

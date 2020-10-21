@@ -36,6 +36,7 @@ class SignUp extends React.Component {
       phoneNumber,
       orgName,
       orgType,
+      orgLogo,
       description,
     } = this.state;
 
@@ -49,7 +50,8 @@ class SignUp extends React.Component {
       return;
     }
 
-    signUp(email, password, displayName, phoneNumber)
+    signUp(email, password, displayName, phoneNumber, orgName, orgType,
+      description, orgLogo)
       .then(() => {
         this.setState({
           displayName: '',
@@ -59,6 +61,7 @@ class SignUp extends React.Component {
           phoneNumber: '',
           orgName: '',
           orgType: '',
+          orgLogo: '',
           description: '',
         });
         this.props.history.push({
@@ -79,6 +82,12 @@ class SignUp extends React.Component {
 
     this.setState({ [name]: value, errorMssg: '' });
   };
+
+  handleFile = (event) => {
+    const { name } = event.target;
+
+    this.setState({ [name]: event.target.files[0] });
+  }
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -116,46 +125,7 @@ class SignUp extends React.Component {
             </span>
           </div>
           <form className='sign-up-form' onSubmit={this.handleSubmit}>
-            <h3>Datos de la organización</h3>
-            <FormInput
-              type='text'
-              name='orgName'
-              value={orgName}
-              onChange={this.handleChange}
-              label='Nombre de la organización'
-              required
-            />
-            <FormSelect
-              type='text'
-              name='orgType'
-              value={orgType}
-              onChange={this.handleChange}
-              label='Tipo de empresa'
-              required
-            >
-              <FormOption value='' label='' selected disabled hidden />
-              <FormOption value='micro' label='Micro' />
-              <FormOption value='pequeña' label='Pequeña' />
-              <FormOption value='mediana' label='Mediana' />
-              <FormOption value='grande' label='Grande' />
-            </FormSelect>
-            <FormTextarea
-              type='text'
-              name='description'
-              value={description}
-              onChange={this.handleChange}
-              label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
-              required
-            />
-            <FormFile
-              id='orgLogo'
-              onChange={this.handleChange}
-              label='Logotipo de la organización'
-              accept='image/jpeg'
-              required
-            />
-
-            <h3>Datos del usuario</h3>
+            <h3>Datos del administrador</h3>
             <FormInput
               type='text'
               name='displayName'
@@ -196,6 +166,46 @@ class SignUp extends React.Component {
               label='Telefono de contacto'
               required
             />
+
+            <h3>Datos de la organización</h3>
+            <FormInput
+              type='text'
+              name='orgName'
+              value={orgName}
+              onChange={this.handleChange}
+              label='Nombre de la organización'
+              required
+            />
+            <FormSelect
+              type='text'
+              name='orgType'
+              value={orgType}
+              onChange={this.handleChange}
+              label='Tipo de organización'
+              required
+            >
+              <FormOption value='' label='' selected disabled hidden />
+              <FormOption value='micro' label='Micro' />
+              <FormOption value='pequeña' label='Pequeña' />
+              <FormOption value='mediana' label='Mediana' />
+              <FormOption value='grande' label='Grande' />
+            </FormSelect>
+            <FormTextarea
+              type='text'
+              name='description'
+              value={description}
+              onChange={this.handleChange}
+              label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
+              required
+            />
+            <FormFile
+              name='orgLogo'
+              onChange={this.handleFile}
+              label='Logotipo de la organización'
+              accept='image/jpeg'
+              required
+            />
+
             <Button variant='contained' color='primary' type='submit'>
               Crear cuenta
             </Button>
