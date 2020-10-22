@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import FormInput from '../form-input/form-input.component';
+import { FormInput } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import Button from '@material-ui/core/Button';
 

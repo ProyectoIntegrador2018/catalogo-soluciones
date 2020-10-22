@@ -1,8 +1,7 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import FormInput from '../form-input/form-input.component';
+import { FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
@@ -20,6 +19,9 @@ class SignUp extends React.Component {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
+      orgName: '',
+      orgType: '',
+      description: '',
     };
   }
 
@@ -32,6 +34,10 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
+      orgName,
+      orgType,
+      orgLogo,
+      description,
     } = this.state;
 
     if (password !== confirmPassword) {
@@ -44,7 +50,8 @@ class SignUp extends React.Component {
       return;
     }
 
-    signUp(email, password, displayName, phoneNumber)
+    signUp(email, password, displayName, phoneNumber, orgName, orgType,
+      description, orgLogo)
       .then(() => {
         this.setState({
           displayName: '',
@@ -52,7 +59,10 @@ class SignUp extends React.Component {
           password: '',
           confirmPassword: '',
           phoneNumber: '',
-          errorMssg: 'Se ha enviado un correo para confirmar la cuenta.',
+          orgName: '',
+          orgType: '',
+          orgLogo: '',
+          description: '',
         });
         this.props.history.push({
           pathname: 'signin',
@@ -72,6 +82,12 @@ class SignUp extends React.Component {
 
     this.setState({ [name]: value, errorMssg: '' });
   };
+
+  handleFile = (event) => {
+    const { name } = event.target;
+
+    this.setState({ [name]: event.target.files[0] });
+  }
 
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
@@ -93,19 +109,29 @@ class SignUp extends React.Component {
       confirmPassword,
       phoneNumber,
       errorMssg,
+      orgName,
+      orgType,
+      description,
     } = this.state;
     return (
       <div className='content-sign-up'>
         <div className='sign-up'>
           <h2 className='title'>Crear nueva cuenta</h2>
-          <span>Registrate con tu correo y contraseña</span>
+          <span>Registrate tu organización con tu correo y contraseña</span>
+          <div className='sign-in'>
+            ¿Ya tienes cuenta?
+            <span className='sign-in-button' onClick={this.goToSignIn}>
+              Inicia sesión
+            </span>
+          </div>
           <form className='sign-up-form' onSubmit={this.handleSubmit}>
+            <h3>Datos del administrador</h3>
             <FormInput
               type='text'
               name='displayName'
               value={displayName}
               onChange={this.handleChange}
-              label='Nombre comercial de la empresa'
+              label='Nombre del administrador de la cuenta'
               required
             />
             <FormInput
@@ -140,21 +166,55 @@ class SignUp extends React.Component {
               label='Telefono de contacto'
               required
             />
-            <Notification
-              severity='error'
-              mssg={errorMssg}
-              onClose={this.handleClose}
+
+            <h3>Datos de la organización</h3>
+            <FormInput
+              type='text'
+              name='orgName'
+              value={orgName}
+              onChange={this.handleChange}
+              label='Nombre de la organización'
+              required
             />
+            <FormSelect
+              type='text'
+              name='orgType'
+              value={orgType}
+              onChange={this.handleChange}
+              label='Tipo de organización'
+              required
+            >
+              <FormOption value='' label='' selected disabled hidden />
+              <FormOption value='micro' label='Micro' />
+              <FormOption value='pequeña' label='Pequeña' />
+              <FormOption value='mediana' label='Mediana' />
+              <FormOption value='grande' label='Grande' />
+            </FormSelect>
+            <FormTextarea
+              type='text'
+              name='description'
+              value={description}
+              onChange={this.handleChange}
+              label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
+              required
+            />
+            <FormFile
+              name='orgLogo'
+              onChange={this.handleFile}
+              label='Logotipo de la organización'
+              accept='image/jpeg'
+              required
+            />
+
             <Button variant='contained' color='primary' type='submit'>
               Crear cuenta
             </Button>
           </form>
-          <div className='sign-in'>
-            Ya tienes cuenta?
-            <span className='sign-in-button' onClick={this.goToSignIn}>
-              Inicia sesión
-            </span>
-          </div>
+          <Notification
+            severity='error'
+            mssg={errorMssg}
+            onClose={this.handleClose}
+          />
         </div>
       </div>
     );

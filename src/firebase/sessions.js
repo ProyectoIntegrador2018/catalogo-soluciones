@@ -1,4 +1,4 @@
-import { auth, firestore } from './firebase';
+import { auth, firestore, storage } from './firebase';
 
 export const getUserRef = async (userAuth) => {
   if (!userAuth) return;
@@ -32,14 +32,25 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const signUp = async (email, password, displayName, phoneNumber) => {
+export const signUp = async (email, password, displayName, phoneNumber, orgName,
+  orgType, description, orgLogo) => {
   return new Promise((resolve, reject) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
         user.sendEmailVerification();
-        createUserProfileDocument(user, { displayName, phoneNumber });
-        resolve();
+
+        storage.child(user.uid + '/logo.jpeg').put(orgLogo)
+          .then((snapshot) => {
+            snapshot.ref.getDownloadURL().then((url) => {
+              createUserProfileDocument(user, {
+                displayName, phoneNumber, orgName,
+                orgType, description, logo: url
+              });
+              auth.signOut();
+              resolve();
+            });
+          });
       })
       .catch((error) => {
         console.log(error);
@@ -62,7 +73,7 @@ export const signIn = async (email, password) => {
         } else {
           auth.currentUser.sendEmailVerification();
           reject(
-            'Se debe verificar la cuenta desde el correo electrónico de verificación. Hemos enviado el correo nuevamente',
+            'Se debe verificar la cuenta desde el correo electrónico de verificación. Hemos enviado el correo nuevamente.',
           );
         }
       })
