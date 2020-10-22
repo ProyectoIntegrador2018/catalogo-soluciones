@@ -1,11 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput } from '../form-input/form-input.component';
+import { FormInput, FormTextarea } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
+import { firestore as db } from '../../firebase/firebase';
+
 import './solution-form.styles.scss';
+import { firestore } from 'firebase';
 
 class SolutionForm extends React.Component {
   constructor() {
@@ -15,8 +19,6 @@ class SolutionForm extends React.Component {
       solutionName: '',
       descriptionPitch: '',
       descriptionSuccess: '',
-      logo: '',
-      flyer: '',
       price: '',
       errorMssg: '',
     };
@@ -43,6 +45,20 @@ class SolutionForm extends React.Component {
       });
       return;
     }
+
+    db.collection('users')
+      .doc(this.props.currentUser.id)
+      .update({
+        solutions: firestore.FieldValue.arrayUnion({
+          solutionName,
+          descriptionPitch,
+          descriptionSuccess,
+          price,
+        }),
+      });
+
+    // Después cambiamos esto a /soluciones o algo distinto
+    this.props.history.push('/');
   };
 
   handleChange = (event) => {
@@ -80,20 +96,22 @@ class SolutionForm extends React.Component {
               label='Nombre de la solución'
               required
             />
-            <FormInput
+            <FormTextarea
               type='text'
               name='descriptionPitch'
               value={descriptionPitch}
               onChange={this.handleChange}
               label='Descripción de la solución (max. 500 caracteres)'
+              rows={10}
               required
             />
-            <FormInput
+            <FormTextarea
               type='text'
               name='descriptionSuccess'
               value={descriptionSuccess}
               onChange={this.handleChange}
               label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
+              rows={10}
               required
             />
             <FormInput
@@ -119,4 +137,8 @@ class SolutionForm extends React.Component {
   }
 }
 
-export default withRouter(SolutionForm);
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+export default connect(mapStateToProps)(withRouter(SolutionForm));
