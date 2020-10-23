@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { Container, Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom';
 import PhotoCarousel from '../../components/carousel/carousel.component';
@@ -36,5 +35,3 @@ const HomePage = () => {
 };
 
 export default HomePage;
-
-
