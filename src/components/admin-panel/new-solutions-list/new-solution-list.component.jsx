@@ -7,7 +7,7 @@ import './new-solution-list.styles.scss';
 const NewSolutionList = ({ newSolutions }) => {
   return (
     <div className='new-solutions-list'>
-      <h1>Nuevas solicitudes de soluciones</h1>
+      <h1>Solicitudes de nuevas soluciones</h1>
       <div className='new-solutions-header'>
         <div className='header-block'>
           <span>Organizacion</span>

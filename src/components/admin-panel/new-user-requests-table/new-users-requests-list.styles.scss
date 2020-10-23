@@ -1,0 +1,26 @@
+.new-users-list {
+  width: 75%;
+  min-height: 20vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto 0;
+
+  .new-users-header {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+
+    .header-block {
+      text-transform: capitalize;
+      width: 28%;
+    }
+
+    .header-action-button {
+      text-transform: capitalize;
+      width: 8%;
+    }
+  }
+}

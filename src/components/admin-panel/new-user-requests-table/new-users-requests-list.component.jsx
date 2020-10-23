@@ -5,15 +5,29 @@ import NewUserRequestItem from '../new-user-request-item/new-user-request-item.c
 import './new-users-requests-list.styles.scss';
 
 const NewUsersRequestsList = ({ userRequests }) => {
-  console.log(userRequests);
   return (
-    <div>
-      <h1>Nuevas solicitudes de usuarios</h1>
-      <div>
-        {userRequests.map((value, index) => {
-          return <NewUserRequestItem key={index} userRequest={value} />;
-        })}
+    <div className='new-users-list'>
+      <h1>Solicitudes de nuevos usuarios</h1>
+      <div className='new-users-header'>
+        <div className='header-block'>
+          <span>Nombre</span>
+        </div>
+        <div className='header-block'>
+          <span>Tipo</span>
+        </div>
+        <div className='header-block'>
+          <span>Punto de contacto</span>
+        </div>
+        <div className='header-action-button'>
+          <span>Aceptar</span>
+        </div>
+        <div className='header-action-button'>
+          <span>Rechazar</span>
+        </div>
       </div>
+      {userRequests.map((value, index) => {
+        return <NewUserRequestItem key={index} userRequest={value} />;
+      })}
     </div>
   );
 };
