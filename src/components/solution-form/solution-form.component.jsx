@@ -9,7 +9,6 @@ import { Button } from '@material-ui/core';
 import { firestore as db } from '../../firebase/firebase';
 
 import './solution-form.styles.scss';
-import { firestore } from 'firebase';
 
 class SolutionForm extends React.Component {
   constructor() {
@@ -46,18 +45,15 @@ class SolutionForm extends React.Component {
       return;
     }
 
-    db.collection('users')
-      .doc(this.props.currentUser.id)
-      .update({
-        solutions: firestore.FieldValue.arrayUnion({
-          solutionName,
-          descriptionPitch,
-          descriptionSuccess,
-          price,
-        }),
-      });
+    db.collection('solutions').add({
+      organizationID: this.props.currentUser.id,
+      solutionName,
+      descriptionPitch,
+      descriptionSuccess,
+      price,
+    });
 
-    // Después cambiamos esto a /soluciones o algo distinto
+    // TODO: Después cambiamos esto a /soluciones o algo distinto
     this.props.history.push('/');
   };
 
