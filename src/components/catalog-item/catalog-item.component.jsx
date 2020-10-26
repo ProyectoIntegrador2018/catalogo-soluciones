@@ -6,8 +6,16 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './catalog-item.styles.scss';
 
 const CatalogItem = ({ data }) => {
-  const { imageUrl, organization, solutionName, price } = data;
+  const {
+    imageUrl,
+    organization,
+    solutionName,
+    price,
+    descriptionPitch,
+    descriptionSuccess,
+  } = data;
 
+  console.log(data);
   return (
     <div className='catalog-item'>
       <Accordion className='accordion'>
@@ -23,7 +31,10 @@ const CatalogItem = ({ data }) => {
           <span className='solution-name'>{solutionName}</span>
           <span className='price'>${price}</span>
         </AccordionSummary>
-        <AccordionDetails>More details about this solution</AccordionDetails>
+        <AccordionDetails>
+          <div>Description pitch: {descriptionPitch}</div>
+          <div>Description sucess: {descriptionSuccess}</div>
+        </AccordionDetails>
       </Accordion>
     </div>
   );
