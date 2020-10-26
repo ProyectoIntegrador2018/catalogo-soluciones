@@ -76,13 +76,13 @@ const Header = ({ currentUser }) => {
               Cerrar sesion
             </Button>
           ) : (
-              <Button
-                className={classes.appBarButton}
-                onClick={() => goTo('signin')}
-              >
-                Iniciar Sesion
-              </Button>
-            )}
+            <Button
+              className={classes.appBarButton}
+              onClick={() => goTo('signin')}
+            >
+              Iniciar Sesion
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </div>
@@ -90,7 +90,7 @@ const Header = ({ currentUser }) => {
 };
 
 const mapStateToProps = (state) => ({
-  currentUser: state.user.currentUser,
+  currentUser: state.users.currentUser,
 });
 
 export default connect(mapStateToProps)(Header);

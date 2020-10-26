@@ -14,7 +14,7 @@ import Administrador from './pages/administrador/administrador.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
-import { setCurrentUser } from './redux/user/user.actions';
+import { setCurrentUser } from './redux/users/users.actions';
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 
 class App extends React.Component {
@@ -92,8 +92,8 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = ({ users }) => ({
+  currentUser: users.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
