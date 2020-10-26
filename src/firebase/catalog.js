@@ -5,11 +5,20 @@ export const getCatalogData = async (attribute) => {
 
   let data = [];
 
+  // This element is used to add id as attribute to organizations (users).
+  let element;
+
   await ref
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
-        data.push(doc.data());
+        if (attribute === 'users') {
+          element = doc.data();
+          element.id = doc.id;
+          data.push(element);
+        } else {
+          data.push(doc.data());
+        }
       });
     })
     .catch((err) => {

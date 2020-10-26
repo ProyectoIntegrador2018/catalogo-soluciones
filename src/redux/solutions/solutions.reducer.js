@@ -1,4 +1,5 @@
 import { SolutionsActionTypes } from './solutions.types';
+import { matchOrganization } from './solutions.utils';
 
 const INITIAL_STATE = {
   allSolutions: null,
@@ -10,6 +11,11 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         allSolutions: action.payload,
+      };
+    case SolutionsActionTypes.PAIR_ORGANIZATION_WITH_SOLUTION:
+      return {
+        ...state,
+        allSolutions: matchOrganization(state.allSolutions, action.payload),
       };
     default:
       return state;
