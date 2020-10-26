@@ -17,9 +17,11 @@ const CatalogList = ({ data }) => (
         <span>Precio</span>
       </div>
     </div>
-    {data.map((value, index) => {
-      return <CatalogItem key={index} data={value} />;
-    })}
+    {data
+      ? data.map((value, index) => {
+          return <CatalogItem key={index} data={value} />;
+        })
+      : null}
   </div>
 );
 

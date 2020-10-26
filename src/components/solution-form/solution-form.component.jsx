@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
 import { FormInput, FormTextarea } from '../form-input/form-input.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
 import { firestore as db } from '../../firebase/firebase';
 
@@ -133,8 +135,8 @@ class SolutionForm extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
 });
 
 export default connect(mapStateToProps)(withRouter(SolutionForm));
