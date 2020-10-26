@@ -14,14 +14,26 @@ import Administrador from './pages/administrador/administrador.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
+import { getCatalogData } from './firebase/catalog';
 import { setCurrentUser } from './redux/user/user.actions';
+import { setSolutions } from './redux/solutions/solutions.actions';
+import { setOrganizations } from './redux/organizations/organizations.actions';
+
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
 
   componentDidMount() {
-    const { setCurrentUser } = this.props;
+    const { setCurrentUser, setSolutions, setOrganizations } = this.props;
+
+    getCatalogData('solutions').then((solutions) => {
+      setSolutions(solutions);
+    });
+
+    getCatalogData('users').then((organizations) => {
+      setOrganizations(organizations);
+    });
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth && userAuth.emailVerified) {
@@ -92,12 +104,15 @@ class App extends React.Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
+const mapStateToProps = ({ user, organizations, solutions }) => ({
   currentUser: user.currentUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+  setOrganizations: (organizations) =>
+    dispatch(setOrganizations(organizations)),
+  setSolutions: (solutions) => dispatch(setSolutions(solutions)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
