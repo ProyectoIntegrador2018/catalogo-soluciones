@@ -1,0 +1,31 @@
+.solutions-list {
+  width: 75%;
+  min-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto 0;
+
+  .solutions-header {
+    width: 100%;
+    padding: 10px 0;
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid darkgrey;
+
+    .header-block {
+      text-transform: capitalize;
+      width: 32%;
+    }
+
+    .header-block-small {
+      text-transform: capitalize;
+      width: 14%;
+    }
+
+    .header-action-button {
+      text-transform: capitalize;
+      width: 14%;
+    }
+  }
+}

@@ -12,6 +12,7 @@ import SignUpPage from './pages/sign-up/sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 import Administrador from './pages/administrador/administrador.component';
+import UserPanel from './pages/user-panel/user-panel.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -26,7 +27,7 @@ import { setOrganizations } from './redux/organizations/organizations.actions';
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
 
-import './index'
+import './index';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -102,8 +103,8 @@ class App extends React.Component {
               this.props.currentUser && this.props.currentUser.adminAccount ? (
                 <Administrador />
               ) : (
-                  <Redirect to='/' />
-                )
+                <Redirect to='/' />
+              )
             }
           />
           <Route
@@ -113,8 +114,19 @@ class App extends React.Component {
               this.props.currentUser && !this.props.currentUser.adminAccount ? (
                 <CreateSolutionPage />
               ) : (
-                  <Redirect to='/' />
-                )
+                <Redirect to='/' />
+              )
+            }
+          />
+          <Route
+            exact
+            path='/panel-control'
+            render={() =>
+              this.props.currentUser && !this.props.currentUser.adminAccount ? (
+                <UserPanel />
+              ) : (
+                <Redirect to='/' />
+              )
             }
           />
         </Switch>
