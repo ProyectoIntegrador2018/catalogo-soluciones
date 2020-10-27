@@ -9,3 +9,8 @@ export const pairOrganizationWithSolution = (organization) => ({
   type: SolutionsActionTypes.PAIR_ORGANIZATION_WITH_SOLUTION,
   payload: organization,
 });
+
+export const removeSolution = (solutionId) => ({
+  type: SolutionsActionTypes.REMOVE_SOLUTION,
+  payload: solutionId,
+});

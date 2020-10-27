@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -6,9 +7,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-user-request-item.styles.scss';
+import { removeOrganization } from '../../../redux/organizations/organizations.actions';
 import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
-const NewUserRequestItem = ({ userRequest }) => {
+const NewUserRequestItem = ({ userRequest, removeOrganization }) => {
   const {
     id,
     logo,
@@ -22,10 +24,12 @@ const NewUserRequestItem = ({ userRequest }) => {
 
   const approveOrganization = () => {
     approveRequest(id, 'users');
+    removeOrganization(id);
   };
 
   const rejectOrganization = () => {
     rejectRequest(id, 'users');
+    removeOrganization(id);
   };
 
   return (
@@ -66,4 +70,9 @@ const NewUserRequestItem = ({ userRequest }) => {
   );
 };
 
-export default NewUserRequestItem;
+const mapDispatchToProps = (dispatch) => ({
+  removeOrganization: (organization) =>
+    dispatch(removeOrganization(organization)),
+});
+
+export default connect(null, mapDispatchToProps)(NewUserRequestItem);

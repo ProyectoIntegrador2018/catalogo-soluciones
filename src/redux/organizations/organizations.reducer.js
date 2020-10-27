@@ -11,6 +11,13 @@ const organizationsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         allOrganizations: action.payload,
       };
+    case OrganizationsActionTypes.REMOVE_ORGANIZATION:
+      return {
+        ...state,
+        allOrganizations: state.allOrganizations.filter(
+          (organization) => organization.id !== action.payload,
+        ),
+      };
     default:
       return state;
   }

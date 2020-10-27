@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -6,9 +7,10 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-solution-item.styles.scss';
+import { removeSolution } from '../../../redux/solutions/solutions.actions';
 import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
-const NewSolutionItem = ({ newSolution }) => {
+const NewSolutionItem = ({ newSolution, removeSolution }) => {
   const {
     id,
     imageUrl,
@@ -21,10 +23,12 @@ const NewSolutionItem = ({ newSolution }) => {
 
   const approveSolution = () => {
     approveRequest(id, 'solutions');
+    removeSolution(id);
   };
 
   const rejectSolution = () => {
     rejectRequest(id, 'solutions');
+    removeSolution(id);
   };
 
   return (
@@ -63,4 +67,8 @@ const NewSolutionItem = ({ newSolution }) => {
   );
 };
 
-export default NewSolutionItem;
+const mapDispatchToProps = (dispatch) => ({
+  removeSolution: (solution) => dispatch(removeSolution(solution)),
+});
+
+export default connect(null, mapDispatchToProps)(NewSolutionItem);
