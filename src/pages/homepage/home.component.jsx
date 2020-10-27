@@ -35,27 +35,46 @@ class HomePage extends React.Component {
     })
   };
 
+  goToSignIn = () => {
+    this.props.history.push('/signin');
+  }
+
+  goToSignUp = () => {
+    this.props.history.push('/signup');
+  }
+
   render() {
     return (
       <div className='homepage'>
-        <div className='background-container'>
+        <div className='banner-container'>
           <img className='background' src='./imgs/TI.jpg' alt='background' />
-          <div class="text-block">
-            <h1>Catálogo de Soluciones Digitales</h1>
-            <h2>CSOFTMTY</h2>
-            <p>
-              Consulta los servicios ofrecidos por las empresas de tecnología
-              del estado de Nuevo León.
+          <div className='banner-elements'>
+            <div class="text-block">
+              <h1>Catálogo de Soluciones Digitales</h1>
+              <h2>CSOFTMTY</h2>
+              <p>
+                Consulta los servicios ofrecidos por las empresas de tecnología
+                del estado de Nuevo León.
             </p>
-            <Button variant='contained' color='primary' onClick={this.goToCatalogo}>
-              Accede al catálogo
+              <Button variant='contained' color='primary' onClick={this.goToCatalogo}>
+                Accede al catálogo
             </Button>
+            </div>
+
+            <Container className='photoCarrousel'>
+              <PhotoCarousel />
+            </Container>
           </div>
-          <br></br>
-          <Container className='photoCarrousel'>
-            <PhotoCarousel />
-          </Container>
         </div>
+
+        <Container className='home-container'>
+          <h2>¿Quiéres listar tus servicios en nuestro catálogo?</h2>
+          <span className='link' onClick={this.goToSignUp}>Crea una cuenta</span>
+          &nbsp; o &nbsp;
+          <span className='link' onClick={this.goToSignIn}>Inicia sesión</span>
+          <p>Después de crear tu cuenta nos pondremos en contacto contigo.</p>
+
+        </Container>
 
         <Notification
           severity={this.state.severity}

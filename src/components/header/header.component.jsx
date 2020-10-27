@@ -84,14 +84,7 @@ const Header = ({ currentUser }) => {
             >
               Cerrar sesion
             </Button>
-          ) : (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('signin')}
-            >
-              Iniciar Sesion
-            </Button>
-          )}
+          ) : null}
         </Toolbar>
       </AppBar>
     </div>
