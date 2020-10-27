@@ -4,11 +4,12 @@ import { withRouter } from 'react-router-dom';
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
-import { FormInput, FormTextarea } from '../form-input/form-input.component';
+import { FormInput, FormTextarea } from '../form/form.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import './solution-inquire.styles.scss';
+import '../form/form.styles.scss';
 
 class SolutionInquire extends React.Component {
   constructor(props) {
@@ -98,8 +99,8 @@ class SolutionInquire extends React.Component {
     } = this.state;
 
     return shouldRender && (
-      <div className='content-solution-inquire'>
-        <div className='solution-inquire'>
+      <div className='form-container box'>
+        <div className='form-content'>
           <h2 className='title'>Preguntar sobre un servicio</h2>
           <form onSubmit={this.handleSubmit}>
             <h3>Organización a contactar</h3>

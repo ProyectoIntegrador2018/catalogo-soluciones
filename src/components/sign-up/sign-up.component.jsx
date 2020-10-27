@@ -1,13 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form-input/form-input.component';
+import { FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form/form.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
 
 import './sign-up.styles.scss';
+import '../form/form.styles.scss';
 
 class SignUp extends React.Component {
   constructor() {
@@ -114,17 +115,17 @@ class SignUp extends React.Component {
       description,
     } = this.state;
     return (
-      <div className='content-sign-up'>
-        <div className='sign-up'>
+      <div className='form-container'>
+        <div className='form-content'>
           <h2 className='title'>Crear nueva cuenta</h2>
-          <span>Registrate tu organización con tu correo y contraseña</span>
+          <span>Registrate tu organización</span>
           <div className='sign-in'>
             ¿Ya tienes cuenta?
             <span className='sign-in-button' onClick={this.goToSignIn}>
               Inicia sesión
             </span>
           </div>
-          <form className='sign-up-form' onSubmit={this.handleSubmit}>
+          <form onSubmit={this.handleSubmit}>
             <h3>Datos del administrador</h3>
             <FormInput
               type='text'

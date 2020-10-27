@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import { FormInput, FormTextarea } from '../form-input/form-input.component';
+import { FormInput, FormTextarea } from '../form/form.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -11,6 +11,7 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { insertNewSolution } from '../../firebase/catalog';
 
 import './solution-form.styles.scss';
+import '../form/form.styles.scss';
 
 class SolutionForm extends React.Component {
   constructor() {
@@ -81,8 +82,8 @@ class SolutionForm extends React.Component {
       errorMssg,
     } = this.state;
     return (
-      <div className='content-solution-form'>
-        <div className='solution-form'>
+      <div className='form-container'>
+        <div className='form-content'>
           <h2 className='title'>Agrega una nueva solución</h2>
           <form onSubmit={this.handleSubmit}>
             <FormInput
