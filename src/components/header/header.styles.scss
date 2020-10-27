@@ -1,3 +1,15 @@
 .logo:hover {
   cursor: pointer;
 }
+
+.toolbar {
+  @media only screen and (max-device-width: 1024px) {
+    display: none;
+  }
+}
+
+.drawer {
+  @media only screen and (min-device-width: 1024px) {
+    display: none;
+  }
+}

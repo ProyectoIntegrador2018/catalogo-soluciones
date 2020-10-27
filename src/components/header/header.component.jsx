@@ -9,6 +9,7 @@ import { useHistory } from 'react-router-dom';
 import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
+import { ButtonGroup, Drawer } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -33,10 +34,62 @@ const useStyles = makeStyles({
   },
 });
 
+const HeaderContent = ({ currentUser, goTo }) => {
+  const classes = useStyles();
+
+  return (
+    <div>
+      <Button
+        className={classes.appBarButton}
+        onClick={() => goTo('/')}
+      >
+        Inicio
+          </Button>
+      <Button
+        className={classes.appBarButton}
+        onClick={() => goTo('catalogo')}
+      >
+        Soluciones y Servicios
+          </Button>
+      {currentUser && currentUser.adminAccount && (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => goTo('admin')}
+        >
+          Administrador
+        </Button>
+      )}
+      {currentUser && !currentUser.adminAccount && (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => goTo('crear-solucion')}
+        >
+          Nueva solución
+        </Button>
+      )}
+      {currentUser ? (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => {
+            auth.signOut();
+            goTo('home');
+          }}
+        >
+          Cerrar sesion
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
 const Header = ({ currentUser }) => {
   const classes = useStyles();
 
   let history = useHistory();
+
+  const [state, setState] = React.useState({
+    drawerOpened: false,
+  });
 
   function goTo(page) {
     switch (page) {
@@ -49,6 +102,10 @@ const Header = ({ currentUser }) => {
     }
   }
 
+  const toggleDrawer = (anchor, open) => (event) => {
+    setState({ [anchor]: open });
+  };
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position='static'>
@@ -59,47 +116,20 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
-          <Button
-            className={classes.appBarButton}
-            onClick={() => goTo('/')}
-          >
-            Inicio
-          </Button>
-          <Button
-            className={classes.appBarButton}
-            onClick={() => goTo('catalogo')}
-          >
-            Soluciones y Servicios
-          </Button>
-          {currentUser && currentUser.adminAccount && (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('admin')}
-            >
-              Administrador
-            </Button>
-          )}
-          {currentUser && !currentUser.adminAccount && (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('crear-solucion')}
-            >
-              Nueva solución
-            </Button>
-          )}
-          {currentUser ? (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => {
-                auth.signOut();
-                goTo('home');
-              }}
-            >
-              Cerrar sesion
-            </Button>
-          ) : null}
+          <div className='toolbar'>
+            <HeaderContent currentUser={currentUser} goTo={goTo} />
+          </div>
+          <div className='drawer'>
+            <Button onClick={toggleDrawer('Menú', true)}>Menú</Button>
+            <Drawer anchor='Menú' open={state['Menú']}
+              onClose={toggleDrawer('Menú', false)}>
+              <HeaderContent currentUser={currentUser} goTo={goTo} />
+            </Drawer>
+          </div>
         </Toolbar>
+
       </AppBar>
+
     </div>
   );
 };

@@ -36,24 +36,8 @@ class HomePage extends React.Component {
     });
   };
 
-  goToCatalogo = () => {
-    this.props.history.push('/catalogo');
-  };
-
-  goTo = (event) => {
-    switch (event.target.id) {
-      case 'signup':
-        this.props.history.push('signup');
-        break;
-      case 'signin':
-        this.props.history.push('signin');
-        break;
-      case 'crear-solucion':
-        this.props.history.push('crear-solucion');
-        break;
-      default:
-        break;
-    }
+  goTo = (page) => {
+    this.props.history.push(page);
   };
 
   render() {
@@ -70,10 +54,9 @@ class HomePage extends React.Component {
                 tecnología del estado de Nuevo León.
               </p>
               <Button
-                id='catalogo'
                 variant='contained'
                 color='primary'
-                onClick={this.goToCatalogo}
+                onClick={() => this.goTo('catalogo')}
               >
                 Acceder al catálogo
               </Button>
@@ -90,28 +73,21 @@ class HomePage extends React.Component {
             ¿Quiéres listar tus servicios en nuestro catálogo?
           </h2>
           {this.props.currentUser ? (
-            <div>
-              <span className='link' id='crear-solucion' onClick={this.goTo}>
-                Agrega una solución
-              </span>
-              &nbsp; o &nbsp;
-              <span className='link' id='mis-soluciones' onClick={this.goTo}>
-                Administra tus soluciones
-              </span>
-            </div>
+            <p>
+              Accede al menu de superior de opciones.
+            </p>
           ) : (
               <div>
-                <span className='link' id='signup' onClick={this.goTo}>
+                <span className='link' onClick={() => this.goTo('signup')}>
                   Crea una cuenta
                 </span>
                 &nbsp; o &nbsp;
-                <span className='link' id='signin' onClick={this.goTo}>
+                <span className='link' onClick={() => this.goTo('signin')}>
                   Inicia sesión
                 </span>
+                <p>No es necesaria una cuenta para visualizar el catálogo.</p>
               </div>
             )}
-
-          <p>No es necesaria una cuenta para visualizar el catálogo.</p>
         </Container>
 
         <Notification
