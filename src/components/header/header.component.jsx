@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   appBar: {
-    backgroundColor: '#AAAAAA',
+    padding: 10,
+    backgroundColor: '#D3D3D3',
     boxShadow: 'none',
   },
   logo: {
@@ -102,3 +103,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Header);
+

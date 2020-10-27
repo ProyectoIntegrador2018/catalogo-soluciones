@@ -4,21 +4,36 @@ body {
 
 .homepage {
   width: 100%;
-  padding: 40px 0 40px 0;
   background-color: white;
 }
 
-.side-by-side {
-  display: flex;
-  flex-direction: column;
+.background-container {
+  background-color: black;
+  margin-bottom: 50px;
+  position: relative;
+}
+
+.background {
+  width: 100%;
+  height: 100%;
+  opacity: 0.2;
+  position: absolute;
+  object-fit: cover;
+}
+
+.text-block {
+  color: white;
+  padding: 20px;
+}
+
+.photoCarrousel {
+  text-align: right;
 }
 
 .landing {
-  text-align: center;
   padding-top: 50px;
 }
 
 .catalogo-button {
   margin-top: 40px;
-  text-align: center;
 }

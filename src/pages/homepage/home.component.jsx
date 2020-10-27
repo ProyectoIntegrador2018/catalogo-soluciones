@@ -38,22 +38,25 @@ class HomePage extends React.Component {
   render() {
     return (
       <div className='homepage'>
-        <div className='side-by-side'>
-          <Container className='photoCarrousel' maxWidth='sm'>
-            <PhotoCarousel />
-          </Container>
-          <Container className='landing' maxWidth='sm'>
+        <div className='background-container'>
+          <img className='background' src='./imgs/TI.jpg' alt='background' />
+          <div class="text-block">
             <h1>Catálogo de Soluciones Digitales</h1>
-            <h3>
-              Consulta los servicios ofrecidos por las empresas de tecnología del
-              estado de Nuevo León.
-          </h3>
-            <br></br>
+            <h2>CSOFTMTY</h2>
+            <p>
+              Consulta los servicios ofrecidos por las empresas de tecnología
+              del estado de Nuevo León.
+            </p>
             <Button variant='contained' color='primary' onClick={this.goToCatalogo}>
               Accede al catálogo
-          </Button>
+            </Button>
+          </div>
+          <br></br>
+          <Container className='photoCarrousel'>
+            <PhotoCarousel />
           </Container>
         </div>
+
         <Notification
           severity={this.state.severity}
           mssg={this.state.notificationMssg}
