@@ -8,12 +8,11 @@ import { Button } from '@material-ui/core';
 
 import './solution-item.styles.scss';
 import { removeSolution } from '../../../redux/solutions/solutions.actions';
+import { deleteUserSolution } from '../../../firebase/user-panel';
 
-const SolutionItem = ({ solution }) => {
+const SolutionItem = ({ solution, removeSolution }) => {
   const {
     id,
-    imageUrl,
-    organization,
     solutionName,
     price,
     descriptionPitch,
@@ -21,7 +20,12 @@ const SolutionItem = ({ solution }) => {
   } = solution;
 
   const removeItem = () => {
-    console.log(id);
+    deleteUserSolution(id);
+    removeSolution(id);
+  };
+
+  const modifyItem = () => {
+    alert('implement this!');
   };
 
   return (
@@ -32,10 +36,6 @@ const SolutionItem = ({ solution }) => {
           aria-controls='panel1a-content'
           id='panel1a-header'
         >
-          <div className='image-container'>
-            <img src={imageUrl} alt='logo' />
-          </div>
-          <span className='organization'>{organization}</span>
           <span className='solution-name'>{solutionName}</span>
           <span className='price'>${price}</span>
         </AccordionSummary>
@@ -49,7 +49,10 @@ const SolutionItem = ({ solution }) => {
         </AccordionDetails>
       </Accordion>
       <span className='action-buttons'>
-        <Button className='accept' onClick={removeItem}>
+        <Button className='modify' onClick={modifyItem}>
+          Editar
+        </Button>
+        <Button className='delete' onClick={removeItem}>
           Borrar
         </Button>
       </span>

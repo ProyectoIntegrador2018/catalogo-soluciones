@@ -12,22 +12,8 @@
     min-height: 80px;
     margin-right: 2%;
 
-    .image-container {
-      width: 5%;
-      padding-right: 15px;
-
-      img {
-        width: 100%;
-        height: 100%;
-      }
-    }
-
-    .organization {
-      width: 35%;
-    }
-
     .solution-name {
-      width: 40%;
+      width: 80%;
     }
     .price {
       width: 20%;
@@ -36,12 +22,12 @@
 
   .action-buttons {
     width: 14%;
-    .accept {
+    .modify {
       width: 45%;
-      background-color: rgb(103, 172, 91);
+      background-color: rgb(104, 184, 213);
       margin-right: 10%;
     }
-    .reject {
+    .delete {
       width: 45%;
       background-color: rgb(226, 82, 65);
     }
