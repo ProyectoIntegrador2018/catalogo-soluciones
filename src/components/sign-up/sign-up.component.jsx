@@ -121,7 +121,7 @@ class SignUp extends React.Component {
           <span>Registrate tu organización</span>
           <div className='sign-in'>
             ¿Ya tienes cuenta?
-            <span className='sign-in-button' onClick={this.goToSignIn}>
+            <span className='sign-in-button link' onClick={this.goToSignIn}>
               Inicia sesión
             </span>
           </div>

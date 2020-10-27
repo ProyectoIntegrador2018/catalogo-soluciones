@@ -93,7 +93,7 @@ class SignIn extends React.Component {
             </form>
             <div className='sign-up'>
               Aún no tienes cuenta?
-            <span className='sign-up-button' onClick={this.goToSignUp}>
+            <span className='sign-up-button link' onClick={this.goToSignUp}>
                 Crear cuenta
             </span>
             </div>

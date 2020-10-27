@@ -12,3 +12,16 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.orange {
+  color: #E0663B;
+}
+
+.link {
+  color: blue;
+}
+
+.link:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

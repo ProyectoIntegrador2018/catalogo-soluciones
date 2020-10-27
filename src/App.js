@@ -28,6 +28,8 @@ import { setOrganizations } from './redux/organizations/organizations.actions';
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
 
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+
 import './index'
 
 class App extends React.Component {
@@ -71,13 +73,24 @@ class App extends React.Component {
     });
   }
 
+  theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#E0663B'
+      },
+      secondary: {
+        main: '#5D5B5B'
+      }
+    }
+  });
+
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
 
   render() {
     return (
-      <div>
+      <MuiThemeProvider theme={this.theme}>
         <Header id='back-to-top-anchor' />
         <Switch>
           <Route exact path='/' component={HomePage} />
@@ -123,7 +136,7 @@ class App extends React.Component {
         <Footer />
         <ScrollToTop />
         <BackToTop />
-      </div>
+      </MuiThemeProvider>
     );
   }
 }
