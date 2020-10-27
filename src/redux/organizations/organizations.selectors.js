@@ -10,11 +10,15 @@ export const selectAllOrganizations = createSelector(
 export const selectApprovedOrganizations = createSelector(
   [selectAllOrganizations],
   (organizations) =>
-    organizations.filter((organization) => organization.approved),
+    organizations
+      ? organizations.filter((organization) => organization.approved)
+      : null,
 );
 
 export const selectUnapprovedOrganizations = createSelector(
   [selectAllOrganizations],
   (organizations) =>
-    organizations.filter((organization) => !organization.approved),
+    organizations
+      ? organizations.filter((organization) => !organization.approved)
+      : null,
 );

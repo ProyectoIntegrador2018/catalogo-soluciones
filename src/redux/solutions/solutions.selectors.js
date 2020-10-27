@@ -15,5 +15,6 @@ export const selectApprovedSolutions = createSelector(
 
 export const selectUnapprovedSolutions = createSelector(
   [selectAllSolutions],
-  (solutions) => solutions.filter((solution) => !solution.approved),
+  (solutions) =>
+    solutions ? solutions.filter((solution) => !solution.approved) : null,
 );

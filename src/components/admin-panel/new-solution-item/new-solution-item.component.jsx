@@ -8,7 +8,14 @@ import { Button } from '@material-ui/core';
 import './new-solution-item.styles.scss';
 
 const NewSolutionItem = ({ newSolution }) => {
-  const { imageUrl, organization, solutionName, price } = newSolution;
+  const {
+    imageUrl,
+    organization,
+    solutionName,
+    price,
+    descriptionPitch,
+    descriptionSuccess,
+  } = newSolution;
 
   return (
     <div className='new-solution-item'>
@@ -25,7 +32,14 @@ const NewSolutionItem = ({ newSolution }) => {
           <span className='solution-name'>{solutionName}</span>
           <span className='price'>${price}</span>
         </AccordionSummary>
-        <AccordionDetails>More details about this solution</AccordionDetails>
+        <AccordionDetails>
+          <div>
+            <h4>Descripción del servicio:</h4>
+            <p>{descriptionPitch}</p>
+            <h4>Casos de éxito del servicio:</h4>
+            <p>{descriptionSuccess}</p>
+          </div>
+        </AccordionDetails>
       </Accordion>
       <span className='action-buttons'>
         <Button className='accept'>&#10004;</Button>

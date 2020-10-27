@@ -8,7 +8,15 @@ import { Button } from '@material-ui/core';
 import './new-user-request-item.styles.scss';
 
 const NewUserRequestItem = ({ userRequest }) => {
-  const { imageUrl, name, type, contact } = userRequest;
+  const {
+    logo,
+    orgName,
+    orgType,
+    displayName,
+    email,
+    description,
+    phoneNumber,
+  } = userRequest;
 
   return (
     <div className='new-user-item'>
@@ -19,13 +27,22 @@ const NewUserRequestItem = ({ userRequest }) => {
           id='panel1a-header'
         >
           <div className='image-container'>
-            <img src={imageUrl} alt='logo' />
+            <img src={logo} alt='logo' />
           </div>
-          <span className='name'>{name}</span>
-          <span className='type'>{type}</span>
-          <span className='contact'>{contact}</span>
+          <span className='name'>{orgName}</span>
+          <span className='type'>{orgType}</span>
+          <span className='contact'>{displayName}</span>
         </AccordionSummary>
-        <AccordionDetails>More details about this solution</AccordionDetails>
+        <AccordionDetails>
+          <div>
+            <h4>Descripcion: </h4>
+            <span>{description}</span>
+            <h4>Email: </h4>
+            <span>{email}</span>
+            <h4>Numero de telefono: </h4>
+            <span>{phoneNumber}</span>
+          </div>
+        </AccordionDetails>
       </Accordion>
       <span className='action-buttons'>
         <Button className='accept'>&#10004;</Button>
