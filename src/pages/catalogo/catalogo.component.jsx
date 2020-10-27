@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 import { selectAllOrganizations } from '../../redux/organizations/organizations.selectors';
-import { selectAllSolutions } from '../../redux/solutions/solutions.selectors';
+import { selectApprovedSolutions } from '../../redux/solutions/solutions.selectors';
 
 import CatalogList from '../../components/catalog-list/catalog-list.component';
 
@@ -21,7 +21,7 @@ const Catalogo = ({ organizations, solutions }) => {
 
 const mapStateToProps = createStructuredSelector({
   organizations: selectAllOrganizations,
-  solutions: selectAllSolutions,
+  solutions: selectApprovedSolutions,
 });
 
 export default connect(mapStateToProps)(Catalogo);

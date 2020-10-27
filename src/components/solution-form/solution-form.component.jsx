@@ -48,14 +48,18 @@ class SolutionForm extends React.Component {
       return;
     }
 
-    insertNewSolution({
-      organizationID: this.props.currentUser.id,
-      solutionName,
-      descriptionPitch,
-      descriptionSuccess,
-      price,
-    }, this.props.currentUser.orgName);
-    
+    insertNewSolution(
+      {
+        organizationID: this.props.currentUser.id,
+        verified: false,
+        solutionName,
+        descriptionPitch,
+        descriptionSuccess,
+        price,
+      },
+      this.props.currentUser.orgName,
+    );
+
     this.props.history.push('/catalogo');
   };
 
