@@ -6,9 +6,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-user-request-item.styles.scss';
+import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
 const NewUserRequestItem = ({ userRequest }) => {
   const {
+    id,
     logo,
     orgName,
     orgType,
@@ -17,6 +19,14 @@ const NewUserRequestItem = ({ userRequest }) => {
     description,
     phoneNumber,
   } = userRequest;
+
+  const approveOrganization = () => {
+    approveRequest(id, 'users');
+  };
+
+  const rejectOrganization = () => {
+    rejectRequest(id, 'users');
+  };
 
   return (
     <div className='new-user-item'>
@@ -45,8 +55,12 @@ const NewUserRequestItem = ({ userRequest }) => {
         </AccordionDetails>
       </Accordion>
       <span className='action-buttons'>
-        <Button className='accept'>&#10004;</Button>
-        <Button className='reject'>&#x2717;</Button>
+        <Button className='accept' onClick={approveOrganization}>
+          &#10004;
+        </Button>
+        <Button className='reject' onClick={rejectOrganization}>
+          &#x2717;
+        </Button>
       </span>
     </div>
   );

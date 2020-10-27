@@ -51,7 +51,7 @@ class SolutionForm extends React.Component {
     insertNewSolution(
       {
         organizationID: this.props.currentUser.id,
-        verified: false,
+        approved: false,
         solutionName,
         descriptionPitch,
         descriptionSuccess,
@@ -85,57 +85,67 @@ class SolutionForm extends React.Component {
       price,
       errorMssg,
     } = this.state;
-    return (
-      <div className='form-container'>
-        <div className='form-content'>
-          <h2 className='title'>Agrega una nueva solución</h2>
-          <form onSubmit={this.handleSubmit}>
-            <FormInput
-              type='text'
-              name='solutionName'
-              value={solutionName}
-              onChange={this.handleChange}
-              label='Nombre de la solución'
-              required
-            />
-            <FormTextarea
-              type='text'
-              name='descriptionPitch'
-              value={descriptionPitch}
-              onChange={this.handleChange}
-              label='Descripción de la solución (max. 500 caracteres)'
-              rows={10}
-              required
-            />
-            <FormTextarea
-              type='text'
-              name='descriptionSuccess'
-              value={descriptionSuccess}
-              onChange={this.handleChange}
-              label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
-              rows={10}
-              required
-            />
-            <FormInput
-              type='number'
-              name='price'
-              value={price}
-              onChange={this.handleChange}
-              label='Precio'
-              required
-            />
-            <Notification
-              severity='error'
-              mssg={errorMssg}
-              onClose={this.handleClose}
-            />
-            <Button variant='contained' color='primary' type='submit'>
-              Crear
-            </Button>
-          </form>
+    if (this.props.currentUser.approved) {
+      return (
+        <div className='form-container'>
+          <div className='form-content'>
+            <h2 className='title'>Agrega una nueva solución</h2>
+            <form onSubmit={this.handleSubmit}>
+              <FormInput
+                type='text'
+                name='solutionName'
+                value={solutionName}
+                onChange={this.handleChange}
+                label='Nombre de la solución'
+                required
+              />
+              <FormTextarea
+                type='text'
+                name='descriptionPitch'
+                value={descriptionPitch}
+                onChange={this.handleChange}
+                label='Descripción de la solución (max. 500 caracteres)'
+                rows={10}
+                required
+              />
+              <FormTextarea
+                type='text'
+                name='descriptionSuccess'
+                value={descriptionSuccess}
+                onChange={this.handleChange}
+                label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
+                rows={10}
+                required
+              />
+              <FormInput
+                type='number'
+                name='price'
+                value={price}
+                onChange={this.handleChange}
+                label='Precio'
+                required
+              />
+              <Notification
+                severity='error'
+                mssg={errorMssg}
+                onClose={this.handleClose}
+              />
+              <Button variant='contained' color='primary' type='submit'>
+                Crear
+              </Button>
+            </form>
+          </div>
         </div>
-      </div>
-    );
+      );
+    } else {
+      // TODO: Arreglar el estilo de este bloque.
+      return (
+        <div className='unapproved-account'>
+          Tu cuenta aún no ha sido aprobada. Ponérse en contacto con el
+          administrador para dar seguimiento a su solicitud.
+        </div>
+      );
+    }
   }
 }
 

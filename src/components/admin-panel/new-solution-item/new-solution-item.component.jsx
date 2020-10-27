@@ -6,9 +6,11 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-solution-item.styles.scss';
+import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
 const NewSolutionItem = ({ newSolution }) => {
   const {
+    id,
     imageUrl,
     organization,
     solutionName,
@@ -16,6 +18,14 @@ const NewSolutionItem = ({ newSolution }) => {
     descriptionPitch,
     descriptionSuccess,
   } = newSolution;
+
+  const approveSolution = () => {
+    approveRequest(id, 'solutions');
+  };
+
+  const rejectSolution = () => {
+    rejectRequest(id, 'solutions');
+  };
 
   return (
     <div className='new-solution-item'>
@@ -42,8 +52,12 @@ const NewSolutionItem = ({ newSolution }) => {
         </AccordionDetails>
       </Accordion>
       <span className='action-buttons'>
-        <Button className='accept'>&#10004;</Button>
-        <Button className='reject'>&#x2717;</Button>
+        <Button className='accept' onClick={approveSolution}>
+          &#10004;
+        </Button>
+        <Button className='reject' onClick={rejectSolution}>
+          &#x2717;
+        </Button>
       </span>
     </div>
   );
