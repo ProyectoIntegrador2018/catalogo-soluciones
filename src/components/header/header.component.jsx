@@ -67,6 +67,14 @@ const HeaderContent = ({ currentUser, goTo }) => {
           Nueva solución
         </Button>
       )}
+      {currentUser && !currentUser.adminAccount && (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => goTo('panel-control')}
+        >
+          Mis soluciones
+        </Button>
+      )}
       {currentUser ? (
         <Button
           className={classes.appBarButton}
@@ -116,21 +124,21 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
-          <div className='toolbar'>
+        <div className='toolbar'>
+          <HeaderContent currentUser={currentUser} goTo={goTo} />
+        </div>
+        <div className='drawer'>
+          <Button onClick={toggleDrawer('Menú', true)}>Menú</Button>
+          <Drawer anchor='Menú' open={state['Menú']}
+            onClose={toggleDrawer('Menú', false)}>
             <HeaderContent currentUser={currentUser} goTo={goTo} />
-          </div>
-          <div className='drawer'>
-            <Button onClick={toggleDrawer('Menú', true)}>Menú</Button>
-            <Drawer anchor='Menú' open={state['Menú']}
-              onClose={toggleDrawer('Menú', false)}>
-              <HeaderContent currentUser={currentUser} goTo={goTo} />
-            </Drawer>
-          </div>
+          </Drawer>
+        </div>
         </Toolbar>
 
       </AppBar>
 
-    </div>
+    </div >
   );
 };
 
@@ -139,4 +147,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Header);
-
