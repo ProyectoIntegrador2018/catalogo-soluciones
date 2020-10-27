@@ -53,11 +53,11 @@ class HomePage extends React.Component {
               <h1>Catálogo de Soluciones Digitales</h1>
               <h2>CSOFTMTY</h2>
               <p>
-                Consulta los servicios ofrecidos por las empresas de tecnología
-                del estado de Nuevo León.
+                Consulta soluciones de TI ofrecidas por las empresas de 
+                tecnología del estado de Nuevo León.
             </p>
               <Button variant='contained' color='primary' onClick={this.goToCatalogo}>
-                Accede al catálogo
+                Acceder al catálogo
             </Button>
             </div>
 
@@ -68,7 +68,9 @@ class HomePage extends React.Component {
         </div>
 
         <Container className='home-container'>
-          <h2>¿Quiéres listar tus servicios en nuestro catálogo?</h2>
+          <h2 className='orange'>
+            ¿Quiéres listar tus servicios en nuestro catálogo?
+          </h2>
           <span className='link' onClick={this.goToSignUp}>Crea una cuenta</span>
           &nbsp; o &nbsp;
           <span className='link' onClick={this.goToSignIn}>Inicia sesión</span>

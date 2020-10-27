@@ -16,7 +16,7 @@ const useStyles = makeStyles({
   },
   appBar: {
     padding: 10,
-    backgroundColor: '#D3D3D3',
+    backgroundColor: '#e6e6e6',
     boxShadow: 'none',
   },
   logo: {
@@ -26,6 +26,7 @@ const useStyles = makeStyles({
     },
   },
   appBarButton: {
+    color: '#636363',
     '&:hover': {
       color: '#CC6600',
     },
@@ -58,6 +59,18 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
+          <Button
+            className={classes.appBarButton}
+            onClick={() => goTo('/')}
+          >
+            Inicio
+          </Button>
+          <Button
+            className={classes.appBarButton}
+            onClick={() => goTo('catalogo')}
+          >
+            Soluciones y Servicios
+          </Button>
           {currentUser && currentUser.adminAccount && (
             <Button
               className={classes.appBarButton}
