@@ -3,13 +3,13 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
 import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
-import { ButtonGroup, Drawer } from '@material-ui/core';
 
 const useStyles = makeStyles({
   root: {
@@ -96,7 +96,7 @@ const Header = ({ currentUser }) => {
   let history = useHistory();
 
   const [state, setState] = React.useState({
-    drawerOpened: false,
+    drawer: false,
   });
 
   function goTo(page) {
