@@ -19,10 +19,7 @@ const NewSolutionList = ({ newSolutions }) => {
           <span>Precio</span>
         </div>
         <div className='header-action-button'>
-          <span>Aceptar</span>
-        </div>
-        <div className='header-action-button'>
-          <span>Rechazar</span>
+          <span>Accion</span>
         </div>
       </div>
       {newSolutions.map((value, index) => {

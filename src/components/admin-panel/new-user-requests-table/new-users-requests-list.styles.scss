@@ -15,12 +15,17 @@
 
     .header-block {
       text-transform: capitalize;
-      width: 28%;
+      width: 32%;
+    }
+
+    .header-block-small {
+      text-transform: capitalize;
+      width: 20%;
     }
 
     .header-action-button {
       text-transform: capitalize;
-      width: 8%;
+      width: 16%;
     }
   }
 }

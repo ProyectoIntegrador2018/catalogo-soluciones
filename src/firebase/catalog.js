@@ -8,20 +8,15 @@ export const getCatalogData = async (attribute) => {
 
   let data = [];
 
-  // This element is used to add id as attribute to organizations (users).
   let element;
 
   await ref
     .get()
     .then((snapshot) => {
       snapshot.forEach((doc) => {
-        if (attribute === 'users') {
-          element = doc.data();
-          element.id = doc.id;
-          data.push(element);
-        } else {
-          data.push(doc.data());
-        }
+        element = doc.data();
+        element.id = doc.id;
+        data.push(element);
       });
     })
     .catch((err) => {
@@ -34,9 +29,11 @@ export const getCatalogData = async (attribute) => {
 export const insertNewSolution = async (solution, orgName) => {
   firestore.collection('solutions').add(solution);
 
-  const sendNewSolutionEmail = firebase.functions().httpsCallable('sendNewSolutionEmail');
+  const sendNewSolutionEmail = firebase
+    .functions()
+    .httpsCallable('sendNewSolutionEmail');
   sendNewSolutionEmail({
     name: solution.solutionName,
     org: orgName,
   });
-}
+};

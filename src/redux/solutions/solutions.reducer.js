@@ -17,6 +17,13 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         allSolutions: matchOrganization(state.allSolutions, action.payload),
       };
+    case SolutionsActionTypes.REMOVE_SOLUTION:
+      return {
+        ...state,
+        allSolutions: state.allSolutions.filter(
+          (solution) => solution.id !== action.payload,
+        ),
+      };
     default:
       return state;
   }

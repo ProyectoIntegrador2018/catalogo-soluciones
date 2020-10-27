@@ -18,6 +18,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
     const adminAccount = false;
+    const approved = false;
 
     try {
       await userRef.set({
@@ -25,6 +26,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
         adminAccount,
+        approved,
         ...additionalData,
       });
     } catch (error) {
@@ -35,27 +37,43 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
-export const signUp = async (email, password, displayName, phoneNumber, orgName,
-  orgType, description, orgLogo) => {
+export const signUp = async (
+  email,
+  password,
+  displayName,
+  phoneNumber,
+  orgName,
+  orgType,
+  description,
+  orgLogo,
+) => {
   return new Promise((resolve, reject) => {
     auth
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
         user.sendEmailVerification();
 
-        const sendNewUserEmail = firebase.functions().httpsCallable('sendNewUserEmail');
+        const sendNewUserEmail = firebase
+          .functions()
+          .httpsCallable('sendNewUserEmail');
         sendNewUserEmail({
           name: displayName,
           org: orgName,
           email,
         });
 
-        storage.child(user.uid + '/logo.jpeg').put(orgLogo)
+        storage
+          .child(user.uid + '/logo.jpeg')
+          .put(orgLogo)
           .then((snapshot) => {
             snapshot.ref.getDownloadURL().then((url) => {
               createUserProfileDocument(user, {
-                displayName, phoneNumber, orgName,
-                orgType, description, logo: url
+                displayName,
+                phoneNumber,
+                orgName,
+                orgType,
+                description,
+                logo: url,
               });
               auth.signOut();
               resolve();
@@ -95,7 +113,7 @@ export const signIn = async (email, password) => {
             errorMssg = 'La contraseña proporcionada es incorrecta.';
             break;
           case 'auth/user-not-found':
-            errorMssg = 'No existe una cuenta para este correo.'
+            errorMssg = 'No existe una cuenta para este correo.';
             break;
           default:
             errorMssg = 'Error de inicio de sesión';

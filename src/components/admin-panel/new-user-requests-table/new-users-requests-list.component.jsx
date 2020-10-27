@@ -12,17 +12,14 @@ const NewUsersRequestsList = ({ userRequests }) => {
         <div className='header-block'>
           <span>Nombre</span>
         </div>
-        <div className='header-block'>
+        <div className='header-block-small'>
           <span>Tipo</span>
         </div>
         <div className='header-block'>
           <span>Punto de contacto</span>
         </div>
         <div className='header-action-button'>
-          <span>Aceptar</span>
-        </div>
-        <div className='header-action-button'>
-          <span>Rechazar</span>
+          <span>Accion</span>
         </div>
       </div>
       {userRequests.map((value, index) => {
