@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import Header from './components/header/header.component';
+import Footer from './components/footer/footer.component';
 
 import SignInPage from './pages/sign-in/sign-in.component';
 import SignUpPage from './pages/sign-up/sign-up.component';
@@ -24,6 +25,8 @@ import { setOrganizations } from './redux/organizations/organizations.actions';
 
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
+
+import './index'
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -115,6 +118,7 @@ class App extends React.Component {
             }
           />
         </Switch>
+        <Footer />
       </div>
     );
   }

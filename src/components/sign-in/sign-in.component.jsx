@@ -63,44 +63,46 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className='form-container'>
-        <div className='form-content'>
-          <h2 className='title'>Iniciar sesión</h2>
-          <span>Inicia sesión con tu correo y contraseña</span>
-          <form onSubmit={this.handleSubmit}>
-            <FormInput
-              name='email'
-              type='email'
-              handleChange={this.handleChange}
-              value={this.state.email}
-              label='Correo'
-              required
-            />
-            <FormInput
-              name='password'
-              type='password'
-              handleChange={this.handleChange}
-              value={this.state.password}
-              label='Contraseña'
-              required
-            />
-            <div className='buttons'>
-              <Button variant='contained' color='primary' type='submit'>
-                Inicia sesión
+      <div className='min-height'>
+        <div className='form-container'>
+          <div className='form-content'>
+            <h2 className='title'>Iniciar sesión</h2>
+            <span>Inicia sesión con tu correo y contraseña</span>
+            <form onSubmit={this.handleSubmit}>
+              <FormInput
+                name='email'
+                type='email'
+                handleChange={this.handleChange}
+                value={this.state.email}
+                label='Correo'
+                required
+              />
+              <FormInput
+                name='password'
+                type='password'
+                handleChange={this.handleChange}
+                value={this.state.password}
+                label='Contraseña'
+                required
+              />
+              <div className='buttons'>
+                <Button variant='contained' color='primary' type='submit'>
+                  Inicia sesión
               </Button>
-            </div>
-          </form>
-          <div className='sign-up'>
-            Aún no tienes cuenta?
+              </div>
+            </form>
+            <div className='sign-up'>
+              Aún no tienes cuenta?
             <span className='sign-up-button' onClick={this.goToSignUp}>
-              Crear cuenta
+                Crear cuenta
             </span>
+            </div>
+            <Notification
+              severity={this.state.severity}
+              mssg={this.state.notificationMssg}
+              onClose={this.handleClose}
+            />
           </div>
-          <Notification
-            severity={this.state.severity}
-            mssg={this.state.notificationMssg}
-            onClose={this.handleClose}
-          />
         </div>
       </div>
     );

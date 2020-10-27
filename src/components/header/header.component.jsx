@@ -15,7 +15,8 @@ const useStyles = makeStyles({
     flexGrow: 1,
   },
   appBar: {
-    backgroundColor: '#AAAAAA',
+    padding: 10,
+    backgroundColor: '#e6e6e6',
     boxShadow: 'none',
   },
   logo: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
     },
   },
   appBarButton: {
+    color: '#636363',
     '&:hover': {
       color: '#CC6600',
     },
@@ -57,6 +59,18 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
+          <Button
+            className={classes.appBarButton}
+            onClick={() => goTo('/')}
+          >
+            Inicio
+          </Button>
+          <Button
+            className={classes.appBarButton}
+            onClick={() => goTo('catalogo')}
+          >
+            Soluciones y Servicios
+          </Button>
           {currentUser && currentUser.adminAccount && (
             <Button
               className={classes.appBarButton}
@@ -83,14 +97,7 @@ const Header = ({ currentUser }) => {
             >
               Cerrar sesion
             </Button>
-          ) : (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('signin')}
-            >
-              Iniciar Sesion
-            </Button>
-          )}
+          ) : null}
         </Toolbar>
       </AppBar>
     </div>
@@ -102,3 +109,4 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Header);
+
