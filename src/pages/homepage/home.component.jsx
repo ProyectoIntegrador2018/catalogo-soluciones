@@ -1,4 +1,8 @@
 import React from 'react';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { Container, Button } from '@material-ui/core';
 import PhotoCarousel from '../../components/carousel/carousel.component';
 import { Notification } from '../../components/notifications/notification.component';
@@ -22,10 +26,6 @@ class HomePage extends React.Component {
     };
   }
 
-  goToCatalogo = () => {
-    this.props.history.push('/catalogo');
-  };
-
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -36,12 +36,24 @@ class HomePage extends React.Component {
     });
   };
 
-  goToSignIn = () => {
-    this.props.history.push('/signin');
+  goToCatalogo = () => {
+    this.props.history.push('/catalogo');
   };
 
-  goToSignUp = () => {
-    this.props.history.push('/signup');
+  goTo = (event) => {
+    switch (event.target.id) {
+      case 'signup':
+        this.props.history.push('signup');
+        break;
+      case 'signin':
+        this.props.history.push('signin');
+        break;
+      case 'crear-solucion':
+        this.props.history.push('crear-solucion');
+        break;
+      default:
+        break;
+    }
   };
 
   render() {
@@ -58,6 +70,7 @@ class HomePage extends React.Component {
                 tecnología del estado de Nuevo León.
               </p>
               <Button
+                id='catalogo'
                 variant='contained'
                 color='primary'
                 onClick={this.goToCatalogo}
@@ -76,14 +89,29 @@ class HomePage extends React.Component {
           <h2 className='orange'>
             ¿Quiéres listar tus servicios en nuestro catálogo?
           </h2>
-          <span className='link' onClick={this.goToSignUp}>
-            Crea una cuenta
-          </span>
-          &nbsp; o &nbsp;
-          <span className='link' onClick={this.goToSignIn}>
-            Inicia sesión
-          </span>
-          <p>Después de crear tu cuenta nos pondremos en contacto contigo.</p>
+          {this.props.currentUser ? (
+            <div>
+              <span className='link' id='crear-solucion' onClick={this.goTo}>
+                Agrega una solución
+              </span>
+              &nbsp; o &nbsp;
+              <span className='link' id='mis-soluciones' onClick={this.goTo}>
+                Administra tus soluciones
+              </span>
+            </div>
+          ) : (
+              <div>
+                <span className='link' id='signup' onClick={this.goTo}>
+                  Crea una cuenta
+                </span>
+                &nbsp; o &nbsp;
+                <span className='link' id='signin' onClick={this.goTo}>
+                  Inicia sesión
+                </span>
+              </div>
+            )}
+
+          <p>No es necesaria una cuenta para visualizar el catálogo.</p>
         </Container>
 
         <Notification
@@ -96,4 +124,8 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+
+export default connect(mapStateToProps)(HomePage);
