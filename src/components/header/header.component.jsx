@@ -65,6 +65,14 @@ const Header = ({ currentUser }) => {
               Administrador
             </Button>
           )}
+          {currentUser && !currentUser.adminAccount && (
+            <Button
+              className={classes.appBarButton}
+              onClick={() => goTo('crear-solucion')}
+            >
+              Nueva solución
+            </Button>
+          )}
           {currentUser ? (
             <Button
               className={classes.appBarButton}

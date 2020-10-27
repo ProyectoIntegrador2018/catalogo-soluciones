@@ -95,7 +95,7 @@ const makeNewSolutionEmailHTML = function (name, org) {
   `
 }
 
-exports.sendNewSolutionEmailHTML = functions.https.onRequest((request, response) => {
+exports.sendNewSolutionEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const body = request.body.data;
     const html = makeNewSolutionEmailHTML(body.name, body.org);
@@ -103,7 +103,7 @@ exports.sendNewSolutionEmailHTML = functions.https.onRequest((request, response)
       from: 'Catálogo de Soluciones Digitales',
       // TODO: reemplazar por email CSOFTMTY.
       to: 'mauriciogm97@hotmail.com',
-      subject: 'Nuevo Usuario en Catálogo de Soluciones Digitales CSOFTMTY',
+      subject: 'Nueva Solución en Catálogo de Soluciones Digitales CSOFTMTY',
       html: html,
     }, (error) => {
       if (error) {

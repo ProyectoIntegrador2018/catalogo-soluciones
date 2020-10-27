@@ -8,7 +8,7 @@ import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-import { firestore as db } from '../../firebase/firebase';
+import { insertNewSolution } from '../../firebase/catalog';
 
 import './solution-form.styles.scss';
 
@@ -47,16 +47,15 @@ class SolutionForm extends React.Component {
       return;
     }
 
-    db.collection('solutions').add({
+    insertNewSolution({
       organizationID: this.props.currentUser.id,
       solutionName,
       descriptionPitch,
       descriptionSuccess,
       price,
-    });
-
-    // TODO: Después cambiamos esto a /soluciones o algo distinto
-    this.props.history.push('/');
+    }, this.props.currentUser.orgName);
+    
+    this.props.history.push('/catalogo');
   };
 
   handleChange = (event) => {

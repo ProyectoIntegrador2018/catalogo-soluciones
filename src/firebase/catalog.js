@@ -1,5 +1,8 @@
 import { firestore } from './firebase';
 
+import firebase from 'firebase/app';
+import 'firebase/functions';
+
 export const getCatalogData = async (attribute) => {
   const ref = firestore.collection(attribute);
 
@@ -27,3 +30,13 @@ export const getCatalogData = async (attribute) => {
 
   return data;
 };
+
+export const insertNewSolution = async (solution, orgName) => {
+  firestore.collection('solutions').add(solution);
+
+  const sendNewSolutionEmail = firebase.functions().httpsCallable('sendNewSolutionEmail');
+  sendNewSolutionEmail({
+    name: solution.solutionName,
+    org: orgName,
+  });
+}
