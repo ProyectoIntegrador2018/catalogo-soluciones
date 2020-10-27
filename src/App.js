@@ -23,6 +23,7 @@ import {
 import { setOrganizations } from './redux/organizations/organizations.actions';
 
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
+import solutionInquire from './components/solution-inquire/solution-inquire.component';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -76,6 +77,7 @@ class App extends React.Component {
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/catalogo' component={Catalogo} />
+          <Route exact path='/solution-inquire' component={solutionInquire} />
           <Route
             exact
             path='/signin'
