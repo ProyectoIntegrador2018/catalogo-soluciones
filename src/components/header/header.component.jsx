@@ -59,10 +59,7 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
-          <Button
-            className={classes.appBarButton}
-            onClick={() => goTo('/')}
-          >
+          <Button className={classes.appBarButton} onClick={() => goTo('/')}>
             Inicio
           </Button>
           <Button
@@ -87,6 +84,14 @@ const Header = ({ currentUser }) => {
               Nueva solución
             </Button>
           )}
+          {currentUser && !currentUser.adminAccount && (
+            <Button
+              className={classes.appBarButton}
+              onClick={() => goTo('panel-control')}
+            >
+              Mis soluciones
+            </Button>
+          )}
           {currentUser ? (
             <Button
               className={classes.appBarButton}
@@ -109,4 +114,3 @@ const mapStateToProps = (state) => ({
 });
 
 export default connect(mapStateToProps)(Header);
-
