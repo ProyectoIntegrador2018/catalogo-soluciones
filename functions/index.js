@@ -3,7 +3,7 @@ const cors = require('cors')({ origin: true });
 
 const { transporter } = require('./util/email_credentials');
 
-const makeContactMailHTML = function (name, fromEmail, service, message, org) {
+const makeContactEmailHTML = function (name, fromEmail, service, message, org) {
   return `
     <h3>Buen día,</h3>
     <p>
@@ -24,14 +24,86 @@ const makeContactMailHTML = function (name, fromEmail, service, message, org) {
 exports.sendContactEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const body = request.body.data;
-    const html = makeContactMailHTML(body.name, body.fromEmail, body.service,
+    const html = makeContactEmailHTML(body.name, body.fromEmail, body.service,
       body.message, body.org);
-    functions.logger.log(html)
     transporter.sendMail({
       from: 'Catálogo de Soluciones Digitales',
       to: body.toEmail,
+      // TODO: reemplazar por email CSOFTMTY.
       cc: 'mauriciogm97@hotmail.com',
       subject: 'Consulta del Catálogo de Soluciones Digitales',
+      html: html,
+    }, (error) => {
+      if (error) {
+        functions.logger.log(error);
+        response.status(500).send(error);
+      } else {
+        response.send({data: 'success'});
+      }
+    });
+  });  
+});
+
+const makeNewUserEmailHTML = function (name, org, email) {
+  return `
+    <h3>Buen día Administrador,</h3>
+    <p>
+      El <b>Catálogo de Soluciones Digitales CSOFTMTY</b> ha recibido un nuevo
+      registro. Se ha registrado <b>${name}</b> como administrador de la 
+      organización <b>${org}</b> con correo <a href="mailto:${email}">
+      ${email}</a>. Porfavor ingresa al sistema para validar su registro.
+    </p>
+    <p>
+      Gracias, buen día.
+    </p>
+  `
+}
+
+exports.sendNewUserEmail = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const body = request.body.data;
+    const html = makeNewUserEmailHTML(body.name, body.org, body.email);
+    transporter.sendMail({
+      from: 'Catálogo de Soluciones Digitales',
+      // TODO: reemplazar por email CSOFTMTY.
+      to: 'mauriciogm97@hotmail.com',
+      subject: 'Nuevo Usuario en Catálogo de Soluciones Digitales CSOFTMTY',
+      html: html,
+    }, (error) => {
+      if (error) {
+        functions.logger.log(error);
+        response.status(500).send(error);
+      } else {
+        response.send({data: 'success'});
+      }
+    });
+  });  
+});
+
+const makeNewSolutionEmailHTML = function (name, org) {
+  return `
+    <h3>Buen día Administrador,</h3>
+    <p>
+      El <b>Catálogo de Soluciones Digitales CSOFTMTY</b> ha recibido un nuevo
+      registro de solución. La organización <b>${org}</b> ha registrado el
+      servicio <b>${name}</b>. Por favor ingresa al sistema para validar el
+      registro.
+    </p>
+    <p>
+      Gracias, buen día.
+    </p>
+  `
+}
+
+exports.sendNewSolutionEmail = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const body = request.body.data;
+    const html = makeNewSolutionEmailHTML(body.name, body.org);
+    transporter.sendMail({
+      from: 'Catálogo de Soluciones Digitales',
+      // TODO: reemplazar por email CSOFTMTY.
+      to: 'mauriciogm97@hotmail.com',
+      subject: 'Nueva Solución en Catálogo de Soluciones Digitales CSOFTMTY',
       html: html,
     }, (error) => {
       if (error) {
