@@ -1,13 +1,14 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput } from '../form-input/form-input.component';
+import { FormInput } from '../form/form.component';
 import { Notification } from '../notifications/notification.component';
 import Button from '@material-ui/core/Button';
 
 import { signIn } from '../../firebase/sessions';
 
 import './sign-in.styles.scss';
+import '../form/form.styles.scss';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -62,9 +63,9 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className='content-sign-in'>
-        <div className='sign-in'>
-          <h2>Iniciar sesión</h2>
+      <div className='form-container'>
+        <div className='form-content'>
+          <h2 className='title'>Iniciar sesión</h2>
           <span>Inicia sesión con tu correo y contraseña</span>
           <form onSubmit={this.handleSubmit}>
             <FormInput
@@ -83,11 +84,6 @@ class SignIn extends React.Component {
               label='Contraseña'
               required
             />
-            <Notification
-              severity={this.state.severity}
-              mssg={this.state.notificationMssg}
-              onClose={this.handleClose}
-            />
             <div className='buttons'>
               <Button variant='contained' color='primary' type='submit'>
                 Inicia sesión
@@ -100,6 +96,11 @@ class SignIn extends React.Component {
               Crear cuenta
             </span>
           </div>
+          <Notification
+            severity={this.state.severity}
+            mssg={this.state.notificationMssg}
+            onClose={this.handleClose}
+          />
         </div>
       </div>
     );

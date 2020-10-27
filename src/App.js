@@ -99,8 +99,8 @@ class App extends React.Component {
               this.props.currentUser && this.props.currentUser.adminAccount ? (
                 <Administrador />
               ) : (
-                <Redirect to='/' />
-              )
+                  <Redirect to='/' />
+                )
             }
           />
           <Route
@@ -110,8 +110,8 @@ class App extends React.Component {
               this.props.currentUser && !this.props.currentUser.adminAccount ? (
                 <CreateSolutionPage />
               ) : (
-                <Redirect to='/' />
-              )
+                  <Redirect to='/' />
+                )
             }
           />
         </Switch>
