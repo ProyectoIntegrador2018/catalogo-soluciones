@@ -5,12 +5,20 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  min-width: 980px;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+/* phones */
+@media only screen and (max-device-width: 1024px) {
+  body {
+    min-width: 320px;
+  }
+}
+
+/* desktop */
+@media only screen and (min-device-width: 1024px) {
+  body {
+    min-width: 1024px;
+  }
 }
 
 .orange {
