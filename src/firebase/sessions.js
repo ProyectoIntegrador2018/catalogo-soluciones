@@ -1,5 +1,8 @@
 import { auth, firestore, storage } from './firebase';
 
+import firebase from 'firebase/app';
+import 'firebase/functions';
+
 export const getUserRef = async (userAuth) => {
   if (!userAuth) return;
   const userRef = firestore.doc(`users/${userAuth.uid}`);
@@ -39,6 +42,13 @@ export const signUp = async (email, password, displayName, phoneNumber, orgName,
       .createUserWithEmailAndPassword(email, password)
       .then(({ user }) => {
         user.sendEmailVerification();
+
+        const sendNewUserEmail = firebase.functions().httpsCallable('sendNewUserEmail');
+        sendNewUserEmail({
+          name: displayName,
+          org: orgName,
+          email,
+        });
 
         storage.child(user.uid + '/logo.jpeg').put(orgLogo)
           .then((snapshot) => {
