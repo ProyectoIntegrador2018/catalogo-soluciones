@@ -38,7 +38,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
   const classes = useStyles();
 
   return (
-    <div>
+    <div className='buttons'>
       <Button
         className={classes.appBarButton}
         onClick={() => goTo('/')}
@@ -110,8 +110,8 @@ const Header = ({ currentUser }) => {
     }
   }
 
-  const toggleDrawer = (anchor, open) => (event) => {
-    setState({ [anchor]: open });
+  const toggleDrawer = (open) => (event) => {
+    setState({ drawer: open });
   };
 
   return (
@@ -128,16 +128,14 @@ const Header = ({ currentUser }) => {
           <HeaderContent currentUser={currentUser} goTo={goTo} />
         </div>
         <div className='drawer'>
-          <Button onClick={toggleDrawer('Menú', true)}>Menú</Button>
-          <Drawer anchor='Menú' open={state['Menú']}
-            onClose={toggleDrawer('Menú', false)}>
+          <Button onClick={toggleDrawer(true)}>Menú</Button>
+          <Drawer anchor='right' open={state.drawer}
+            onClose={toggleDrawer(false)}>
             <HeaderContent currentUser={currentUser} goTo={goTo} />
           </Drawer>
         </div>
         </Toolbar>
-
       </AppBar>
-
     </div >
   );
 };
