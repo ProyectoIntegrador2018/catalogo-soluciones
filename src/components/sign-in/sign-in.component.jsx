@@ -62,47 +62,45 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <div className='min-height'>
-        <Form
-          title='Iniciar sesión'
-          onSubmit={this.handleSubmit}
-        >
-          <span>Inicia sesión con tu correo y contraseña</span>
+      <Form
+        title='Iniciar sesión'
+        onSubmit={this.handleSubmit}
+      >
+        <span>Inicia sesión con tu correo y contraseña</span>
 
-          <FormInput
-            name='email'
-            type='email'
-            handleChange={this.handleChange}
-            value={this.state.email}
-            label='Correo'
-            required
-          />
-          <FormInput
-            name='password'
-            type='password'
-            handleChange={this.handleChange}
-            value={this.state.password}
-            label='Contraseña'
-            required
-          />
+        <FormInput
+          name='email'
+          type='email'
+          handleChange={this.handleChange}
+          value={this.state.email}
+          label='Correo'
+          required
+        />
+        <FormInput
+          name='password'
+          type='password'
+          handleChange={this.handleChange}
+          value={this.state.password}
+          label='Contraseña'
+          required
+        />
 
-          <Button variant='contained' color='primary' type='submit'>
-            Inicia sesión
+        <Button variant='contained' color='primary' type='submit'>
+          Inicia sesión
           </Button>
 
-          <div className='sign-up'>
-            Aún no tienes cuenta?
+        <div className='sign-up'>
+          Aún no tienes cuenta?
             <span className='sign-up-button link' onClick={this.goToSignUp}>
-              Crear cuenta
+            Crear cuenta
             </span>
-          </div>
-          <Notification
-            severity={this.state.severity}
-            mssg={this.state.notificationMssg}
-            onClose={this.handleClose}
-          />
-        </Form>
-      </div>
+        </div>
+        <Notification
+          severity={this.state.severity}
+          mssg={this.state.notificationMssg}
+          onClose={this.handleClose}
+        />
+      </Form>
     );
   }
 }

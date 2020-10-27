@@ -91,6 +91,7 @@ class App extends React.Component {
     return (
       <MuiThemeProvider theme={this.theme}>
         <Header id='back-to-top-anchor' />
+        <div className='switch'>
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/catalogo' component={Catalogo} />
@@ -143,6 +144,7 @@ class App extends React.Component {
             }
           />
         </Switch>
+        </div>
         <Footer />
         <ScrollToTop />
         <BackToTop />
