@@ -1,14 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput } from '../form/form.component';
+import { Form, FormInput } from '../form/form.component';
 import { Notification } from '../notifications/notification.component';
 import Button from '@material-ui/core/Button';
 
 import { signIn } from '../../firebase/sessions';
 
 import './sign-in.styles.scss';
-import '../form/form.styles.scss';
 
 class SignIn extends React.Component {
   constructor(props) {
@@ -64,46 +63,45 @@ class SignIn extends React.Component {
   render() {
     return (
       <div className='min-height'>
-        <div className='form-container'>
-          <div className='form-content'>
-            <h2 className='title'>Iniciar sesión</h2>
-            <span>Inicia sesión con tu correo y contraseña</span>
-            <form onSubmit={this.handleSubmit}>
-              <FormInput
-                name='email'
-                type='email'
-                handleChange={this.handleChange}
-                value={this.state.email}
-                label='Correo'
-                required
-              />
-              <FormInput
-                name='password'
-                type='password'
-                handleChange={this.handleChange}
-                value={this.state.password}
-                label='Contraseña'
-                required
-              />
-              <div className='buttons'>
-                <Button variant='contained' color='primary' type='submit'>
-                  Inicia sesión
-              </Button>
-              </div>
-            </form>
-            <div className='sign-up'>
-              Aún no tienes cuenta?
+        <Form
+          title='Iniciar sesión'
+          onSubmit={this.handleSubmit}
+        >
+          <span>Inicia sesión con tu correo y contraseña</span>
+
+          <FormInput
+            name='email'
+            type='email'
+            handleChange={this.handleChange}
+            value={this.state.email}
+            label='Correo'
+            required
+          />
+          <FormInput
+            name='password'
+            type='password'
+            handleChange={this.handleChange}
+            value={this.state.password}
+            label='Contraseña'
+            required
+          />
+
+          <Button variant='contained' color='primary' type='submit'>
+            Inicia sesión
+          </Button>
+
+          <div className='sign-up'>
+            Aún no tienes cuenta?
             <span className='sign-up-button link' onClick={this.goToSignUp}>
-                Crear cuenta
+              Crear cuenta
             </span>
-            </div>
-            <Notification
-              severity={this.state.severity}
-              mssg={this.state.notificationMssg}
-              onClose={this.handleClose}
-            />
           </div>
-        </div>
+          <Notification
+            severity={this.state.severity}
+            mssg={this.state.notificationMssg}
+            onClose={this.handleClose}
+          />
+        </Form>
       </div>
     );
   }
