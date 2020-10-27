@@ -13,7 +13,7 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
-    var severity, notificationMssg;
+    var severity = 'info', notificationMssg = '';
     if (this.props.location.state) {
       severity = this.props.location.state.severity;
       notificationMssg = this.props.location.state.notificationMssg;
