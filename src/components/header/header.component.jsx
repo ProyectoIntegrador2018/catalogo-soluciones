@@ -10,6 +10,12 @@ import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
 
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ListIcon from '@material-ui/icons/List';
+import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
+
 const HeaderContent = ({ currentUser, goTo }) => {
   return (
     <div className='buttons'>
@@ -17,20 +23,20 @@ const HeaderContent = ({ currentUser, goTo }) => {
         className='app-bar-button'
         onClick={() => goTo('/')}
       >
-        Inicio
-          </Button>
+        <HomeIcon className='icon' /> Inicio
+      </Button>
       <Button
         className='app-bar-button'
         onClick={() => goTo('catalogo')}
       >
-        Soluciones y Servicios
-          </Button>
+        <ListIcon className='icon' /> Catálogo
+      </Button>
       {currentUser && currentUser.adminAccount && (
         <Button
           className='app-bar-button'
           onClick={() => goTo('admin')}
         >
-          Administrador
+          <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
@@ -38,7 +44,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
           className='app-bar-button'
           onClick={() => goTo('crear-solucion')}
         >
-          Nueva solución
+          <AddIcon className='icon' /> Nueva solución
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
@@ -46,7 +52,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
           className='app-bar-button'
           onClick={() => goTo('panel-control')}
         >
-          Mis soluciones
+          <SettingsIcon className='icon' /> Mis soluciones
         </Button>
       )}
       {currentUser ? (
@@ -57,7 +63,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
             goTo('home');
           }}
         >
-          Cerrar sesion
+          <ExitToAppIcon className='icon' /> Cerrar sesion
         </Button>
       ) : null}
     </div>
@@ -71,19 +77,13 @@ const Header = ({ currentUser }) => {
     drawer: false,
   });
 
-  function goTo(page) {
-    switch (page) {
-      case 'home':
-        history.push('/');
-        break;
-      default:
-        history.push(page);
-        break;
-    }
-  }
-
   const toggleDrawer = (open) => (event) => {
     setState({ drawer: open });
+  };
+
+  const goTo = (page) => {
+    setState({ drawer: false });
+    history.push(page);
   };
 
   return (
@@ -94,7 +94,7 @@ const Header = ({ currentUser }) => {
             className='logo'
             src='./logoCSOFTMTY.png'
             alt='Logo CSOFTMTY'
-            onClick={() => goTo('home')}
+            onClick={() => goTo('/')}
           />
           <div className='button-bar'>
             <HeaderContent currentUser={currentUser} goTo={goTo} />
