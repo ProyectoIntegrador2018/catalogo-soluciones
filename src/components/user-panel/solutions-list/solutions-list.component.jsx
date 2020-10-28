@@ -5,7 +5,6 @@ import SolutionItem from '../solution-item/solution-item.component';
 import './solutions-list.styles.scss';
 
 const SolutionsList = ({ solutions }) => {
-  console.log('asdfasdfhaskdjfhaksdfhjkashkjf', solutions);
   if (solutions && solutions.length) {
     return (
       <div className='solutions-list'>

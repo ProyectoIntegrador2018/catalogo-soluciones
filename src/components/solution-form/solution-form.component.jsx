@@ -8,7 +8,7 @@ import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-import { insertNewSolution } from '../../firebase/catalog';
+import { insertNewSolution, updateSolution } from '../../firebase/catalog';
 
 import './solution-form.styles.scss';
 
@@ -47,17 +47,29 @@ class SolutionForm extends React.Component {
       return;
     }
 
-    insertNewSolution(
-      {
-        organizationID: this.props.currentUser.id,
-        approved: false,
-        solutionName,
-        descriptionPitch,
-        descriptionSuccess,
-        price,
-      },
-      this.props.currentUser.orgName,
-    );
+    if (this.props.solution) {
+      updateSolution(
+        {
+          solutionName,
+          descriptionPitch,
+          descriptionSuccess,
+          price,
+        },
+        this.props.solution.id,
+      );
+    } else {
+      insertNewSolution(
+        {
+          organizationID: this.props.currentUser.id,
+          approved: false,
+          solutionName,
+          descriptionPitch,
+          descriptionSuccess,
+          price,
+        },
+        this.props.currentUser.orgName,
+      );
+    }
 
     this.props.history.push('/catalogo');
   };
@@ -76,6 +88,17 @@ class SolutionForm extends React.Component {
     this.setState({ errorMssg: '' });
   };
 
+  componentDidMount() {
+    if (this.props.solution) {
+      this.setState({
+        solutionName: this.props.solution.solutionName,
+        descriptionPitch: this.props.solution.descriptionPitch,
+        descriptionSuccess: this.props.solution.descriptionSuccess,
+        price: this.props.solution.price,
+      });
+    }
+  }
+
   render() {
     const {
       solutionName,
@@ -86,10 +109,7 @@ class SolutionForm extends React.Component {
     } = this.state;
     if (this.props.currentUser.approved) {
       return (
-        <Form
-          title='Agregar nueva solución'
-          onSubmit={this.handleSubmit}
-        >
+        <Form title='Agregar nueva solución' onSubmit={this.handleSubmit}>
           <FormInput
             type='text'
             name='solutionName'
@@ -124,9 +144,9 @@ class SolutionForm extends React.Component {
             label='Precio'
             required
           />
-        
+
           <Button variant='contained' color='primary' type='submit'>
-            Crear
+            {this.props.solution ? 'Guardar' : 'Crear'}
           </Button>
 
           <Notification

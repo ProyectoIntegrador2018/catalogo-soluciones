@@ -9,8 +9,11 @@ import { Button } from '@material-ui/core';
 import './solution-item.styles.scss';
 import { removeSolution } from '../../../redux/solutions/solutions.actions';
 import { deleteUserSolution } from '../../../firebase/user-panel';
+import { useHistory } from 'react-router-dom';
 
 const SolutionItem = ({ solution, removeSolution }) => {
+  const history = useHistory();
+
   const {
     id,
     solutionName,
@@ -25,7 +28,7 @@ const SolutionItem = ({ solution, removeSolution }) => {
   };
 
   const modifyItem = () => {
-    alert('implement this!');
+    history.push('/editar-solucion', { ...solution });
   };
 
   return (

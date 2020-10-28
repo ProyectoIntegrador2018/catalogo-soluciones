@@ -15,6 +15,9 @@ import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 import Administrador from './pages/administrador/administrador.component';
 import UserPanel from './pages/user-panel/user-panel.component';
+import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
+import solutionInquire from './components/solution-inquire/solution-inquire.component';
+import EditSolutionPage from './pages/editar-solucion/editar-solucion.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -25,9 +28,6 @@ import {
   pairOrganizationWithSolution,
 } from './redux/solutions/solutions.actions';
 import { setOrganizations } from './redux/organizations/organizations.actions';
-
-import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
-import solutionInquire from './components/solution-inquire/solution-inquire.component';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
@@ -75,12 +75,12 @@ class App extends React.Component {
   theme = createMuiTheme({
     palette: {
       primary: {
-        main: '#E0663B'
+        main: '#E0663B',
       },
       secondary: {
-        main: '#5D5B5B'
-      }
-    }
+        main: '#5D5B5B',
+      },
+    },
   });
 
   componentWillUnmount() {
@@ -92,58 +92,73 @@ class App extends React.Component {
       <MuiThemeProvider theme={this.theme}>
         <Header id='back-to-top-anchor' />
         <div className='switch'>
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/catalogo' component={Catalogo} />
-          <Route exact path='/solution-inquire' component={solutionInquire} />
-          <Route
-            exact
-            path='/signin'
-            render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
-            }
-          />
-          <Route
-            exact
-            path='/signup'
-            render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignUpPage />
-            }
-          />
-          <Route
-            exact
-            path='/admin'
-            render={() =>
-              this.props.currentUser && this.props.currentUser.adminAccount ? (
-                <Administrador />
-              ) : (
-                <Redirect to='/' />
-              )
-            }
-          />
-          <Route
-            exact
-            path='/crear-solucion'
-            render={() =>
-              this.props.currentUser && !this.props.currentUser.adminAccount ? (
-                <CreateSolutionPage />
-              ) : (
-                <Redirect to='/' />
-              )
-            }
-          />
-          <Route
-            exact
-            path='/panel-control'
-            render={() =>
-              this.props.currentUser && !this.props.currentUser.adminAccount ? (
-                <UserPanel />
-              ) : (
-                <Redirect to='/' />
-              )
-            }
-          />
-        </Switch>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route exact path='/catalogo' component={Catalogo} />
+            <Route exact path='/solution-inquire' component={solutionInquire} />
+            <Route
+              exact
+              path='/signin'
+              render={() =>
+                this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
+              }
+            />
+            <Route
+              exact
+              path='/signup'
+              render={() =>
+                this.props.currentUser ? <Redirect to='/' /> : <SignUpPage />
+              }
+            />
+            <Route
+              exact
+              path='/admin'
+              render={() =>
+                this.props.currentUser &&
+                this.props.currentUser.adminAccount ? (
+                  <Administrador />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/crear-solucion'
+              render={() =>
+                this.props.currentUser &&
+                !this.props.currentUser.adminAccount ? (
+                  <CreateSolutionPage />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/panel-control'
+              render={() =>
+                this.props.currentUser &&
+                !this.props.currentUser.adminAccount ? (
+                  <UserPanel />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/editar-solucion'
+              render={() =>
+                this.props.currentUser &&
+                !this.props.currentUser.adminAccount ? (
+                  <EditSolutionPage />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+          </Switch>
         </div>
         <Footer />
         <ScrollToTop />

@@ -37,3 +37,7 @@ export const insertNewSolution = async (solution, orgName) => {
     org: orgName,
   });
 };
+
+export const updateSolution = async (solution, id) => {
+  firestore.collection('solutions').doc(id).update(solution);
+};
