@@ -1,23 +1,50 @@
-.logo:hover {
-  cursor: pointer;
-}
+.root {
+  flex-grow: 1;
 
-.toolbar {
-  @media only screen and (max-device-width: 1024px) {
-    display: none;
+  .app-bar {
+    padding: 10px;
+    background-color: #e6e6e6;
+    box-shadow: none;
+
+    .toolbar {
+      max-width: 1300px;
+
+      .logo {
+        margin-right: auto;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .button-bar {
+        @media only screen and (max-device-width: 1024px) {
+          display: none;
+        }
+      }
+
+      .drawer-btn {
+        @media only screen and (min-device-width: 1024px) {
+          display: none;
+        }
+      }
+    }
   }
 }
 
 .buttons {
+  .app-bar-button {
+    color: #636363;
+    &:hover {
+      color: #CC6600;
+    }
+  }
   @media only screen and (max-device-width: 1024px) {
-    Button {
+    .app-bar-button {
       display: block;
     }
   }
 }
 
-.drawer {
-  @media only screen and (min-device-width: 1024px) {
-    display: none;
-  }
+.icon {
+  margin-right: 5px;
 }

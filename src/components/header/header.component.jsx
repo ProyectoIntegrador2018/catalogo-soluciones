@@ -1,6 +1,5 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Drawer from '@material-ui/core/Drawer';
@@ -11,79 +10,60 @@ import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-  appBar: {
-    padding: 10,
-    backgroundColor: '#e6e6e6',
-    boxShadow: 'none',
-  },
-  logo: {
-    marginRight: 'auto',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  appBarButton: {
-    color: '#636363',
-    '&:hover': {
-      color: '#CC6600',
-    },
-  },
-});
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ListIcon from '@material-ui/icons/List';
+import AddIcon from '@material-ui/icons/Add';
+import SettingsIcon from '@material-ui/icons/Settings';
 
 const HeaderContent = ({ currentUser, goTo }) => {
-  const classes = useStyles();
-
   return (
     <div className='buttons'>
       <Button
-        className={classes.appBarButton}
+        className='app-bar-button'
         onClick={() => goTo('/')}
       >
-        Inicio
-          </Button>
+        <HomeIcon className='icon' /> Inicio
+      </Button>
       <Button
-        className={classes.appBarButton}
+        className='app-bar-button'
         onClick={() => goTo('catalogo')}
       >
-        Soluciones y Servicios
-          </Button>
+        <ListIcon className='icon' /> Catálogo
+      </Button>
       {currentUser && currentUser.adminAccount && (
         <Button
-          className={classes.appBarButton}
+          className='app-bar-button'
           onClick={() => goTo('admin')}
         >
-          Administrador
+          <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
         <Button
-          className={classes.appBarButton}
+          className='app-bar-button'
           onClick={() => goTo('crear-solucion')}
         >
-          Nueva solución
+          <AddIcon className='icon' /> Nueva solución
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
         <Button
-          className={classes.appBarButton}
+          className='app-bar-button'
           onClick={() => goTo('panel-control')}
         >
-          Mis soluciones
+          <SettingsIcon className='icon' /> Mis soluciones
         </Button>
       )}
       {currentUser ? (
         <Button
-          className={classes.appBarButton}
+          className='app-bar-button'
           onClick={() => {
             auth.signOut();
             goTo('home');
           }}
         >
-          Cerrar sesion
+          <ExitToAppIcon className='icon' /> Cerrar sesion
         </Button>
       ) : null}
     </div>
@@ -91,51 +71,43 @@ const HeaderContent = ({ currentUser, goTo }) => {
 }
 
 const Header = ({ currentUser }) => {
-  const classes = useStyles();
-
   let history = useHistory();
 
   const [state, setState] = React.useState({
     drawer: false,
   });
 
-  function goTo(page) {
-    switch (page) {
-      case 'home':
-        history.push('/');
-        break;
-      default:
-        history.push(page);
-        break;
-    }
-  }
-
   const toggleDrawer = (open) => (event) => {
     setState({ drawer: open });
   };
 
+  const goTo = (page) => {
+    setState({ drawer: false });
+    history.push(page);
+  };
+
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appBar} position='static'>
-        <Toolbar>
+    <div className='root'>
+      <AppBar className='app-bar' position='static'>
+        <center><Toolbar className='toolbar'>
           <img
-            className={classes.logo}
+            className='logo'
             src='./logoCSOFTMTY.png'
             alt='Logo CSOFTMTY'
-            onClick={() => goTo('home')}
+            onClick={() => goTo('/')}
           />
-        <div className='toolbar'>
-          <HeaderContent currentUser={currentUser} goTo={goTo} />
-        </div>
-        <div className='drawer'>
-          <Button onClick={toggleDrawer(true)}>Menú</Button>
-          <Drawer anchor='right' open={state.drawer}
-            onClose={toggleDrawer(false)}>
+          <div className='button-bar'>
             <HeaderContent currentUser={currentUser} goTo={goTo} />
-          </Drawer>
-        </div>
-        </Toolbar>
+          </div>
+          <div className='drawer-btn'>
+            <Button onClick={toggleDrawer(true)}>Menú</Button>
+          </div>
+        </Toolbar></center>
       </AppBar>
+      <Drawer anchor='right' open={state.drawer}
+        onClose={toggleDrawer(false)}>
+        <HeaderContent currentUser={currentUser} goTo={goTo} />
+      </Drawer>
     </div >
   );
 };
