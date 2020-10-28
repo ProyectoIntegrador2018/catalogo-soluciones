@@ -1,7 +1,3 @@
-.logo:hover {
-  cursor: pointer;
-}
-
 .toolbar {
   @media only screen and (max-device-width: 1024px) {
     display: none;
@@ -19,5 +15,29 @@
 .drawer {
   @media only screen and (min-device-width: 1024px) {
     display: none;
+  }
+}
+
+.root {
+  flex-grow: 1;
+
+  .app-bar {
+    padding: 10px 0;
+    background-color: #e6e6e6;
+    box-shadow: none;
+
+    .logo {
+      margin-right: auto;
+      &:hover {
+        cursor: pointer;
+      }
+    }
+  
+    .app-bar-button {
+      color: #636363;
+      &:hover {
+        color: #CC6600;
+      }
+    }
   }
 }
