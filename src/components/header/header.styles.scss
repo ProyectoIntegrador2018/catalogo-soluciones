@@ -1,43 +1,47 @@
-.toolbar {
-  @media only screen and (max-device-width: 1024px) {
-    display: none;
-  }
-}
-
-.buttons {
-  @media only screen and (max-device-width: 1024px) {
-    Button {
-      display: block;
-    }
-  }
-}
-
-.drawer {
-  @media only screen and (min-device-width: 1024px) {
-    display: none;
-  }
-}
-
 .root {
   flex-grow: 1;
 
   .app-bar {
-    padding: 10px 0;
+    padding: 10px;
     background-color: #e6e6e6;
     box-shadow: none;
 
-    .logo {
-      margin-right: auto;
-      &:hover {
-        cursor: pointer;
+    .toolbar {
+      min-width: 1024px;
+      max-width: 1300px;
+
+      .logo {
+        margin-right: auto;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .button-bar {
+        @media only screen and (max-device-width: 1024px) {
+          display: none;
+        }
+      }
+      
+      .buttons {
+        .app-bar-button {
+          color: #636363;
+          &:hover {
+            color: #CC6600;
+          }
+        }
+        @media only screen and (max-device-width: 1024px) {
+          Button {
+            display: block;
+          }
+        }
       }
     }
-  
-    .app-bar-button {
-      color: #636363;
-      &:hover {
-        color: #CC6600;
-      }
-    }
+  }
+}
+
+.drawer-btn {
+  @media only screen and (min-device-width: 1024px) {
+    display: none;
   }
 }

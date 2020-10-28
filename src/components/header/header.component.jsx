@@ -89,25 +89,25 @@ const Header = ({ currentUser }) => {
   return (
     <div className='root'>
       <AppBar className='app-bar' position='static'>
-        <Toolbar>
+        <center><Toolbar className='toolbar'>
           <img
             className='logo'
             src='./logoCSOFTMTY.png'
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
-        <div className='toolbar'>
-          <HeaderContent currentUser={currentUser} goTo={goTo} />
-        </div>
-        <div className='drawer'>
-          <Button onClick={toggleDrawer(true)}>Menú</Button>
-          <Drawer anchor='right' open={state.drawer}
-            onClose={toggleDrawer(false)}>
+          <div className='button-bar'>
             <HeaderContent currentUser={currentUser} goTo={goTo} />
-          </Drawer>
-        </div>
-        </Toolbar>
+          </div>
+          <div className='drawer-btn'>
+            <Button onClick={toggleDrawer(true)}>Menú</Button>
+          </div>
+        </Toolbar></center>
       </AppBar>
+      <Drawer anchor='right' open={state.drawer}
+        onClose={toggleDrawer(false)}>
+        <HeaderContent currentUser={currentUser} goTo={goTo} />
+      </Drawer>
     </div >
   );
 };
