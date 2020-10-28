@@ -1,4 +1,8 @@
 import React from 'react';
+import { createStructuredSelector } from 'reselect';
+import { connect } from 'react-redux';
+
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { Container, Button } from '@material-ui/core';
 import PhotoCarousel from '../../components/carousel/carousel.component';
 import { Notification } from '../../components/notifications/notification.component';
@@ -22,10 +26,6 @@ class HomePage extends React.Component {
     };
   }
 
-  goToCatalogo = () => {
-    this.props.history.push('/catalogo');
-  };
-
   handleClose = (event, reason) => {
     if (reason === 'clickaway') {
       return;
@@ -36,12 +36,8 @@ class HomePage extends React.Component {
     });
   };
 
-  goToSignIn = () => {
-    this.props.history.push('/signin');
-  };
-
-  goToSignUp = () => {
-    this.props.history.push('/signup');
+  goTo = (page) => {
+    this.props.history.push(page);
   };
 
   render() {
@@ -60,7 +56,7 @@ class HomePage extends React.Component {
               <Button
                 variant='contained'
                 color='primary'
-                onClick={this.goToCatalogo}
+                onClick={() => this.goTo('catalogo')}
               >
                 Acceder al catálogo
               </Button>
@@ -76,14 +72,22 @@ class HomePage extends React.Component {
           <h2 className='orange'>
             ¿Quiéres listar tus servicios en nuestro catálogo?
           </h2>
-          <span className='link' onClick={this.goToSignUp}>
-            Crea una cuenta
-          </span>
-          &nbsp; o &nbsp;
-          <span className='link' onClick={this.goToSignIn}>
-            Inicia sesión
-          </span>
-          <p>Después de crear tu cuenta nos pondremos en contacto contigo.</p>
+          {this.props.currentUser ? (
+            <p>
+              Accede al menu de superior de opciones.
+            </p>
+          ) : (
+              <div>
+                <span className='link' onClick={() => this.goTo('signup')}>
+                  Crea una cuenta
+                </span>
+                &nbsp; o &nbsp;
+                <span className='link' onClick={() => this.goTo('signin')}>
+                  Inicia sesión
+                </span>
+                <p>No es necesaria una cuenta para visualizar el catálogo.</p>
+              </div>
+            )}
         </Container>
 
         <Notification
@@ -96,4 +100,8 @@ class HomePage extends React.Component {
   }
 }
 
-export default HomePage;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+
+export default connect(mapStateToProps)(HomePage);

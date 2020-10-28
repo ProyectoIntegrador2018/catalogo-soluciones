@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
@@ -33,10 +34,70 @@ const useStyles = makeStyles({
   },
 });
 
+const HeaderContent = ({ currentUser, goTo }) => {
+  const classes = useStyles();
+
+  return (
+    <div className='buttons'>
+      <Button
+        className={classes.appBarButton}
+        onClick={() => goTo('/')}
+      >
+        Inicio
+          </Button>
+      <Button
+        className={classes.appBarButton}
+        onClick={() => goTo('catalogo')}
+      >
+        Soluciones y Servicios
+          </Button>
+      {currentUser && currentUser.adminAccount && (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => goTo('admin')}
+        >
+          Administrador
+        </Button>
+      )}
+      {currentUser && !currentUser.adminAccount && (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => goTo('crear-solucion')}
+        >
+          Nueva solución
+        </Button>
+      )}
+      {currentUser && !currentUser.adminAccount && (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => goTo('panel-control')}
+        >
+          Mis soluciones
+        </Button>
+      )}
+      {currentUser ? (
+        <Button
+          className={classes.appBarButton}
+          onClick={() => {
+            auth.signOut();
+            goTo('home');
+          }}
+        >
+          Cerrar sesion
+        </Button>
+      ) : null}
+    </div>
+  );
+}
+
 const Header = ({ currentUser }) => {
   const classes = useStyles();
 
   let history = useHistory();
+
+  const [state, setState] = React.useState({
+    drawer: false,
+  });
 
   function goTo(page) {
     switch (page) {
@@ -49,6 +110,10 @@ const Header = ({ currentUser }) => {
     }
   }
 
+  const toggleDrawer = (open) => (event) => {
+    setState({ drawer: open });
+  };
+
   return (
     <div className={classes.root}>
       <AppBar className={classes.appBar} position='static'>
@@ -59,53 +124,19 @@ const Header = ({ currentUser }) => {
             alt='Logo CSOFTMTY'
             onClick={() => goTo('home')}
           />
-          <Button className={classes.appBarButton} onClick={() => goTo('/')}>
-            Inicio
-          </Button>
-          <Button
-            className={classes.appBarButton}
-            onClick={() => goTo('catalogo')}
-          >
-            Soluciones y Servicios
-          </Button>
-          {currentUser && currentUser.adminAccount && (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('admin')}
-            >
-              Administrador
-            </Button>
-          )}
-          {currentUser && !currentUser.adminAccount && (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('crear-solucion')}
-            >
-              Nueva solución
-            </Button>
-          )}
-          {currentUser && !currentUser.adminAccount && (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('panel-control')}
-            >
-              Mis soluciones
-            </Button>
-          )}
-          {currentUser ? (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => {
-                auth.signOut();
-                goTo('home');
-              }}
-            >
-              Cerrar sesion
-            </Button>
-          ) : null}
+        <div className='toolbar'>
+          <HeaderContent currentUser={currentUser} goTo={goTo} />
+        </div>
+        <div className='drawer'>
+          <Button onClick={toggleDrawer(true)}>Menú</Button>
+          <Drawer anchor='right' open={state.drawer}
+            onClose={toggleDrawer(false)}>
+            <HeaderContent currentUser={currentUser} goTo={goTo} />
+          </Drawer>
+        </div>
         </Toolbar>
       </AppBar>
-    </div>
+    </div >
   );
 };
 

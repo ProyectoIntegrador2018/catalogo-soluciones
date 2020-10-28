@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import { FormInput, FormTextarea } from '../form/form.component';
+import { Form, FormInput, FormTextarea } from '../form/form.component';
 import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -11,7 +11,6 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { insertNewSolution } from '../../firebase/catalog';
 
 import './solution-form.styles.scss';
-import '../form/form.styles.scss';
 
 class SolutionForm extends React.Component {
   constructor() {
@@ -87,55 +86,55 @@ class SolutionForm extends React.Component {
     } = this.state;
     if (this.props.currentUser.approved) {
       return (
-        <div className='form-container'>
-          <div className='form-content'>
-            <h2 className='title'>Agrega una nueva solución</h2>
-            <form onSubmit={this.handleSubmit}>
-              <FormInput
-                type='text'
-                name='solutionName'
-                value={solutionName}
-                onChange={this.handleChange}
-                label='Nombre de la solución'
-                required
-              />
-              <FormTextarea
-                type='text'
-                name='descriptionPitch'
-                value={descriptionPitch}
-                onChange={this.handleChange}
-                label='Descripción de la solución (max. 500 caracteres)'
-                rows={10}
-                required
-              />
-              <FormTextarea
-                type='text'
-                name='descriptionSuccess'
-                value={descriptionSuccess}
-                onChange={this.handleChange}
-                label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
-                rows={10}
-                required
-              />
-              <FormInput
-                type='number'
-                name='price'
-                value={price}
-                onChange={this.handleChange}
-                label='Precio'
-                required
-              />
-              <Notification
-                severity='error'
-                mssg={errorMssg}
-                onClose={this.handleClose}
-              />
-              <Button variant='contained' color='primary' type='submit'>
-                Crear
-              </Button>
-            </form>
-          </div>
-        </div>
+        <Form
+          title='Agregar nueva solución'
+          onSubmit={this.handleSubmit}
+        >
+          <FormInput
+            type='text'
+            name='solutionName'
+            value={solutionName}
+            onChange={this.handleChange}
+            label='Nombre de la solución'
+            required
+          />
+          <FormTextarea
+            type='text'
+            name='descriptionPitch'
+            value={descriptionPitch}
+            onChange={this.handleChange}
+            label='Descripción de la solución (max. 500 caracteres)'
+            rows={10}
+            required
+          />
+          <FormTextarea
+            type='text'
+            name='descriptionSuccess'
+            value={descriptionSuccess}
+            onChange={this.handleChange}
+            label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
+            rows={10}
+            required
+          />
+          <FormInput
+            type='number'
+            name='price'
+            value={price}
+            onChange={this.handleChange}
+            label='Precio'
+            required
+          />
+        
+          <Button variant='contained' color='primary' type='submit'>
+            Crear
+          </Button>
+
+          <Notification
+            severity='error'
+            mssg={errorMssg}
+            onClose={this.handleClose}
+          />
+        </Form>
       );
     } else {
       // TODO: Arreglar el estilo de este bloque.

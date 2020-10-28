@@ -2,6 +2,19 @@ import React from 'react';
 
 import './form.styles.scss';
 
+export const Form = ({ title, onSubmit, ...otherProps }) => (
+  <div className='form-container'>
+    <div className='form-content'>
+      <h2 className='title'>{title}</h2>
+      <form onSubmit={onSubmit} {...otherProps}></form>
+    </div>
+  </div>
+);
+
+export const FormSubTitle = ({ ...otherProps }) => (
+  <h3 className='title' {...otherProps}></h3>
+);
+
 export const FormInput = ({ handleChange, label, ...otherProps }) => (
   <div className='group'>
     <input className='form-input' onChange={handleChange} {...otherProps} />

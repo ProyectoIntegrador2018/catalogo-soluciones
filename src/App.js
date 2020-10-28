@@ -6,6 +6,8 @@ import './App.css';
 
 import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
+import ScrollToTop from './components/scroller/scroller.component';
+import BackToTop from './components/scroller/scroll-to-top.component';
 
 import SignInPage from './pages/sign-in/sign-in.component';
 import SignUpPage from './pages/sign-up/sign-up.component';
@@ -27,7 +29,7 @@ import { setOrganizations } from './redux/organizations/organizations.actions';
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
 
-import './index';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -70,14 +72,25 @@ class App extends React.Component {
     });
   }
 
+  theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#E0663B'
+      },
+      secondary: {
+        main: '#5D5B5B'
+      }
+    }
+  });
+
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
 
   render() {
     return (
-      <div>
-        <Header />
+      <MuiThemeProvider theme={this.theme}>
+        <Header id='back-to-top-anchor' />
         <Switch>
           <Route exact path='/' component={HomePage} />
           <Route exact path='/catalogo' component={Catalogo} />
@@ -131,7 +144,9 @@ class App extends React.Component {
           />
         </Switch>
         <Footer />
-      </div>
+        <ScrollToTop />
+        <BackToTop />
+      </MuiThemeProvider>
     );
   }
 }
