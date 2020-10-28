@@ -19,23 +19,14 @@ import SettingsIcon from '@material-ui/icons/Settings';
 const HeaderContent = ({ currentUser, goTo }) => {
   return (
     <div className='buttons'>
-      <Button
-        className='app-bar-button'
-        onClick={() => goTo('/')}
-      >
+      <Button className='app-bar-button' onClick={() => goTo('/')}>
         <HomeIcon className='icon' /> Inicio
       </Button>
-      <Button
-        className='app-bar-button'
-        onClick={() => goTo('catalogo')}
-      >
+      <Button className='app-bar-button' onClick={() => goTo('catalogo')}>
         <ListIcon className='icon' /> Catálogo
       </Button>
       {currentUser && currentUser.adminAccount && (
-        <Button
-          className='app-bar-button'
-          onClick={() => goTo('admin')}
-        >
+        <Button className='app-bar-button' onClick={() => goTo('admin')}>
           <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
@@ -60,7 +51,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
           className='app-bar-button'
           onClick={() => {
             auth.signOut();
-            goTo('home');
+            goTo('/');
           }}
         >
           <ExitToAppIcon className='icon' /> Cerrar sesion
@@ -68,7 +59,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
       ) : null}
     </div>
   );
-}
+};
 
 const Header = ({ currentUser }) => {
   let history = useHistory();
@@ -89,26 +80,27 @@ const Header = ({ currentUser }) => {
   return (
     <div className='root'>
       <AppBar className='app-bar' position='static'>
-        <center><Toolbar className='toolbar'>
-          <img
-            className='logo'
-            src='./logoCSOFTMTY.png'
-            alt='Logo CSOFTMTY'
-            onClick={() => goTo('/')}
-          />
-          <div className='button-bar'>
-            <HeaderContent currentUser={currentUser} goTo={goTo} />
-          </div>
-          <div className='drawer-btn'>
-            <Button onClick={toggleDrawer(true)}>Menú</Button>
-          </div>
-        </Toolbar></center>
+        <center>
+          <Toolbar className='toolbar'>
+            <img
+              className='logo'
+              src='./logoCSOFTMTY.png'
+              alt='Logo CSOFTMTY'
+              onClick={() => goTo('/')}
+            />
+            <div className='button-bar'>
+              <HeaderContent currentUser={currentUser} goTo={goTo} />
+            </div>
+            <div className='drawer-btn'>
+              <Button onClick={toggleDrawer(true)}>Menú</Button>
+            </div>
+          </Toolbar>
+        </center>
       </AppBar>
-      <Drawer anchor='right' open={state.drawer}
-        onClose={toggleDrawer(false)}>
+      <Drawer anchor='right' open={state.drawer} onClose={toggleDrawer(false)}>
         <HeaderContent currentUser={currentUser} goTo={goTo} />
       </Drawer>
-    </div >
+    </div>
   );
 };
 
