@@ -23,8 +23,6 @@ class SolutionForm extends React.Component {
       descriptionSuccess: '',
       price: '',
     };
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit = async (event) => {
@@ -83,8 +81,6 @@ class SolutionForm extends React.Component {
     const { name, value } = event.target;
 
     this.setState({ [name]: value });
-
-    this.props.setNotification({ severity: 'info', message: '' });
   };
 
   componentDidMount() {

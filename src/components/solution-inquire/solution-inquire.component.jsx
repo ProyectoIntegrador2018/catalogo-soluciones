@@ -34,8 +34,6 @@ class SolutionInquire extends React.Component {
         message: '',
       }
     }
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit = async (event) => {
@@ -78,8 +76,6 @@ class SolutionInquire extends React.Component {
     const { name, value } = event.target;
 
     this.setState({ [name]: value });
-
-    this.props.setNotification({ severity: 'info', message: '' });
   };
 
   render() {

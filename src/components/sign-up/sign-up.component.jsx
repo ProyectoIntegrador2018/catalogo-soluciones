@@ -25,8 +25,6 @@ class SignUp extends React.Component {
       orgType: '',
       description: '',
     };
-
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit = async (event) => {
@@ -88,8 +86,6 @@ class SignUp extends React.Component {
     const { name, value } = event.target;
 
     this.setState({ [name]: value });
-
-    this.props.setNotification({ severity: 'info', message: '' })
   };
 
   handleFile = (event) => {
