@@ -8,7 +8,7 @@ const Alert = (props) => {
   return <MuiAlert elevation={6} variant='filled' {...props} />;
 };
 
-export const Notification = ({ severity, mssg, onClose, ...otherProps }) => (
+export default Notification = ({ severity, mssg, onClose, ...otherProps }) => (
   <Snackbar
     autoHideDuration={5000}
     anchorOrigin={{

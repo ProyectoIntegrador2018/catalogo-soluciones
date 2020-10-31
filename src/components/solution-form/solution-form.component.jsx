@@ -4,7 +4,7 @@ import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
 import { Form, FormInput, FormTextarea } from '../form/form.component';
-import { Notification } from '../notifications/notification.component';
+import Notification from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 

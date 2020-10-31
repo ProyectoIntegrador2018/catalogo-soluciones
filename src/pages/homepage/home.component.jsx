@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { Container, Button } from '@material-ui/core';
 import PhotoCarousel from '../../components/carousel/carousel.component';
-import { Notification } from '../../components/notifications/notification.component';
+import Notification from '../../components/notifications/notification.component';
 
 import './home.styles.scss';
 

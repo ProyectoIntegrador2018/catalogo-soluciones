@@ -5,7 +5,7 @@ import firebase from 'firebase/app';
 import 'firebase/functions';
 
 import { Form, FormSubTitle, FormInput, FormTextarea } from '../form/form.component';
-import { Notification } from '../notifications/notification.component';
+import Notification from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import './solution-inquire.styles.scss';

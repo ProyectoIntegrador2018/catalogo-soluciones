@@ -2,7 +2,7 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 
 import { Form, FormSubTitle, FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form/form.component';
-import { Notification } from '../notifications/notification.component';
+import Notification from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
