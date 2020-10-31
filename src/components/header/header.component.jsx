@@ -15,6 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
+import MenuIcon from '@material-ui/icons/Menu';
 
 const HeaderContent = ({ currentUser, goTo }) => {
   return (
@@ -92,7 +93,9 @@ const Header = ({ currentUser }) => {
               <HeaderContent currentUser={currentUser} goTo={goTo} />
             </div>
             <div className='drawer-btn'>
-              <Button onClick={toggleDrawer(true)}>Menú</Button>
+              <Button onClick={toggleDrawer(true)}>
+                <MenuIcon className='icon'/> Menú
+              </Button>
             </div>
           </Toolbar>
         </center>
