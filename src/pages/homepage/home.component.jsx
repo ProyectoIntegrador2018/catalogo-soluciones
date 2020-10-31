@@ -5,37 +5,10 @@ import { connect } from 'react-redux';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { Container, Button } from '@material-ui/core';
 import PhotoCarousel from '../../components/carousel/carousel.component';
-import Notification from '../../components/notifications/notification.component';
 
 import './home.styles.scss';
 
 class HomePage extends React.Component {
-  constructor(props) {
-    super(props);
-
-    var severity = '',
-      notificationMssg = '';
-    if (this.props.location.state) {
-      severity = this.props.location.state.severity;
-      notificationMssg = this.props.location.state.notificationMssg;
-    }
-
-    this.state = {
-      severity: severity,
-      notificationMssg: notificationMssg,
-    };
-  }
-
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    this.setState({
-      severity: 'info',
-      notificationMssg: '',
-    });
-  };
-
   goTo = (page) => {
     this.props.history.push(page);
   };
@@ -89,12 +62,6 @@ class HomePage extends React.Component {
               </div>
             )}
         </Container>
-
-        <Notification
-          severity={this.state.severity}
-          mssg={this.state.notificationMssg}
-          onClose={this.handleClose}
-        />
       </div>
     );
   }

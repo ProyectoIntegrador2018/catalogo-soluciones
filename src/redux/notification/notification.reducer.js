@@ -2,7 +2,7 @@ import { NotificationActionTypes } from './notification.types';
 
 const INITIAL_STATE = {
   severity: 'info',
-  message: 'jbankjinklj',
+  message: '',
 };
 
 const notificationReducer = (state = INITIAL_STATE, action) => {
@@ -10,7 +10,8 @@ const notificationReducer = (state = INITIAL_STATE, action) => {
     case NotificationActionTypes.SET_NOTIFICATION:
       return {
         ...state,
-        notification: action.payload,
+        severity: action.payload.severity,
+        message: action.payload.message,
       }
     default:
       return state;

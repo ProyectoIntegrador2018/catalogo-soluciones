@@ -1,11 +1,13 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+
+import { setNotification } from '../../redux/notification/notification.actions';
 
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
 import { Form, FormSubTitle, FormInput, FormTextarea } from '../form/form.component';
-import Notification from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 
 import './solution-inquire.styles.scss';
@@ -30,9 +32,10 @@ class SolutionInquire extends React.Component {
         solutionName: this.props.location.state.solutionName,
         orgName: this.props.location.state.orgName,
         message: '',
-        errorMssg: '',
       }
     }
+
+    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit = async (event) => {
@@ -47,6 +50,8 @@ class SolutionInquire extends React.Component {
       solutionName,
     } = this.state;
 
+    const { setNotification } = this.props;
+
     const sendContactEmail = firebase.functions().httpsCallable('sendContactEmail');
     sendContactEmail({
       toEmail,
@@ -56,17 +61,15 @@ class SolutionInquire extends React.Component {
       org: inquiringOrg,
       message,
     }).then(() => {
-      this.props.history.push({
-        pathname: '/',
-        state: {
-          severity: 'info',
-          notificationMssg: 'Se ha enviado el mensaje. Pronto recibira una respuesta por correo.',
-        }
+      setNotification({
+        severity: 'info',
+        message: 'Se ha enviado el mensaje. Pronto recibira una respuesta por correo.',
       });
+      this.props.history.push('/');
     }).catch((error) => {
-      console.log(error);
-      this.setState({
-        errorMssg: 'Error al enviar mensaje. Intente nuevamente.'
+      setNotification({
+        severity: 'info',
+        message: 'Error al enviar mensaje. Intente nuevamente.',
       });
     });
   };
@@ -74,15 +77,9 @@ class SolutionInquire extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value, errorMssg: '' });
-  };
+    this.setState({ [name]: value });
 
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ errorMssg: '' });
+    this.props.setNotification({ severity: 'info', message: '' });
   };
 
   render() {
@@ -94,7 +91,6 @@ class SolutionInquire extends React.Component {
       solutionName,
       orgName,
       message,
-      errorMssg,
     } = this.state;
 
     return shouldRender && (
@@ -153,16 +149,14 @@ class SolutionInquire extends React.Component {
           <Button variant='contained' color='primary' type='submit'>
             Enviar mensaje
           </Button>
-          
-          <Notification
-            severity='error'
-            mssg={errorMssg}
-            onClose={this.handleClose}
-          />
         </Form>
       </div>
     );
   }
 }
 
-export default withRouter(SolutionInquire);
+const mapDispatchToProps = (dispatch) => ({
+  setNotification: (notification) => dispatch(setNotification(notification)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SolutionInquire));
