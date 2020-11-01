@@ -12,6 +12,10 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { insertNewSolution, updateSolution } from '../../firebase/catalog';
 
 import './solution-form.styles.scss';
+import {
+  modifySolution,
+  addSolution,
+} from '../../redux/solutions/solutions.actions';
 
 class SolutionForm extends React.Component {
   constructor() {
@@ -45,7 +49,7 @@ class SolutionForm extends React.Component {
     if (descriptionPitch.length > 500 || descriptionSuccess.length > 500) {
       setNotification({
         severity: 'error',
-        message: 'La longitud de la descripción es mayor a 500 caracteres.'
+        message: 'La longitud de la descripción es mayor a 500 caracteres.',
       });
       return;
     }
@@ -60,18 +64,33 @@ class SolutionForm extends React.Component {
         },
         this.props.solution.id,
       );
+      const solutionToEdit = {
+        id: this.props.solution.id,
+        solutionName: solutionName,
+        descriptionPitch: descriptionPitch,
+        descriptionSuccess: descriptionSuccess,
+        price: price,
+      };
+      const { modifySolution } = this.props;
+      modifySolution(solutionToEdit);
+      // Update solution in state.
     } else {
-      insertNewSolution(
-        {
-          organizationID: this.props.currentUser.id,
-          approved: false,
-          solutionName,
-          descriptionPitch,
-          descriptionSuccess,
-          price,
-        },
+      const newSolution = {
+        organizationID: this.props.currentUser.id,
+        approved: false,
+        solutionName,
+        descriptionPitch,
+        descriptionSuccess,
+        price,
+      };
+      const res = await insertNewSolution(
+        newSolution,
         this.props.currentUser.orgName,
       );
+      const { addSolution } = this.props;
+      newSolution.id = res.id;
+      addSolution(newSolution);
+      // Add solution to state.
     }
 
     this.props.history.push('/catalogo');
@@ -142,7 +161,6 @@ class SolutionForm extends React.Component {
           <Button variant='contained' color='primary' type='submit'>
             {this.props.solution ? 'Guardar' : 'Crear'}
           </Button>
-
         </Form>
       );
     } else {
@@ -162,7 +180,12 @@ const mapStateToProps = createStructuredSelector({
 });
 
 const mapDispatchToProps = (dispatch) => ({
+  modifySolution: (solution) => dispatch(modifySolution(solution)),
+  addSolution: (solution) => dispatch(addSolution(solution)),
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SolutionForm));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withRouter(SolutionForm));

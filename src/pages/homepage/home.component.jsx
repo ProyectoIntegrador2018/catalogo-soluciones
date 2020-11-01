@@ -46,21 +46,19 @@ class HomePage extends React.Component {
             ¿Quiéres listar tus servicios en nuestro catálogo?
           </h2>
           {this.props.currentUser ? (
-            <p>
-              Accede al menu de superior de opciones.
-            </p>
+            <p>Accede al menu de superior de opciones.</p>
           ) : (
-              <div>
-                <span className='link' onClick={() => this.goTo('signup')}>
-                  Crea una cuenta
-                </span>
-                &nbsp; o &nbsp;
-                <span className='link' onClick={() => this.goTo('signin')}>
-                  Inicia sesión
-                </span>
-                <p>No es necesaria una cuenta para visualizar el catálogo.</p>
-              </div>
-            )}
+            <div>
+              <span className='link' onClick={() => this.goTo('signup')}>
+                Crea una cuenta
+              </span>
+              &nbsp; o &nbsp;
+              <span className='link' onClick={() => this.goTo('signin')}>
+                Inicia sesión
+              </span>
+              <p>No es necesaria una cuenta para visualizar el catálogo.</p>
+            </div>
+          )}
         </Container>
       </div>
     );

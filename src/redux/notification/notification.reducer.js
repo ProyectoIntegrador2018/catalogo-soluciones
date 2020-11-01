@@ -12,7 +12,7 @@ const notificationReducer = (state = INITIAL_STATE, action) => {
         ...state,
         severity: action.payload.severity,
         message: action.payload.message,
-      }
+      };
     default:
       return state;
   }

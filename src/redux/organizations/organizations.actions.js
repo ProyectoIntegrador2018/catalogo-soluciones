@@ -9,3 +9,8 @@ export const removeOrganization = (organizationId) => ({
   type: OrganizationsActionTypes.REMOVE_ORGANIZATION,
   payload: organizationId,
 });
+
+export const adminApproveOrganization = (organizationId) => ({
+  type: OrganizationsActionTypes.APPROVE_ORGANIZATION,
+  payload: organizationId,
+});

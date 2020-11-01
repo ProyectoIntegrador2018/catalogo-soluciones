@@ -27,7 +27,7 @@ export const getCatalogData = async (attribute) => {
 };
 
 export const insertNewSolution = async (solution, orgName) => {
-  firestore.collection('solutions').add(solution);
+  const solutionId = await firestore.collection('solutions').add(solution);
 
   const sendNewSolutionEmail = firebase
     .functions()
@@ -36,6 +36,8 @@ export const insertNewSolution = async (solution, orgName) => {
     name: solution.solutionName,
     org: orgName,
   });
+
+  return solutionId;
 };
 
 export const updateSolution = async (solution, id) => {
