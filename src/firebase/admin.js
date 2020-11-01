@@ -1,8 +1,6 @@
 import { firestore } from './firebase';
 
 export const approveRequest = (id, collection) => {
-  console.log('approved!', id);
-
   firestore
     .collection(collection)
     .doc(id)

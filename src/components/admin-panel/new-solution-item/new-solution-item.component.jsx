@@ -7,10 +7,17 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-solution-item.styles.scss';
-import { removeSolution } from '../../../redux/solutions/solutions.actions';
+import {
+  removeSolution,
+  adminApproveSolution,
+} from '../../../redux/solutions/solutions.actions';
 import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
-const NewSolutionItem = ({ newSolution, removeSolution }) => {
+const NewSolutionItem = ({
+  newSolution,
+  removeSolution,
+  adminApproveSolution,
+}) => {
   const {
     id,
     imageUrl,
@@ -23,7 +30,8 @@ const NewSolutionItem = ({ newSolution, removeSolution }) => {
 
   const approveSolution = () => {
     approveRequest(id, 'solutions');
-    removeSolution(id);
+    // Change state using redux.
+    adminApproveSolution(id);
   };
 
   const rejectSolution = () => {
@@ -69,6 +77,8 @@ const NewSolutionItem = ({ newSolution, removeSolution }) => {
 
 const mapDispatchToProps = (dispatch) => ({
   removeSolution: (solution) => dispatch(removeSolution(solution)),
+  adminApproveSolution: (solutionId) =>
+    dispatch(adminApproveSolution(solutionId)),
 });
 
 export default connect(null, mapDispatchToProps)(NewSolutionItem);

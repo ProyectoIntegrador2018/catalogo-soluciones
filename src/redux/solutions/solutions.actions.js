@@ -14,3 +14,8 @@ export const removeSolution = (solutionId) => ({
   type: SolutionsActionTypes.REMOVE_SOLUTION,
   payload: solutionId,
 });
+
+export const adminApproveSolution = (solutionId) => ({
+  type: SolutionsActionTypes.APPROVE_SOLUTION,
+  payload: solutionId,
+});

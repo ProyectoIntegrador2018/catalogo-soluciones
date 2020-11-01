@@ -1,5 +1,5 @@
 import { SolutionsActionTypes } from './solutions.types';
-import { matchOrganization } from './solutions.utils';
+import { matchOrganization, approveSolution } from './solutions.utils';
 
 const INITIAL_STATE = {
   allSolutions: null,
@@ -23,6 +23,11 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
         allSolutions: state.allSolutions.filter(
           (solution) => solution.id !== action.payload,
         ),
+      };
+    case SolutionsActionTypes.APPROVE_SOLUTION:
+      return {
+        ...state,
+        allSolutions: approveSolution(state.allSolutions, action.payload),
       };
     default:
       return state;
