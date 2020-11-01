@@ -8,6 +8,7 @@ import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 import ScrollToTop from './components/scroller/scroller.component';
 import BackToTop from './components/scroller/scroll-to-top.component';
+import Notification from './components/notifications/notification.component';
 
 import SignInPage from './pages/sign-in/sign-in.component';
 import SignUpPage from './pages/sign-up/sign-up.component';
@@ -115,11 +116,11 @@ class App extends React.Component {
               path='/admin'
               render={() =>
                 this.props.currentUser &&
-                this.props.currentUser.adminAccount ? (
-                  <Administrador />
-                ) : (
-                  <Redirect to='/' />
-                )
+                  this.props.currentUser.adminAccount ? (
+                    <Administrador />
+                  ) : (
+                    <Redirect to='/' />
+                  )
               }
             />
             <Route
@@ -127,11 +128,11 @@ class App extends React.Component {
               path='/crear-solucion'
               render={() =>
                 this.props.currentUser &&
-                !this.props.currentUser.adminAccount ? (
-                  <CreateSolutionPage />
-                ) : (
-                  <Redirect to='/' />
-                )
+                  !this.props.currentUser.adminAccount ? (
+                    <CreateSolutionPage />
+                  ) : (
+                    <Redirect to='/' />
+                  )
               }
             />
             <Route
@@ -139,11 +140,11 @@ class App extends React.Component {
               path='/panel-control'
               render={() =>
                 this.props.currentUser &&
-                !this.props.currentUser.adminAccount ? (
-                  <UserPanel />
-                ) : (
-                  <Redirect to='/' />
-                )
+                  !this.props.currentUser.adminAccount ? (
+                    <UserPanel />
+                  ) : (
+                    <Redirect to='/' />
+                  )
               }
             />
             <Route
@@ -151,11 +152,11 @@ class App extends React.Component {
               path='/editar-solucion'
               render={() =>
                 this.props.currentUser &&
-                !this.props.currentUser.adminAccount ? (
-                  <EditSolutionPage />
-                ) : (
-                  <Redirect to='/' />
-                )
+                  !this.props.currentUser.adminAccount ? (
+                    <EditSolutionPage />
+                  ) : (
+                    <Redirect to='/' />
+                  )
               }
             />
           </Switch>
@@ -163,12 +164,13 @@ class App extends React.Component {
         <Footer />
         <ScrollToTop />
         <BackToTop />
+        <Notification />
       </MuiThemeProvider>
     );
   }
 }
 
-const mapStateToProps = ({ user, organizations, solutions }) => ({
+const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser,
 });
 
