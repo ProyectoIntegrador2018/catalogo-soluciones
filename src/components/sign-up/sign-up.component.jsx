@@ -1,8 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { Form, FormSubTitle, FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form/form.component';
-import { Notification } from '../notifications/notification.component';
+import { setNotification } from '../../redux/notification/notification.actions';
+
+import {
+  Form,
+  FormSubTitle,
+  FormInput,
+  FormSelect,
+  FormOption,
+  FormTextarea,
+  FormFile,
+} from '../form/form.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
@@ -40,6 +50,8 @@ class SignUp extends React.Component {
       description,
     } = this.state;
 
+    const { setNotification } = this.props;
+
     if (password !== confirmPassword) {
       this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
       return;
@@ -50,8 +62,16 @@ class SignUp extends React.Component {
       return;
     }
 
-    signUp(email, password, displayName, phoneNumber, orgName, orgType,
-      description, orgLogo)
+    signUp(
+      email,
+      password,
+      displayName,
+      phoneNumber,
+      orgName,
+      orgType,
+      description,
+      orgLogo,
+    )
       .then(() => {
         this.setState({
           displayName: '',
@@ -64,37 +84,30 @@ class SignUp extends React.Component {
           orgLogo: '',
           description: '',
         });
-        this.props.history.push({
-          pathname: 'signin',
-          state: {
-            severity: 'info',
-            notificationMssg: 'Se ha enviado un correo para confirmar la cuenta.'
-          }
+        setNotification({
+          severity: 'info',
+          message: 'Se ha enviado un correo para confirmar la cuenta.',
         });
+        this.props.history.push('signin');
       })
       .catch((errorMssg) => {
-        this.setState({ errorMssg: errorMssg });
+        setNotification({
+          severity: 'error',
+          message: errorMssg,
+        });
       });
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value, errorMssg: '' });
+    this.setState({ [name]: value });
   };
 
   handleFile = (event) => {
     const { name } = event.target;
 
     this.setState({ [name]: event.target.files[0] });
-  }
-
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ errorMssg: '' });
   };
 
   goToSignIn = () => {
@@ -108,22 +121,18 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
-      errorMssg,
       orgName,
       orgType,
       description,
     } = this.state;
     return (
-      <Form
-        title='Crear nueva cuenta'
-        onSubmit={this.handleSubmit}
-      >
+      <Form title='Crear nueva cuenta' onSubmit={this.handleSubmit}>
         <span>Registra tu organización</span>
         <div className='sign-in'>
           ¿Ya tienes cuenta?
-            <span className='sign-in-button link' onClick={this.goToSignIn}>
+          <span className='sign-in-button link' onClick={this.goToSignIn}>
             Inicia sesión
-            </span>
+          </span>
         </div>
         <FormSubTitle>Datos del administrador</FormSubTitle>
         <FormInput
@@ -209,15 +218,13 @@ class SignUp extends React.Component {
         <Button variant='contained' color='primary' type='submit'>
           Crear cuenta
         </Button>
-
-        <Notification
-          severity='error'
-          mssg={errorMssg}
-          onClose={this.handleClose}
-        />
       </Form>
     );
   }
 }
 
-export default withRouter(SignUp);
+const mapDispatchToProps = (dispatch) => ({
+  setNotification: (notification) => dispatch(setNotification(notification)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));

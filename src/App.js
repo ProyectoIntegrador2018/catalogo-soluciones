@@ -8,6 +8,7 @@ import Header from './components/header/header.component';
 import Footer from './components/footer/footer.component';
 import ScrollToTop from './components/scroller/scroller.component';
 import BackToTop from './components/scroller/scroll-to-top.component';
+import Notification from './components/notifications/notification.component';
 
 import SignInPage from './pages/sign-in/sign-in.component';
 import SignUpPage from './pages/sign-up/sign-up.component';
@@ -163,12 +164,13 @@ class App extends React.Component {
         <Footer />
         <ScrollToTop />
         <BackToTop />
+        <Notification />
       </MuiThemeProvider>
     );
   }
 }
 
-const mapStateToProps = ({ user, organizations, solutions }) => ({
+const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser,
 });
 

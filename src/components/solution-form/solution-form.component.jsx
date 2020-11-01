@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
+import { setNotification } from '../../redux/notification/notification.actions';
+
 import { Form, FormInput, FormTextarea } from '../form/form.component';
-import { Notification } from '../notifications/notification.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
@@ -25,7 +26,6 @@ class SolutionForm extends React.Component {
       descriptionPitch: '',
       descriptionSuccess: '',
       price: '',
-      errorMssg: '',
     };
   }
 
@@ -39,14 +39,17 @@ class SolutionForm extends React.Component {
       price,
     } = this.state;
 
+    const { setNotification } = this.props;
+
     if (price < 0) {
-      this.setState({ errorMssg: 'Precio inválido.' });
+      setNotification({ severity: 'error', message: 'Precio inválido' });
       return;
     }
 
     if (descriptionPitch.length > 500 || descriptionSuccess.length > 500) {
-      this.setState({
-        errorMssg: 'La longitud de la descripción es mayor a 500 caracteres.',
+      setNotification({
+        severity: 'error',
+        message: 'La longitud de la descripción es mayor a 500 caracteres.',
       });
       return;
     }
@@ -96,15 +99,7 @@ class SolutionForm extends React.Component {
   handleChange = (event) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value, errorMssg: '' });
-  };
-
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ errorMssg: '' });
+    this.setState({ [name]: value });
   };
 
   componentDidMount() {
@@ -124,7 +119,6 @@ class SolutionForm extends React.Component {
       descriptionPitch,
       descriptionSuccess,
       price,
-      errorMssg,
     } = this.state;
     if (this.props.currentUser.approved) {
       return (
@@ -167,12 +161,6 @@ class SolutionForm extends React.Component {
           <Button variant='contained' color='primary' type='submit'>
             {this.props.solution ? 'Guardar' : 'Crear'}
           </Button>
-
-          <Notification
-            severity='error'
-            mssg={errorMssg}
-            onClose={this.handleClose}
-          />
         </Form>
       );
     } else {
@@ -194,6 +182,7 @@ const mapStateToProps = createStructuredSelector({
 const mapDispatchToProps = (dispatch) => ({
   modifySolution: (solution) => dispatch(modifySolution(solution)),
   addSolution: (solution) => dispatch(addSolution(solution)),
+  setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
 export default connect(
