@@ -26,14 +26,16 @@ class SignIn extends React.Component {
 
     const { email, password } = this.state;
 
-    signIn(email, password).then(() => {
-      this.setState({ email: '', password: '' });
-    }).catch((errorMssg) => {
-      this.props.setNotification({
-        severity: 'error',
-        message: errorMssg
+    signIn(email, password)
+      .then(() => {
+        this.setState({ email: '', password: '' });
+      })
+      .catch((errorMssg) => {
+        this.props.setNotification({
+          severity: 'error',
+          message: errorMssg,
+        });
       });
-    })
   };
 
   handleChange = (event) => {
@@ -48,10 +50,7 @@ class SignIn extends React.Component {
 
   render() {
     return (
-      <Form
-        title='Iniciar sesión'
-        onSubmit={this.handleSubmit}
-      >
+      <Form title='Iniciar sesión' onSubmit={this.handleSubmit}>
         <span>Inicia sesión con tu correo y contraseña</span>
 
         <FormInput
@@ -73,13 +72,13 @@ class SignIn extends React.Component {
 
         <Button variant='contained' color='primary' type='submit'>
           Inicia sesión
-          </Button>
+        </Button>
 
         <div className='sign-up'>
           Aún no tienes cuenta?
-            <span className='sign-up-button link' onClick={this.goToSignUp}>
+          <span className='sign-up-button link' onClick={this.goToSignUp}>
             Crear cuenta
-            </span>
+          </span>
         </div>
       </Form>
     );

@@ -7,7 +7,12 @@ import { setNotification } from '../../redux/notification/notification.actions';
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
-import { Form, FormSubTitle, FormInput, FormTextarea } from '../form/form.component';
+import {
+  Form,
+  FormSubTitle,
+  FormInput,
+  FormTextarea,
+} from '../form/form.component';
 import { Button } from '@material-ui/core';
 
 import './solution-inquire.styles.scss';
@@ -16,11 +21,13 @@ class SolutionInquire extends React.Component {
   constructor(props) {
     super(props);
 
-    if (!this.props.location.state ||
+    if (
+      !this.props.location.state ||
       !this.props.location.state.toEmail ||
       !this.props.location.state.solutionName ||
-      !this.props.location.state.orgName) {
-      this.state = { shouldRender: false }
+      !this.props.location.state.orgName
+    ) {
+      this.state = { shouldRender: false };
       this.props.history.push('/');
     } else {
       this.state = {
@@ -32,7 +39,7 @@ class SolutionInquire extends React.Component {
         solutionName: this.props.location.state.solutionName,
         orgName: this.props.location.state.orgName,
         message: '',
-      }
+      };
     }
   }
 
@@ -50,7 +57,9 @@ class SolutionInquire extends React.Component {
 
     const { setNotification } = this.props;
 
-    const sendContactEmail = firebase.functions().httpsCallable('sendContactEmail');
+    const sendContactEmail = firebase
+      .functions()
+      .httpsCallable('sendContactEmail');
     sendContactEmail({
       toEmail,
       fromEmail,
@@ -58,18 +67,21 @@ class SolutionInquire extends React.Component {
       service: solutionName,
       org: inquiringOrg,
       message,
-    }).then(() => {
-      setNotification({
-        severity: 'info',
-        message: 'Se ha enviado el mensaje. Pronto recibira una respuesta por correo.',
+    })
+      .then(() => {
+        setNotification({
+          severity: 'info',
+          message:
+            'Se ha enviado el mensaje. Pronto recibira una respuesta por correo.',
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        setNotification({
+          severity: 'info',
+          message: 'Error al enviar mensaje. Intente nuevamente.',
+        });
       });
-      this.props.history.push('/');
-    }).catch((error) => {
-      setNotification({
-        severity: 'info',
-        message: 'Error al enviar mensaje. Intente nuevamente.',
-      });
-    });
   };
 
   handleChange = (event) => {
@@ -89,64 +101,66 @@ class SolutionInquire extends React.Component {
       message,
     } = this.state;
 
-    return shouldRender && (
-      <div className='box'>
-        <Form
-          title='Preguntar sobre un servicio'
-          onSubmit={this.handleSubmit}
-        >
-          <FormSubTitle>Organización a contactar</FormSubTitle>
-          <FormInput
-            type='text'
-            value={orgName}
-            label='Organización que se esta contactando'
-            readOnly
-          />
-          <FormInput
-            type='text'
-            value={solutionName}
-            label='Servicio que se está solicitando'
-            readOnly
-          />
-          <FormSubTitle>Mensaje de contacto</FormSubTitle>
-          <FormInput
-            type='text'
-            name='name'
-            value={name}
-            onChange={this.handleChange}
-            label='Nombre de quién envía el mensaje'
-            required
-          />
-          <FormInput
-            type='text'
-            name='inquiringOrg'
-            value={inquiringOrg}
-            onChange={this.handleChange}
-            label='Nombre de su organización'
-            required
-          />
-          <FormInput
-            type='email'
-            name='fromEmail'
-            value={fromEmail}
-            onChange={this.handleChange}
-            label='Correo electrónico de contacto'
-            required
-          />
-          <FormTextarea
-            type='text'
-            name='message'
-            value={message}
-            onChange={this.handleChange}
-            label='Su mensaje'
-            required
-          />
+    return (
+      shouldRender && (
+        <div className='box'>
+          <Form
+            title='Preguntar sobre un servicio'
+            onSubmit={this.handleSubmit}
+          >
+            <FormSubTitle>Organización a contactar</FormSubTitle>
+            <FormInput
+              type='text'
+              value={orgName}
+              label='Organización que se esta contactando'
+              readOnly
+            />
+            <FormInput
+              type='text'
+              value={solutionName}
+              label='Servicio que se está solicitando'
+              readOnly
+            />
+            <FormSubTitle>Mensaje de contacto</FormSubTitle>
+            <FormInput
+              type='text'
+              name='name'
+              value={name}
+              onChange={this.handleChange}
+              label='Nombre de quién envía el mensaje'
+              required
+            />
+            <FormInput
+              type='text'
+              name='inquiringOrg'
+              value={inquiringOrg}
+              onChange={this.handleChange}
+              label='Nombre de su organización'
+              required
+            />
+            <FormInput
+              type='email'
+              name='fromEmail'
+              value={fromEmail}
+              onChange={this.handleChange}
+              label='Correo electrónico de contacto'
+              required
+            />
+            <FormTextarea
+              type='text'
+              name='message'
+              value={message}
+              onChange={this.handleChange}
+              label='Su mensaje'
+              required
+            />
 
-          <Button variant='contained' color='primary' type='submit'>
-            Enviar mensaje
-          </Button>
-        </Form>
-      </div>
+            <Button variant='contained' color='primary' type='submit'>
+              Enviar mensaje
+            </Button>
+          </Form>
+        </div>
+      )
     );
   }
 }

@@ -7,10 +7,17 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-user-request-item.styles.scss';
-import { removeOrganization } from '../../../redux/organizations/organizations.actions';
+import {
+  removeOrganization,
+  adminApproveOrganization,
+} from '../../../redux/organizations/organizations.actions';
 import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
-const NewUserRequestItem = ({ userRequest, removeOrganization }) => {
+const NewUserRequestItem = ({
+  userRequest,
+  removeOrganization,
+  adminApproveOrganization,
+}) => {
   const {
     id,
     logo,
@@ -24,7 +31,7 @@ const NewUserRequestItem = ({ userRequest, removeOrganization }) => {
 
   const approveOrganization = () => {
     approveRequest(id, 'users');
-    removeOrganization(id);
+    adminApproveOrganization(id);
   };
 
   const rejectOrganization = () => {
@@ -71,8 +78,10 @@ const NewUserRequestItem = ({ userRequest, removeOrganization }) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  removeOrganization: (organization) =>
-    dispatch(removeOrganization(organization)),
+  removeOrganization: (organizationId) =>
+    dispatch(removeOrganization(organizationId)),
+  adminApproveOrganization: (organizationId) =>
+    dispatch(adminApproveOrganization(organizationId)),
 });
 
 export default connect(null, mapDispatchToProps)(NewUserRequestItem);

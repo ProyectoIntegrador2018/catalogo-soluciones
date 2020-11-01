@@ -4,7 +4,15 @@ import { withRouter } from 'react-router-dom';
 
 import { setNotification } from '../../redux/notification/notification.actions';
 
-import { Form, FormSubTitle, FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form/form.component';
+import {
+  Form,
+  FormSubTitle,
+  FormInput,
+  FormSelect,
+  FormOption,
+  FormTextarea,
+  FormFile,
+} from '../form/form.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
@@ -54,8 +62,16 @@ class SignUp extends React.Component {
       return;
     }
 
-    signUp(email, password, displayName, phoneNumber, orgName, orgType,
-      description, orgLogo)
+    signUp(
+      email,
+      password,
+      displayName,
+      phoneNumber,
+      orgName,
+      orgType,
+      description,
+      orgLogo,
+    )
       .then(() => {
         this.setState({
           displayName: '',
@@ -70,14 +86,14 @@ class SignUp extends React.Component {
         });
         setNotification({
           severity: 'info',
-          message: 'Se ha enviado un correo para confirmar la cuenta.'
+          message: 'Se ha enviado un correo para confirmar la cuenta.',
         });
         this.props.history.push('signin');
       })
       .catch((errorMssg) => {
         setNotification({
           severity: 'error',
-          message: errorMssg
+          message: errorMssg,
         });
       });
   };
@@ -92,7 +108,7 @@ class SignUp extends React.Component {
     const { name } = event.target;
 
     this.setState({ [name]: event.target.files[0] });
-  }
+  };
 
   goToSignIn = () => {
     this.props.history.push('signin');
@@ -110,16 +126,13 @@ class SignUp extends React.Component {
       description,
     } = this.state;
     return (
-      <Form
-        title='Crear nueva cuenta'
-        onSubmit={this.handleSubmit}
-      >
+      <Form title='Crear nueva cuenta' onSubmit={this.handleSubmit}>
         <span>Registra tu organización</span>
         <div className='sign-in'>
           ¿Ya tienes cuenta?
-            <span className='sign-in-button link' onClick={this.goToSignIn}>
+          <span className='sign-in-button link' onClick={this.goToSignIn}>
             Inicia sesión
-            </span>
+          </span>
         </div>
         <FormSubTitle>Datos del administrador</FormSubTitle>
         <FormInput

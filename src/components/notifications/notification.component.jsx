@@ -25,10 +25,7 @@ class Notification extends React.Component {
   }
 
   render() {
-    const {
-      severity,
-      message,
-    } = this.props.notification;
+    const { severity, message } = this.props.notification;
     return (
       <Snackbar
         autoHideDuration={5000}
@@ -42,14 +39,14 @@ class Notification extends React.Component {
         <Alert severity={severity} onClose={this.onClose}>
           {message}
         </Alert>
-      </Snackbar >
+      </Snackbar>
     );
   }
-};
+}
 
 const mapStateToProps = createStructuredSelector({
   notification: selectNotification,
-})
+});
 
 const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),

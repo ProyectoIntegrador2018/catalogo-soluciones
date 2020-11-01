@@ -116,11 +116,11 @@ class App extends React.Component {
               path='/admin'
               render={() =>
                 this.props.currentUser &&
-                  this.props.currentUser.adminAccount ? (
-                    <Administrador />
-                  ) : (
-                    <Redirect to='/' />
-                  )
+                this.props.currentUser.adminAccount ? (
+                  <Administrador />
+                ) : (
+                  <Redirect to='/' />
+                )
               }
             />
             <Route
@@ -128,11 +128,11 @@ class App extends React.Component {
               path='/crear-solucion'
               render={() =>
                 this.props.currentUser &&
-                  !this.props.currentUser.adminAccount ? (
-                    <CreateSolutionPage />
-                  ) : (
-                    <Redirect to='/' />
-                  )
+                !this.props.currentUser.adminAccount ? (
+                  <CreateSolutionPage />
+                ) : (
+                  <Redirect to='/' />
+                )
               }
             />
             <Route
@@ -140,11 +140,11 @@ class App extends React.Component {
               path='/panel-control'
               render={() =>
                 this.props.currentUser &&
-                  !this.props.currentUser.adminAccount ? (
-                    <UserPanel />
-                  ) : (
-                    <Redirect to='/' />
-                  )
+                !this.props.currentUser.adminAccount ? (
+                  <UserPanel />
+                ) : (
+                  <Redirect to='/' />
+                )
               }
             />
             <Route
@@ -152,11 +152,11 @@ class App extends React.Component {
               path='/editar-solucion'
               render={() =>
                 this.props.currentUser &&
-                  !this.props.currentUser.adminAccount ? (
-                    <EditSolutionPage />
-                  ) : (
-                    <Redirect to='/' />
-                  )
+                !this.props.currentUser.adminAccount ? (
+                  <EditSolutionPage />
+                ) : (
+                  <Redirect to='/' />
+                )
               }
             />
           </Switch>
