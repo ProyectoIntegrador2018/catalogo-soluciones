@@ -11,7 +11,10 @@ import { selectCurrentUser } from '../../redux/user/user.selectors';
 import { insertNewSolution, updateSolution } from '../../firebase/catalog';
 
 import './solution-form.styles.scss';
-import { modifySolution } from '../../redux/solutions/solutions.actions';
+import {
+  modifySolution,
+  addSolution,
+} from '../../redux/solutions/solutions.actions';
 
 class SolutionForm extends React.Component {
   constructor() {
@@ -69,18 +72,21 @@ class SolutionForm extends React.Component {
       modifySolution(solutionToEdit);
       // Update solution in state.
     } else {
+      const newSolution = {
+        organizationID: this.props.currentUser.id,
+        approved: false,
+        solutionName,
+        descriptionPitch,
+        descriptionSuccess,
+        price,
+      };
       const res = await insertNewSolution(
-        {
-          organizationID: this.props.currentUser.id,
-          approved: false,
-          solutionName,
-          descriptionPitch,
-          descriptionSuccess,
-          price,
-        },
+        newSolution,
         this.props.currentUser.orgName,
       );
-      console.log(res.id);
+      const { addSolution } = this.props;
+      newSolution.id = res.id;
+      addSolution(newSolution);
       // Add solution to state.
     }
 
@@ -102,8 +108,6 @@ class SolutionForm extends React.Component {
   };
 
   componentDidMount() {
-    const { modifySolution } = this.props;
-
     if (this.props.solution) {
       this.setState({
         solutionName: this.props.solution.solutionName,
@@ -189,6 +193,7 @@ const mapStateToProps = createStructuredSelector({
 
 const mapDispatchToProps = (dispatch) => ({
   modifySolution: (solution) => dispatch(modifySolution(solution)),
+  addSolution: (solution) => dispatch(addSolution(solution)),
 });
 
 export default connect(

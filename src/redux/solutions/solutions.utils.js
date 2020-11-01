@@ -21,7 +21,6 @@ export const approveSolution = (solutions, solutionId) => {
 };
 
 export const editSolution = (solutions, solution) => {
-  console.log('hace alllgoooo aquiiii');
   for (const i in solutions) {
     if (solutions[i].id === solution.id) {
       solutions[i].solutionName = solution.solutionName;
@@ -29,10 +28,14 @@ export const editSolution = (solutions, solution) => {
       solutions[i].descriptionSuccess = solution.descriptionsuccess;
       solutions[i].price = solution.price;
       // Slice needed to trigger change detection.
-      console.log('entramos aquiii');
       return solutions.slice();
     }
   }
 
   return solutions;
+};
+
+export const addToSolutions = (solutions, solution) => {
+  solutions.push(solution);
+  return solutions.slice();
 };

@@ -3,6 +3,7 @@ import {
   matchOrganization,
   approveSolution,
   editSolution,
+  addToSolutions,
 } from './solutions.utils';
 
 const INITIAL_STATE = {
@@ -34,10 +35,14 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
         allSolutions: approveSolution(state.allSolutions, action.payload),
       };
     case SolutionsActionTypes.MODIFY_SOLUTION:
-      console.log('sospechosooooooo');
       return {
         ...state,
         allSolutions: editSolution(state.allSolutions, action.payload),
+      };
+    case SolutionsActionTypes.ADD_SOLUTION:
+      return {
+        ...state,
+        allSolutions: addToSolutions(state.allSolutions, action.payload),
       };
     default:
       return state;

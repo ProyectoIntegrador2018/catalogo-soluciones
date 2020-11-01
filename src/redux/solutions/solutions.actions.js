@@ -24,3 +24,8 @@ export const modifySolution = (solution) => ({
   type: SolutionsActionTypes.MODIFY_SOLUTION,
   payload: solution,
 });
+
+export const addSolution = (solution) => ({
+  type: SolutionsActionTypes.ADD_SOLUTION,
+  payload: solution,
+});
