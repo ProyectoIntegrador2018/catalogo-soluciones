@@ -19,3 +19,8 @@ export const adminApproveSolution = (solutionId) => ({
   type: SolutionsActionTypes.APPROVE_SOLUTION,
   payload: solutionId,
 });
+
+export const modifySolution = (solution) => ({
+  type: SolutionsActionTypes.MODIFY_SOLUTION,
+  payload: solution,
+});

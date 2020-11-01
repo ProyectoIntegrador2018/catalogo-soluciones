@@ -1,5 +1,9 @@
 import { SolutionsActionTypes } from './solutions.types';
-import { matchOrganization, approveSolution } from './solutions.utils';
+import {
+  matchOrganization,
+  approveSolution,
+  editSolution,
+} from './solutions.utils';
 
 const INITIAL_STATE = {
   allSolutions: null,
@@ -28,6 +32,12 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         allSolutions: approveSolution(state.allSolutions, action.payload),
+      };
+    case SolutionsActionTypes.MODIFY_SOLUTION:
+      console.log('sospechosooooooo');
+      return {
+        ...state,
+        allSolutions: editSolution(state.allSolutions, action.payload),
       };
     default:
       return state;
