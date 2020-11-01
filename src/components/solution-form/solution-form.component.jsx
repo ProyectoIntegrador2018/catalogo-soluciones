@@ -5,7 +5,7 @@ import { createStructuredSelector } from 'reselect';
 
 import { setNotification } from '../../redux/notification/notification.actions';
 
-import { Form, FormInput, FormTextarea } from '../form/form.component';
+import { Form, FormInput, FormTextarea, FormSelect, FormOption } from '../form/form.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
@@ -17,6 +17,8 @@ import {
   addSolution,
 } from '../../redux/solutions/solutions.actions';
 
+import SOLUTION_CATEGORIES from '../../constants/solution-categories';
+
 class SolutionForm extends React.Component {
   constructor() {
     super();
@@ -26,6 +28,7 @@ class SolutionForm extends React.Component {
       descriptionPitch: '',
       descriptionSuccess: '',
       price: '',
+      category: '',
     };
   }
 
@@ -37,6 +40,7 @@ class SolutionForm extends React.Component {
       descriptionPitch,
       descriptionSuccess,
       price,
+      category,
     } = this.state;
 
     const { setNotification } = this.props;
@@ -61,15 +65,17 @@ class SolutionForm extends React.Component {
           descriptionPitch,
           descriptionSuccess,
           price,
+          category,
         },
         this.props.solution.id,
       );
       const solutionToEdit = {
         id: this.props.solution.id,
-        solutionName: solutionName,
-        descriptionPitch: descriptionPitch,
-        descriptionSuccess: descriptionSuccess,
-        price: price,
+        solutionName,
+        descriptionPitch,
+        descriptionSuccess,
+        price,
+        category,
       };
       const { modifySolution } = this.props;
       modifySolution(solutionToEdit);
@@ -82,6 +88,7 @@ class SolutionForm extends React.Component {
         descriptionPitch,
         descriptionSuccess,
         price,
+        category,
       };
       const res = await insertNewSolution(
         newSolution,
@@ -109,6 +116,7 @@ class SolutionForm extends React.Component {
         descriptionPitch: this.props.solution.descriptionPitch,
         descriptionSuccess: this.props.solution.descriptionSuccess,
         price: this.props.solution.price,
+        category: this.props.solution.category,
       });
     }
   }
@@ -119,6 +127,7 @@ class SolutionForm extends React.Component {
       descriptionPitch,
       descriptionSuccess,
       price,
+      category,
     } = this.state;
     if (this.props.currentUser.approved) {
       return (
@@ -131,6 +140,23 @@ class SolutionForm extends React.Component {
             label='Nombre de la solución'
             required
           />
+          <FormSelect
+            type='text'
+            name='category'
+            value={category}
+            onChange={this.handleChange}
+            label='Categoría'
+            required
+          >
+            <FormOption value='' label='' disabled hidden />
+            {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
+              <optgroup label={category}>
+                {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
+                  <FormOption value={subcategory} label={subcategory} />
+                ))}
+              </optgroup>
+            ))}
+          </FormSelect>
           <FormTextarea
             type='text'
             name='descriptionPitch'
