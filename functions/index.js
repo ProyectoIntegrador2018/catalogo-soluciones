@@ -115,3 +115,75 @@ exports.sendNewSolutionEmail = functions.https.onRequest((request, response) => 
     });
   });  
 });
+
+const makeUserApprovedEmailHTML = function(name, org, email) {
+  return `
+    <h3>Buen día ${name},</h3>
+    <p>
+      Tu solicitud para registrar la organización <b>${org}</b> con el usuario 
+      <b>${email}</b> en el <b> Catálogo de Soluciones Digitales CSOFTMTY</b> 
+      ha sido aprobada. Te invitamos a <a href='catalogo-soluciones.web.app'>
+      acceder al sistema</a> para comenzar a agregar soluciones.
+    </p>
+    <p>
+      Gracias, buen día.
+    </p>
+  `
+}
+
+exports.userApprovedEmail = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const body = request.body.data;
+    const html = makeUserApprovedEmailHTML(body.name, body.org, body.email);
+    transporter.sendMail({
+      from: 'Catálogo de Soluciones Digitales',
+      to: body.email,
+      subject: 'Tu cuenta ha sido aprobada en el Catálogo de Soluciones Digitales CSOFTMTY',
+      html: html,
+    }, (error) => {
+      if (error) {
+        functions.logger.log(error);
+        response.status(500).send(error);
+      } else {
+        response.send({data: 'success'});
+      }
+    });
+  });  
+});
+
+const makeSolutionApprovedEmailHTML = function(name, org, solutionName) {
+  return `
+    <h3>Buen día ${name},</h3>
+    <p>
+      Tu solicitud para registrar la solución <b>${solutionName}</b> de la 
+      organización <b>${org}</b> en el <b> Catálogo de Soluciones Digitales 
+      CSOFTMTY</b> ha sido aprobada. Te invitamos a <a 
+      href='catalogo-soluciones.web.app/catalogo'>acceder al catálogo</a> para
+      ver tu solución.
+    </p>
+    <p>
+      Gracias, buen día.
+    </p>
+  `
+}
+
+exports.userApprovedEmail = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const body = request.body.data;
+    const html = makeSolutionApprovedEmailHTML(body.name, body.org, 
+      body.solutionName);
+    transporter.sendMail({
+      from: 'Catálogo de Soluciones Digitales',
+      to: body.email,
+      subject: 'Tu solución ha sido aprobada en el Catálogo de Soluciones Digitales CSOFTMTY',
+      html: html,
+    }, (error) => {
+      if (error) {
+        functions.logger.log(error);
+        response.status(500).send(error);
+      } else {
+        response.send({data: 'success'});
+      }
+    });
+  });  
+});

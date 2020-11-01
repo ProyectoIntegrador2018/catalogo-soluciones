@@ -97,10 +97,13 @@ class SolutionForm extends React.Component {
       const { addSolution } = this.props;
       newSolution.id = res.id;
       addSolution(newSolution);
+      setNotification({ 
+        severity: 'info', 
+        message: 'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.', 
+      });
       // Add solution to state.
     }
-
-    this.props.history.push('/catalogo');
+    this.props.history.push('/panel-control');
   };
 
   handleChange = (event) => {
