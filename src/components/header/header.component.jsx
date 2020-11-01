@@ -20,36 +20,29 @@ import MenuIcon from '@material-ui/icons/Menu';
 const HeaderContent = ({ currentUser, goTo }) => {
   return (
     <div className='buttons'>
-      <Button className='app-bar-button' onClick={() => goTo('/')}>
+      <Button onClick={() => goTo('/')}>
         <HomeIcon className='icon' /> Inicio
       </Button>
-      <Button className='app-bar-button' onClick={() => goTo('catalogo')}>
+      <Button onClick={() => goTo('/catalogo')}>
         <ListIcon className='icon' /> Catálogo
       </Button>
       {currentUser && currentUser.adminAccount && (
-        <Button className='app-bar-button' onClick={() => goTo('admin')}>
+        <Button onClick={() => goTo('admin')}>
           <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
-        <Button
-          className='app-bar-button'
-          onClick={() => goTo('crear-solucion')}
-        >
+        <Button onClick={() => goTo('crear-solucion')}>
           <AddIcon className='icon' /> Nueva solución
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
-        <Button
-          className='app-bar-button'
-          onClick={() => goTo('panel-control')}
-        >
+        <Button onClick={() => goTo('panel-control')}>
           <SettingsIcon className='icon' /> Mis soluciones
         </Button>
       )}
       {currentUser ? (
         <Button
-          className='app-bar-button'
           onClick={() => {
             auth.signOut();
             goTo('/');
