@@ -1,3 +1,4 @@
+const firebase = require('firebase-admin');
 const functions = require('firebase-functions');
 const cors = require('cors')({ origin: true });
 
@@ -93,6 +94,9 @@ exports.sendUserApprovedEmail = functions.https.onRequest((request, response) =>
 
 exports.sendUserRejectedEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
+    // Aqui se borra el id de usuario, se debe borrar el documento de la BD en
+    // frontend.
+    firebase.auth().deleteUser(body.uid);
     const body = request.body.data;
     const html = templates.makeUserRejectedEmailHTML(body.name, body.org, 
       body.email, body.message);
