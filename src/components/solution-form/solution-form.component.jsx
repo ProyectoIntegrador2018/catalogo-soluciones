@@ -112,6 +112,19 @@ class SolutionForm extends React.Component {
     this.setState({ [name]: value });
   };
 
+  handleChangeMultiple = (event) => {
+    console.log(event.target)
+    const options = event.target.value;
+    console.log(options)
+    const value = [];
+    for (let i = 0, l = options.length; i < l; i += 1) {
+      if (options[i].selected) {
+        value.push(options[i].value);
+      }
+    }
+    this.setState({ categories: this.state.categories.push(value) });
+  };
+
   componentDidMount() {
     if (this.props.solution) {
       this.setState({

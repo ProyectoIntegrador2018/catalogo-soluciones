@@ -5,17 +5,28 @@ import { createStructuredSelector } from 'reselect';
 import { selectUnapprovedSolutions } from '../../redux/solutions/solutions.selectors';
 import { selectUnapprovedOrganizations } from '../../redux/organizations/organizations.selectors';
 
+import Panel from '../../components/panel/panel.component';
 import NewUsersRequestsList from '../../components/admin-panel/new-user-requests-table/new-users-requests-list.component';
 import NewSolutionsList from '../../components/admin-panel/new-solutions-list/new-solution-list.component';
 
-import './administrador.styles.scss';
+import './panel-admin.styles.scss';
 
-const Administrador = ({ organizations, solutions }) => {
+import { PlaylistAddCheck } from '@material-ui/icons';
+
+const PanelAdmin = ({ organizations, solutions }) => {
   return (
-    <div className='administrador'>
-      <NewUsersRequestsList userRequests={organizations}></NewUsersRequestsList>
-      <NewSolutionsList newSolutions={solutions}></NewSolutionsList>
-    </div>
+    <Panel
+      items={{
+        'Solicitudes de organizaciones': {
+          icon: <PlaylistAddCheck />,
+          component: <NewUsersRequestsList userRequests={organizations} />,
+        },
+        'Solicitudes de soluciones': {
+          icon: <PlaylistAddCheck />,
+          component: <NewSolutionsList newSolutions={solutions} />,
+        }
+      }}
+    />
   );
 };
 
@@ -24,4 +35,4 @@ const mapStateToProps = createStructuredSelector({
   solutions: selectUnapprovedSolutions,
 });
 
-export default connect(mapStateToProps)(Administrador);
+export default connect(mapStateToProps)(PanelAdmin);
