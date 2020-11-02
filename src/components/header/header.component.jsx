@@ -13,7 +13,6 @@ import './header.styles.scss';
 import HomeIcon from '@material-ui/icons/Home';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListIcon from '@material-ui/icons/List';
-import AddIcon from '@material-ui/icons/Add';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MenuIcon from '@material-ui/icons/Menu';
 
@@ -24,21 +23,16 @@ const HeaderContent = ({ currentUser, goTo }) => {
         <HomeIcon className='icon' /> Inicio
       </Button>
       <Button onClick={() => goTo('/catalogo')}>
-        <ListIcon className='icon' /> Catálogo
+        <ListIcon className='icon' /> Consultar Catálogo
       </Button>
       {currentUser && currentUser.adminAccount && (
-        <Button onClick={() => goTo('admin')}>
+        <Button onClick={() => goTo('panel-admin')}>
           <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
       {currentUser && !currentUser.adminAccount && (
-        <Button onClick={() => goTo('crear-solucion')}>
-          <AddIcon className='icon' /> Nueva solución
-        </Button>
-      )}
-      {currentUser && !currentUser.adminAccount && (
-        <Button onClick={() => goTo('panel-control')}>
-          <SettingsIcon className='icon' /> Mis soluciones
+        <Button onClick={() => goTo('panel-org')}>
+          <SettingsIcon className='icon' /> Herramientas
         </Button>
       )}
       {currentUser ? (
