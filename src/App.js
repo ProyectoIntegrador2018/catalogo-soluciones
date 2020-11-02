@@ -14,8 +14,8 @@ import SignInPage from './pages/sign-in/sign-in.component';
 import SignUpPage from './pages/sign-up/sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
-import Administrador from './pages/administrador/administrador.component';
-import UserPanel from './pages/user-panel/user-panel.component';
+import PanelAdmin from './pages/panel-admin/panel-admin.component';
+import PanelOrg from './pages/panel-org/panel-org.component';
 import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
 import EditSolutionPage from './pages/editar-solucion/editar-solucion.component';
@@ -113,11 +113,11 @@ class App extends React.Component {
             />
             <Route
               exact
-              path='/admin'
+              path='/panel-admin'
               render={() =>
                 this.props.currentUser &&
                 this.props.currentUser.adminAccount ? (
-                  <Administrador />
+                  <PanelAdmin />
                 ) : (
                   <Redirect to='/' />
                 )
@@ -125,23 +125,11 @@ class App extends React.Component {
             />
             <Route
               exact
-              path='/crear-solucion'
+              path='/panel-org'
               render={() =>
                 this.props.currentUser &&
                 !this.props.currentUser.adminAccount ? (
-                  <CreateSolutionPage />
-                ) : (
-                  <Redirect to='/' />
-                )
-              }
-            />
-            <Route
-              exact
-              path='/panel-control'
-              render={() =>
-                this.props.currentUser &&
-                !this.props.currentUser.adminAccount ? (
-                  <UserPanel />
+                  <PanelOrg />
                 ) : (
                   <Redirect to='/' />
                 )
