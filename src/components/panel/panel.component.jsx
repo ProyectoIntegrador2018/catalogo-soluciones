@@ -7,11 +7,14 @@ import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 
+import './panel.styles.scss'
+
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <div
+    <center><div
+      className='max-width'
       role="tabpanel"
       hidden={value !== index}
       id={`scrollable-auto-tabpanel-${index}`}
@@ -23,7 +26,7 @@ function TabPanel(props) {
           <Typography>{children}</Typography>
         </Box>
       )}
-    </div>
+    </div></center>
   );
 }
 
@@ -59,23 +62,26 @@ export default function PanelMenu({ items }) {
   return (
     <div className={classes.root}>
       <AppBar position="static" color="default">
-        <Tabs
-          value={value}
-          onChange={handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-        >
-          {Object.keys(items).map((title, index) => (
-            <Tab
-              label={title}
-              icon={items[title].icon}
-              {...a11yProps(index)}
-            />
-          ))}
-        </Tabs>
+        <center><div className='max-width'>
+          <Tabs
+            className='tab-bar'
+            value={value}
+            onChange={handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            variant="scrollable"
+            scrollButtons="auto"
+            aria-label="scrollable auto tabs example"
+          >
+            {Object.keys(items).map((title, index) => (
+              <Tab
+                label={title}
+                icon={items[title].icon}
+                {...a11yProps(index)}
+              />
+            ))}
+          </Tabs>
+        </div></center>
       </AppBar>
       {Object.values(items).map((content, index) => (
         <TabPanel value={value} index={index} key={index}>
