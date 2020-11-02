@@ -32,14 +32,15 @@
 }
 
 .buttons {
-  .app-bar-button {
+  Button {
     color: #636363;
     &:hover {
       color: #CC6600;
     }
   }
+
   @media only screen and (max-device-width: 1024px) {
-    .app-bar-button {
+    Button {
       display: block;
     }
   }
@@ -47,4 +48,5 @@
 
 .icon {
   margin-right: 5px;
+  vertical-align: middle;
 }
