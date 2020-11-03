@@ -108,7 +108,7 @@ class SolutionInquire extends React.Component {
             title='Preguntar sobre un servicio'
             onSubmit={this.handleSubmit}
           >
-            <FormSubTitle>Organización a contactar</FormSubTitle>
+            <FormSubTitle subtitle='Organización a contactar' />
             <FormInput
               type='text'
               value={orgName}
@@ -121,7 +121,7 @@ class SolutionInquire extends React.Component {
               label='Servicio que se está solicitando'
               readOnly
             />
-            <FormSubTitle>Mensaje de contacto</FormSubTitle>
+            <FormSubTitle subtitle='Mensaje de contacto' />
             <FormInput
               type='text'
               name='name'

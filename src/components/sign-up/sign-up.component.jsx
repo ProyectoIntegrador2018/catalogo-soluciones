@@ -134,7 +134,7 @@ class SignUp extends React.Component {
             Inicia sesión
           </span>
         </div>
-        <FormSubTitle>Datos del administrador</FormSubTitle>
+        <FormSubTitle subtitle='Datos del administrador' />
         <FormInput
           type='text'
           name='displayName'
@@ -176,7 +176,7 @@ class SignUp extends React.Component {
           required
         />
 
-        <FormSubTitle>Datos de la organización</FormSubTitle>
+        <FormSubTitle subtitle='Datos de la organización' />
         <FormInput
           type='text'
           name='orgName'
