@@ -61,7 +61,7 @@ export default function PanelMenu({ items }) {
 
   return (
     <div className={classes.root}>
-      <AppBar position="static" color="default">
+      <AppBar className='panel-header' position="static" color="default">
         <center><div className='max-width'>
           <Tabs
             className='tab-bar'
