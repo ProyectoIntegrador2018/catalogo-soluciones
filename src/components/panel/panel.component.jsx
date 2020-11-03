@@ -14,7 +14,7 @@ function TabPanel(props) {
 
   return (
     <center><div
-      className='max-width'
+      className='panel-content max-width'
       role="tabpanel"
       hidden={value !== index}
       id={`scrollable-auto-tabpanel-${index}`}

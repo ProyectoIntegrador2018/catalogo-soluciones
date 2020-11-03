@@ -13,7 +13,6 @@ import Checkbox from '@material-ui/core/Checkbox';
 import SolutionForm from '../../solution-form/solution-form.component';
 import { removeSolution } from '../../../redux/solutions/solutions.actions';
 import { deleteUserSolution } from '../../../firebase/user-panel';
-import { useHistory } from 'react-router-dom';
 
 import './solutions-list.styles.scss';
 
