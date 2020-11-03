@@ -6,7 +6,7 @@ import { selectUnapprovedSolutions } from '../../redux/solutions/solutions.selec
 import { selectUnapprovedOrganizations } from '../../redux/organizations/organizations.selectors';
 
 import Panel from '../../components/panel/panel.component';
-import NewUsersRequestsList from '../../components/admin-panel/new-user-requests-table/new-users-requests-list.component';
+import NewUsersRequestsList from '../../components/admin-panel/new-user-requests-list/new-users-requests-list.component';
 import NewSolutionsList from '../../components/admin-panel/new-solutions-list/new-solution-list.component';
 
 import './panel-admin.styles.scss';
@@ -24,7 +24,7 @@ const PanelAdmin = ({ organizations, solutions }) => {
         'Solicitudes de soluciones': {
           icon: <PlaylistAddCheck />,
           component: <NewSolutionsList newSolutions={solutions} />,
-        }
+        },
       }}
     />
   );
