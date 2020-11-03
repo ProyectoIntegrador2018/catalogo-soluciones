@@ -20,16 +20,26 @@ import {
 import SOLUTION_CATEGORIES from '../../constants/solution-categories';
 
 class SolutionForm extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
 
-    this.state = {
-      solutionName: '',
-      descriptionPitch: '',
-      descriptionSuccess: '',
-      price: '',
-      category: '',
-    };
+    if (this.props.solution) {
+      this.state = {
+        solutionName: this.props.solution.solutionName,
+        descriptionPitch: this.props.solution.descriptionPitch,
+        descriptionSuccess: this.props.solution.descriptionSuccess,
+        price: this.props.solution.price,
+        category: this.props.solution.category,
+      };
+    } else {
+      this.state = {
+        solutionName: '',
+        descriptionPitch: '',
+        descriptionSuccess: '',
+        price: '',
+        category: '',
+      };
+    }
   }
 
   handleSubmit = async (event) => {
@@ -103,7 +113,7 @@ class SolutionForm extends React.Component {
       });
       // Add solution to state.
     }
-    this.props.history.push('/panel-org');
+    this.props.history.push('panel-org-x');
   };
 
   handleChange = (event) => {
@@ -125,18 +135,6 @@ class SolutionForm extends React.Component {
     this.setState({ categories: this.state.categories.push(value) });
   };
 
-  componentDidMount() {
-    if (this.props.solution) {
-      this.setState({
-        solutionName: this.props.solution.solutionName,
-        descriptionPitch: this.props.solution.descriptionPitch,
-        descriptionSuccess: this.props.solution.descriptionSuccess,
-        price: this.props.solution.price,
-        category: this.props.solution.category,
-      });
-    }
-  }
-
   render() {
     const {
       solutionName,
@@ -147,7 +145,10 @@ class SolutionForm extends React.Component {
     } = this.state;
     if (this.props.currentUser.approved) {
       return (
-        <Form title='Agregar nueva solución' onSubmit={this.handleSubmit}>
+        <Form 
+          title={this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'}
+          onSubmit={this.handleSubmit}
+        >
           <FormInput
             type='text'
             name='solutionName'
@@ -201,8 +202,16 @@ class SolutionForm extends React.Component {
           />
 
           <Button variant='contained' color='primary' type='submit'>
-            {this.props.solution ? 'Guardar' : 'Crear'}
+            {this.props.solution ? 'Guardar cambios' : 'Crear solución'}
           </Button>
+          &nbsp;&nbsp;
+          {this.props.solution ?
+            <Button variant='contained' color='secondary' 
+              onClick={() => this.props.history.push('panel-org-x')}
+            >
+              Cerrar
+            </Button> 
+          : null}
         </Form>
       );
     } else {

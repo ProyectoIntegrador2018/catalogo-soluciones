@@ -17,6 +17,7 @@ import AddIcon from '@material-ui/icons/Add';
 const PanelOrg = ({ solutions }) => {
   return (
     <Panel
+      key={3}
       items={{
         'Mis soluciones': {
           icon: <ListIcon />,

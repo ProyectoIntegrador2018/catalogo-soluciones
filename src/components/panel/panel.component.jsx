@@ -22,7 +22,7 @@ function TabPanel(props) {
       {...other}
     >
       {value === index && (
-        <Box p={3}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PanelMenu({ items }) {
+export default function PanelMenu({ items, ...otherProps }) {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
 

@@ -16,7 +16,6 @@ import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 import PanelAdmin from './pages/panel-admin/panel-admin.component';
 import PanelOrg from './pages/panel-org/panel-org.component';
-import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
 import EditSolutionPage from './pages/editar-solucion/editar-solucion.component';
 
@@ -123,6 +122,7 @@ class App extends React.Component {
                 )
               }
             />
+            <Redirect from='/panel-org-x' to='/panel-org' />
             <Route
               exact
               path='/panel-org'
