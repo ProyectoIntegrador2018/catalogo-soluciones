@@ -11,6 +11,7 @@ import './catalogo.styles.scss';
 const Catalogo = ({ solutions }) => {
   return (
     <div className='catalogo'>
+      <h1>Catálogo de soluciones digitales</h1>
       <CatalogList data={solutions}></CatalogList>
     </div>
   );
