@@ -103,7 +103,7 @@ class SolutionForm extends React.Component {
       });
       // Add solution to state.
     }
-    this.props.history.push('/panel-control');
+    this.props.history.push('/panel-org');
   };
 
   handleChange = (event) => {
