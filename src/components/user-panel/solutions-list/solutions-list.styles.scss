@@ -1,31 +1,18 @@
-.solutions-list {
-  width: 75%;
-  min-height: 90vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 50px auto 0;
-
-  .solutions-header {
-    width: 100%;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-
-    .header-block {
-      text-transform: capitalize;
-      width: 64%;
-    }
-
-    .header-block-small {
-      text-transform: capitalize;
-      width: 14%;
-    }
-
-    .header-action-button {
-      text-transform: capitalize;
-      width: 14%;
-    }
+.action-buttons {
+  padding-left: 30px;
+  .modify {
+    background-color: #428bca;
+    color: white;
+    margin-right: 10%;
   }
+  .delete {
+    background-color: #d9534f;
+    color: white;
+  }
+}
+
+.modal {
+  padding: 40px;
+  overflow-y: scroll;
+  border: 0px;
 }

@@ -122,6 +122,7 @@ class App extends React.Component {
                 )
               }
             />
+            <Redirect from='/panel-org-x' to='/panel-org' />
             <Route
               exact
               path='/panel-org'
