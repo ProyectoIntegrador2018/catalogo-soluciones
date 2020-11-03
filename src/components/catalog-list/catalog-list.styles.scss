@@ -1,26 +1,8 @@
-.catalog-list {
-  width: 75%;
-  min-height: 60vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin: 50px auto 0;
+.description-title,
+.description-body {
+  margin-left: 50px;
+}
 
-  .catalog-header {
-    width: 100%;
-    padding: 10px 0;
-    display: flex;
-    justify-content: space-between;
-    border-bottom: 1px solid darkgrey;
-
-    .header-block {
-      text-transform: capitalize;
-      width: 40%;
-    }
-
-    .header-block-small {
-      text-transform: capitalize;
-      width: 20%;
-    }
-  }
+.separate {
+  margin-bottom: 30px;
 }
