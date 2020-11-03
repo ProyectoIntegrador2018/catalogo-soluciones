@@ -1,52 +1,6 @@
-.content-sign-in {
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  .sign-in {
-    width: 600px;
-    padding: 60px;
-    border-radius: 15px;
-    flex-direction: column;
-    border: solid 1px black;
-    box-shadow: 10px 5px 5px black;
-    .title {
-      margin: 10px 0;
-    }
-    .sign-up {
-      margin-top: 20px;
-      .sign-up-button {
-        margin-left: 10px;
-        color: #0000ee;
-
-        &:hover {
-          cursor: pointer;
-        }
-      }
-    }
-  }
-}
-
-//Phones
-@media only screen and (max-width: 700px) {
-  .content-sign-in {
-    width: 100%;
-    margin-right: 0;
-    .sign-in {
-      width: 380px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-  }
-}
-//Tablets
-@media only screen and (min-width: 700px) and (max-width: 1050px) {
-  .content-sign-in {
-    width: 66%;
-    .sign-in {
-      margin-bottom: 20px;
-    }
+.sign-up {
+  margin-top: 20px;
+  .sign-up-button {
+    margin-left: 10px;
   }
 }

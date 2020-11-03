@@ -1,11 +1,13 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 
-import { FormInput } from '../form-input/form-input.component';
-import { Notification } from '../notifications/notification.component';
+import { Form, FormInput } from '../form/form.component';
 import Button from '@material-ui/core/Button';
 
 import { signIn } from '../../firebase/sessions';
+
+import { setNotification } from '../../redux/notification/notification.actions';
 
 import './sign-in.styles.scss';
 
@@ -13,17 +15,9 @@ class SignIn extends React.Component {
   constructor(props) {
     super(props);
 
-    var severity, notificationMssg;
-    if (this.props.location.state) {
-      severity = this.props.location.state.severity;
-      notificationMssg = this.props.location.state.notificationMssg;
-    }
-
     this.state = {
       email: '',
       password: '',
-      severity: severity,
-      notificationMssg: notificationMssg,
     };
   }
 
@@ -32,14 +26,16 @@ class SignIn extends React.Component {
 
     const { email, password } = this.state;
 
-    signIn(email, password).then(() => {
-      this.setState({ email: '', password: '' });
-    }).catch((errorMssg) => {
-      this.setState({
-        severity: 'error',
-        notificationMssg: errorMssg
+    signIn(email, password)
+      .then(() => {
+        this.setState({ email: '', password: '' });
+      })
+      .catch((errorMssg) => {
+        this.props.setNotification({
+          severity: 'error',
+          message: errorMssg,
+        });
       });
-    })
   };
 
   handleChange = (event) => {
@@ -48,62 +44,49 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ notificationMssg: '' });
-  };
-
   goToSignUp = () => {
     this.props.history.push('signup');
   };
 
   render() {
     return (
-      <div className='content-sign-in'>
-        <div className='sign-in'>
-          <h2>Iniciar sesión</h2>
-          <span>Inicia sesión con tu correo y contraseña</span>
-          <form onSubmit={this.handleSubmit}>
-            <FormInput
-              name='email'
-              type='email'
-              handleChange={this.handleChange}
-              value={this.state.email}
-              label='Correo'
-              required
-            />
-            <FormInput
-              name='password'
-              type='password'
-              handleChange={this.handleChange}
-              value={this.state.password}
-              label='Contraseña'
-              required
-            />
-            <Notification
-              severity={this.state.severity}
-              mssg={this.state.notificationMssg}
-              onClose={this.handleClose}
-            />
-            <div className='buttons'>
-              <Button variant='contained' color='primary' type='submit'>
-                Inicia sesión
-              </Button>
-            </div>
-          </form>
-          <div className='sign-up'>
-            Aún no tienes cuenta?
-            <span className='sign-up-button' onClick={this.goToSignUp}>
-              Crear cuenta
-            </span>
-          </div>
+      <Form title='Iniciar sesión' onSubmit={this.handleSubmit}>
+        <span>Inicia sesión con tu correo y contraseña</span>
+
+        <FormInput
+          name='email'
+          type='email'
+          handleChange={this.handleChange}
+          value={this.state.email}
+          label='Correo'
+          required
+        />
+        <FormInput
+          name='password'
+          type='password'
+          handleChange={this.handleChange}
+          value={this.state.password}
+          label='Contraseña'
+          required
+        />
+
+        <Button variant='contained' color='primary' type='submit'>
+          Inicia sesión
+        </Button>
+
+        <div className='sign-up'>
+          Aún no tienes cuenta?
+          <span className='sign-up-button link' onClick={this.goToSignUp}>
+            Crear cuenta
+          </span>
         </div>
-      </div>
+      </Form>
     );
   }
 }
 
-export default withRouter(SignIn);
+const mapDispatchToProps = (dispatch) => ({
+  setNotification: (notification) => dispatch(setNotification(notification)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignIn));

@@ -1,5 +1,10 @@
 import { SolutionsActionTypes } from './solutions.types';
-import { matchOrganization } from './solutions.utils';
+import {
+  matchOrganization,
+  approveSolution,
+  editSolution,
+  addToSolutions,
+} from './solutions.utils';
 
 const INITIAL_STATE = {
   allSolutions: null,
@@ -16,6 +21,28 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         allSolutions: matchOrganization(state.allSolutions, action.payload),
+      };
+    case SolutionsActionTypes.REMOVE_SOLUTION:
+      return {
+        ...state,
+        allSolutions: state.allSolutions.filter(
+          (solution) => solution.id !== action.payload,
+        ),
+      };
+    case SolutionsActionTypes.APPROVE_SOLUTION:
+      return {
+        ...state,
+        allSolutions: approveSolution(state.allSolutions, action.payload),
+      };
+    case SolutionsActionTypes.MODIFY_SOLUTION:
+      return {
+        ...state,
+        allSolutions: editSolution(state.allSolutions, action.payload),
+      };
+    case SolutionsActionTypes.ADD_SOLUTION:
+      return {
+        ...state,
+        allSolutions: addToSolutions(state.allSolutions, action.payload),
       };
     default:
       return state;

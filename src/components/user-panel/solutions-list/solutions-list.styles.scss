@@ -1,0 +1,18 @@
+.action-buttons {
+  padding-left: 30px;
+  .modify {
+    background-color: #428bca;
+    color: white;
+    margin-right: 10%;
+  }
+  .delete {
+    background-color: #d9534f;
+    color: white;
+  }
+}
+
+.modal {
+  padding: 40px;
+  overflow-y: scroll;
+  border: 0px;
+}

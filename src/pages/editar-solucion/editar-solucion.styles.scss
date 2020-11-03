@@ -1,11 +1,11 @@
-.create-solution {
+.edit-solution {
   display: flex;
   padding: 15px;
 }
 
 //Phones and tablets
 @media only screen and (max-width: 1050px) {
-  .create-solution {
+  .edit-solution {
     display: block;
   }
 }

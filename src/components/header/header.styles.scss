@@ -1,3 +1,52 @@
-.logo:hover {
-  cursor: pointer;
+.root {
+  flex-grow: 1;
+
+  .app-bar {
+    padding: 10px;
+    background-color: #e6e6e6;
+    box-shadow: none;
+
+    .toolbar {
+      max-width: 1300px;
+
+      .logo {
+        margin-right: auto;
+        &:hover {
+          cursor: pointer;
+        }
+      }
+
+      .button-bar {
+        @media only screen and (max-device-width: 1024px) {
+          display: none;
+        }
+      }
+
+      .drawer-btn {
+        @media only screen and (min-device-width: 1024px) {
+          display: none;
+        }
+      }
+    }
+  }
+}
+
+.buttons {
+  Button {
+    color: #636363;
+    &:hover {
+      color: #cc6600;
+    }
+  }
+
+  @media only screen and (max-device-width: 1024px) {
+    Button {
+      display: block;
+    }
+  }
+}
+
+.icon {
+  margin-right: 5px;
+  vertical-align: middle;
 }

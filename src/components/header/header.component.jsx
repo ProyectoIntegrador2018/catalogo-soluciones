@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
+import Drawer from '@material-ui/core/Drawer';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 
@@ -10,81 +10,86 @@ import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
 
-const useStyles = makeStyles({
-  root: {
-    flexGrow: 1,
-  },
-  appBar: {
-    backgroundColor: '#AAAAAA',
-    boxShadow: 'none',
-  },
-  logo: {
-    marginRight: 'auto',
-    '&:hover': {
-      cursor: 'pointer',
-    },
-  },
-  appBarButton: {
-    '&:hover': {
-      color: '#CC6600',
-    },
-  },
-});
+import HomeIcon from '@material-ui/icons/Home';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import ListIcon from '@material-ui/icons/List';
+import SettingsIcon from '@material-ui/icons/Settings';
+import MenuIcon from '@material-ui/icons/Menu';
+
+const HeaderContent = ({ currentUser, goTo }) => {
+  return (
+    <div className='buttons'>
+      <Button onClick={() => goTo('/')}>
+        <HomeIcon className='icon' /> Inicio
+      </Button>
+      <Button onClick={() => goTo('/catalogo')}>
+        <ListIcon className='icon' /> Consultar Catálogo
+      </Button>
+      {currentUser && currentUser.adminAccount && (
+        <Button onClick={() => goTo('panel-admin')}>
+          <SettingsIcon className='icon' /> Administrador
+        </Button>
+      )}
+      {currentUser && !currentUser.adminAccount && (
+        <Button onClick={() => goTo('panel-org')}>
+          <SettingsIcon className='icon' /> Herramientas
+        </Button>
+      )}
+      {currentUser ? (
+        <Button
+          onClick={() => {
+            auth.signOut();
+            goTo('/');
+          }}
+        >
+          <ExitToAppIcon className='icon' /> Cerrar sesion
+        </Button>
+      ) : null}
+    </div>
+  );
+};
 
 const Header = ({ currentUser }) => {
-  const classes = useStyles();
-
   let history = useHistory();
 
-  function goTo(page) {
-    switch (page) {
-      case 'home':
-        history.push('/');
-        break;
-      default:
-        history.push(page);
-        break;
-    }
-  }
+  const [state, setState] = React.useState({
+    drawer: false,
+  });
+
+  const toggleDrawer = (open) => (event) => {
+    setState({ drawer: open });
+  };
+
+  const goTo = (page) => {
+    setState({ drawer: false });
+    history.push(page);
+  };
 
   return (
-    <div className={classes.root}>
-      <AppBar className={classes.appBar} position='static'>
-        <Toolbar>
-          <img
-            className={classes.logo}
-            src='./logoCSOFTMTY.png'
-            alt='Logo CSOFTMTY'
-            onClick={() => goTo('home')}
-          />
-          {currentUser && currentUser.adminAccount && (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('admin')}
-            >
-              Administrador
-            </Button>
-          )}
-          {currentUser ? (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => {
-                auth.signOut();
-                goTo('home');
-              }}
-            >
-              Cerrar sesion
-            </Button>
-          ) : (
-            <Button
-              className={classes.appBarButton}
-              onClick={() => goTo('signin')}
-            >
-              Iniciar Sesion
-            </Button>
-          )}
-        </Toolbar>
+    <div className='root'>
+      <AppBar className='app-bar' position='static'>
+        <center>
+          <Toolbar className='toolbar'>
+            <img
+              className='logo'
+              src='./logoCSOFTMTY.png'
+              alt='Logo CSOFTMTY'
+              onClick={() => goTo('/')}
+            />
+            <div className='button-bar'>
+              <HeaderContent currentUser={currentUser} goTo={goTo} />
+            </div>
+            <div className='drawer-btn'>
+              <Button onClick={toggleDrawer(true)}>
+                <MenuIcon className='icon' /> Menú
+              </Button>
+            </div>
+          </Toolbar>
+        </center>
       </AppBar>
+      <Drawer anchor='right' open={state.drawer} onClose={toggleDrawer(false)}>
+        <HeaderContent currentUser={currentUser} goTo={goTo} />
+      </Drawer>
     </div>
   );
 };

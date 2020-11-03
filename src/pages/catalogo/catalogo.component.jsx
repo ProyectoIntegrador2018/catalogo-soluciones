@@ -2,26 +2,23 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
-import { selectAllOrganizations } from '../../redux/organizations/organizations.selectors';
-import { selectAllSolutions } from '../../redux/solutions/solutions.selectors';
+import { selectApprovedSolutions } from '../../redux/solutions/solutions.selectors';
 
 import CatalogList from '../../components/catalog-list/catalog-list.component';
 
 import './catalogo.styles.scss';
 
-const Catalogo = ({ organizations, solutions }) => {
-  console.log('testing organizations: ', organizations);
-  console.log('testing solutions: ', solutions);
+const Catalogo = ({ solutions }) => {
   return (
     <div className='catalogo'>
+      <h1>Catálogo de soluciones digitales</h1>
       <CatalogList data={solutions}></CatalogList>
     </div>
   );
 };
 
 const mapStateToProps = createStructuredSelector({
-  organizations: selectAllOrganizations,
-  solutions: selectAllSolutions,
+  solutions: selectApprovedSolutions,
 });
 
 export default connect(mapStateToProps)(Catalogo);

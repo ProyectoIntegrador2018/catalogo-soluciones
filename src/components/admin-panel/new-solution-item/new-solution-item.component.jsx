@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -6,9 +7,37 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Button } from '@material-ui/core';
 
 import './new-solution-item.styles.scss';
+import {
+  removeSolution,
+  adminApproveSolution,
+} from '../../../redux/solutions/solutions.actions';
+import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
-const NewSolutionItem = ({ newSolution }) => {
-  const { imageUrl, organization, solutionName, price } = newSolution;
+const NewSolutionItem = ({
+  newSolution,
+  removeSolution,
+  adminApproveSolution,
+}) => {
+  const {
+    id,
+    imageUrl,
+    organization,
+    solutionName,
+    price,
+    descriptionPitch,
+    descriptionSuccess,
+  } = newSolution;
+
+  const approveSolution = () => {
+    approveRequest(id, 'solutions');
+    // Change state using redux.
+    adminApproveSolution(id);
+  };
+
+  const rejectSolution = () => {
+    rejectRequest(id, 'solutions');
+    removeSolution(id);
+  };
 
   return (
     <div className='new-solution-item'>
@@ -25,14 +54,31 @@ const NewSolutionItem = ({ newSolution }) => {
           <span className='solution-name'>{solutionName}</span>
           <span className='price'>${price}</span>
         </AccordionSummary>
-        <AccordionDetails>More details about this solution</AccordionDetails>
+        <AccordionDetails>
+          <div>
+            <h4>Descripción del servicio:</h4>
+            <p>{descriptionPitch}</p>
+            <h4>Casos de éxito del servicio:</h4>
+            <p>{descriptionSuccess}</p>
+          </div>
+        </AccordionDetails>
       </Accordion>
       <span className='action-buttons'>
-        <Button className='accept'>&#10004;</Button>
-        <Button className='reject'>&#x2717;</Button>
+        <Button className='accept' onClick={approveSolution}>
+          &#10004;
+        </Button>
+        <Button className='reject' onClick={rejectSolution}>
+          &#x2717;
+        </Button>
       </span>
     </div>
   );
 };
 
-export default NewSolutionItem;
+const mapDispatchToProps = (dispatch) => ({
+  removeSolution: (solution) => dispatch(removeSolution(solution)),
+  adminApproveSolution: (solutionId) =>
+    dispatch(adminApproveSolution(solutionId)),
+});
+
+export default connect(null, mapDispatchToProps)(NewSolutionItem);

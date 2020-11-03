@@ -1,8 +1,18 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
-import { FormInput, FormSelect, FormOption, FormTextarea, FormFile } from '../form-input/form-input.component';
-import { Notification } from '../notifications/notification.component';
+import { setNotification } from '../../redux/notification/notification.actions';
+
+import {
+  Form,
+  FormSubTitle,
+  FormInput,
+  FormSelect,
+  FormOption,
+  FormTextarea,
+  FormFile,
+} from '../form/form.component';
 import { Button } from '@material-ui/core';
 
 import { signUp } from '../../firebase/sessions';
@@ -40,6 +50,8 @@ class SignUp extends React.Component {
       description,
     } = this.state;
 
+    const { setNotification } = this.props;
+
     if (password !== confirmPassword) {
       this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
       return;
@@ -50,8 +62,16 @@ class SignUp extends React.Component {
       return;
     }
 
-    signUp(email, password, displayName, phoneNumber, orgName, orgType,
-      description, orgLogo)
+    signUp(
+      email,
+      password,
+      displayName,
+      phoneNumber,
+      orgName,
+      orgType,
+      description,
+      orgLogo,
+    )
       .then(() => {
         this.setState({
           displayName: '',
@@ -64,37 +84,30 @@ class SignUp extends React.Component {
           orgLogo: '',
           description: '',
         });
-        this.props.history.push({
-          pathname: 'signin',
-          state: {
-            severity: 'info',
-            notificationMssg: 'Se ha enviado un correo para confirmar la cuenta.'
-          }
+        setNotification({
+          severity: 'info',
+          message: 'Se ha enviado un correo para confirmar la cuenta.',
         });
+        this.props.history.push('signin');
       })
       .catch((errorMssg) => {
-        this.setState({ errorMssg: errorMssg });
+        setNotification({
+          severity: 'error',
+          message: errorMssg,
+        });
       });
   };
 
   handleChange = (event) => {
     const { name, value } = event.target;
 
-    this.setState({ [name]: value, errorMssg: '' });
+    this.setState({ [name]: value });
   };
 
   handleFile = (event) => {
     const { name } = event.target;
 
     this.setState({ [name]: event.target.files[0] });
-  }
-
-  handleClose = (event, reason) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-
-    this.setState({ errorMssg: '' });
   };
 
   goToSignIn = () => {
@@ -108,117 +121,110 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
-      errorMssg,
       orgName,
       orgType,
       description,
     } = this.state;
     return (
-      <div className='content-sign-up'>
-        <div className='sign-up'>
-          <h2 className='title'>Crear nueva cuenta</h2>
-          <span>Registrate tu organización con tu correo y contraseña</span>
-          <div className='sign-in'>
-            ¿Ya tienes cuenta?
-            <span className='sign-in-button' onClick={this.goToSignIn}>
-              Inicia sesión
-            </span>
-          </div>
-          <form className='sign-up-form' onSubmit={this.handleSubmit}>
-            <h3>Datos del administrador</h3>
-            <FormInput
-              type='text'
-              name='displayName'
-              value={displayName}
-              onChange={this.handleChange}
-              label='Nombre del administrador de la cuenta'
-              required
-            />
-            <FormInput
-              type='email'
-              name='email'
-              value={email}
-              onChange={this.handleChange}
-              label='Correo'
-              required
-            />
-            <FormInput
-              type='password'
-              name='password'
-              value={password}
-              onChange={this.handleChange}
-              label='Contraseña'
-              required
-            />
-            <FormInput
-              type='password'
-              name='confirmPassword'
-              value={confirmPassword}
-              onChange={this.handleChange}
-              label='Confirmar contraseña'
-              required
-            />
-            <FormInput
-              type='number'
-              name='phoneNumber'
-              value={phoneNumber}
-              onChange={this.handleChange}
-              label='Telefono de contacto'
-              required
-            />
-
-            <h3>Datos de la organización</h3>
-            <FormInput
-              type='text'
-              name='orgName'
-              value={orgName}
-              onChange={this.handleChange}
-              label='Nombre de la organización'
-              required
-            />
-            <FormSelect
-              type='text'
-              name='orgType'
-              value={orgType}
-              onChange={this.handleChange}
-              label='Tipo de organización'
-              required
-            >
-              <FormOption value='' label='' selected disabled hidden />
-              <FormOption value='micro' label='Micro' />
-              <FormOption value='pequeña' label='Pequeña' />
-              <FormOption value='mediana' label='Mediana' />
-              <FormOption value='grande' label='Grande' />
-            </FormSelect>
-            <FormTextarea
-              type='text'
-              name='description'
-              value={description}
-              onChange={this.handleChange}
-              label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
-              required
-            />
-            <FormFile
-              name='orgLogo'
-              onChange={this.handleFile}
-              label='Logotipo de la organización'
-              accept='image/jpeg'
-              required
-            />
-
-            <Button variant='contained' color='primary' type='submit'>
-              Crear cuenta
-            </Button>
-          </form>
-          <Notification
-            severity='error'
-            mssg={errorMssg}
-            onClose={this.handleClose}
-          />
+      <Form title='Crear nueva cuenta' onSubmit={this.handleSubmit}>
+        <span>Registra tu organización</span>
+        <div className='sign-in'>
+          ¿Ya tienes cuenta?
+          <span className='sign-in-button link' onClick={this.goToSignIn}>
+            Inicia sesión
+          </span>
         </div>
-      </div>
+        <FormSubTitle subtitle='Datos del administrador' />
+        <FormInput
+          type='text'
+          name='displayName'
+          value={displayName}
+          onChange={this.handleChange}
+          label='Nombre del administrador de la cuenta'
+          required
+        />
+        <FormInput
+          type='email'
+          name='email'
+          value={email}
+          onChange={this.handleChange}
+          label='Correo'
+          required
+        />
+        <FormInput
+          type='password'
+          name='password'
+          value={password}
+          onChange={this.handleChange}
+          label='Contraseña'
+          required
+        />
+        <FormInput
+          type='password'
+          name='confirmPassword'
+          value={confirmPassword}
+          onChange={this.handleChange}
+          label='Confirmar contraseña'
+          required
+        />
+        <FormInput
+          type='number'
+          name='phoneNumber'
+          value={phoneNumber}
+          onChange={this.handleChange}
+          label='Telefono de contacto'
+          required
+        />
+
+        <FormSubTitle subtitle='Datos de la organización' />
+        <FormInput
+          type='text'
+          name='orgName'
+          value={orgName}
+          onChange={this.handleChange}
+          label='Nombre de la organización'
+          required
+        />
+        <FormSelect
+          type='text'
+          name='orgType'
+          value={orgType}
+          onChange={this.handleChange}
+          label='Tipo de organización'
+          required
+        >
+          <FormOption value='' label='' disabled hidden />
+          <FormOption value='micro' label='Micro' />
+          <FormOption value='pequeña' label='Pequeña' />
+          <FormOption value='mediana' label='Mediana' />
+          <FormOption value='grande' label='Grande' />
+        </FormSelect>
+        <FormTextarea
+          type='text'
+          name='description'
+          value={description}
+          onChange={this.handleChange}
+          label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
+          required
+        />
+        <FormFile
+          name='orgLogo'
+          onChange={this.handleFile}
+          label='Logotipo de la organización'
+          accept='image/jpeg'
+          required
+        />
+
+        <Button variant='contained' color='primary' type='submit'>
+          Crear cuenta
+        </Button>
+      </Form>
     );
   }
 }
 
-export default withRouter(SignUp);
+const mapDispatchToProps = (dispatch) => ({
+  setNotification: (notification) => dispatch(setNotification(notification)),
+});
+
+export default connect(null, mapDispatchToProps)(withRouter(SignUp));

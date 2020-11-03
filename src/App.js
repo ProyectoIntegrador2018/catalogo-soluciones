@@ -5,12 +5,19 @@ import { connect } from 'react-redux';
 import './App.css';
 
 import Header from './components/header/header.component';
+import Footer from './components/footer/footer.component';
+import ScrollToTop from './components/scroller/scroller.component';
+import BackToTop from './components/scroller/scroll-to-top.component';
+import Notification from './components/notifications/notification.component';
 
 import SignInPage from './pages/sign-in/sign-in.component';
 import SignUpPage from './pages/sign-up/sign-up.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
-import Administrador from './pages/administrador/administrador.component';
+import PanelAdmin from './pages/panel-admin/panel-admin.component';
+import PanelOrg from './pages/panel-org/panel-org.component';
+import solutionInquire from './components/solution-inquire/solution-inquire.component';
+import EditSolutionPage from './pages/editar-solucion/editar-solucion.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -22,7 +29,7 @@ import {
 } from './redux/solutions/solutions.actions';
 import { setOrganizations } from './redux/organizations/organizations.actions';
 
-import CreateSolutionPage from './pages/crear-solucion/crear-solucion.component';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -65,60 +72,93 @@ class App extends React.Component {
     });
   }
 
+  theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#E0663B',
+      },
+      secondary: {
+        main: '#5D5B5B',
+      },
+    },
+  });
+
   componentWillUnmount() {
     this.unsubscribeFromAuth();
   }
 
   render() {
     return (
-      <div>
-        <Header />
-        <Switch>
-          <Route exact path='/' component={HomePage} />
-          <Route exact path='/catalogo' component={Catalogo} />
-          <Route
-            exact
-            path='/signin'
-            render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
-            }
-          />
-          <Route
-            exact
-            path='/signup'
-            render={() =>
-              this.props.currentUser ? <Redirect to='/' /> : <SignUpPage />
-            }
-          />
-          <Route
-            exact
-            path='/admin'
-            render={() =>
-              this.props.currentUser && this.props.currentUser.adminAccount ? (
-                <Administrador />
-              ) : (
-                <Redirect to='/' />
-              )
-            }
-          />
-          <Route
-            exact
-            path='/crear-solucion'
-            render={() =>
-              this.props.currentUser && !this.props.currentUser.adminAccount ? (
-                <CreateSolutionPage />
-              ) : (
-                <Redirect to='/' />
-              )
-            }
-          />
-        </Switch>
-      </div>
+      <MuiThemeProvider theme={this.theme}>
+        <Header id='back-to-top-anchor' />
+        <div className='switch'>
+          <Switch>
+            <Route exact path='/' component={HomePage} />
+            <Route exact path='/catalogo' component={Catalogo} />
+            <Route exact path='/solution-inquire' component={solutionInquire} />
+            <Route
+              exact
+              path='/signin'
+              render={() =>
+                this.props.currentUser ? <Redirect to='/' /> : <SignInPage />
+              }
+            />
+            <Route
+              exact
+              path='/signup'
+              render={() =>
+                this.props.currentUser ? <Redirect to='/' /> : <SignUpPage />
+              }
+            />
+            <Route
+              exact
+              path='/panel-admin'
+              render={() =>
+                this.props.currentUser &&
+                this.props.currentUser.adminAccount ? (
+                  <PanelAdmin />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Redirect from='/panel-org-x' to='/panel-org' />
+            <Route
+              exact
+              path='/panel-org'
+              render={() =>
+                this.props.currentUser &&
+                !this.props.currentUser.adminAccount ? (
+                  <PanelOrg />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+            <Route
+              exact
+              path='/editar-solucion'
+              render={() =>
+                this.props.currentUser &&
+                !this.props.currentUser.adminAccount ? (
+                  <EditSolutionPage />
+                ) : (
+                  <Redirect to='/' />
+                )
+              }
+            />
+          </Switch>
+        </div>
+        <Footer />
+        <ScrollToTop />
+        <BackToTop />
+        <Notification />
+      </MuiThemeProvider>
     );
   }
 }
 
-const mapStateToProps = ({ user, organizations, solutions }) => ({
+const mapStateToProps = ({ user }) => ({
   currentUser: user.currentUser,
 });
 

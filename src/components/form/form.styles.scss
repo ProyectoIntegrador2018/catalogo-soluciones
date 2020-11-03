@@ -1,3 +1,43 @@
+.form-container {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  width: 60%;
+  display: flex;
+  justify-content: center;
+  .form-content {
+    width: 600px;
+    padding: 60px;
+    border-radius: 15px;
+    flex-direction: column;
+    border: solid 1px black;
+    box-shadow: 10px 5px 5px black;
+    background-color: white;
+    .title {
+      margin: 10px 0;
+      text-align: left;
+    }
+  }
+}
+//Phones
+@media only screen and (max-width: 700px) {
+  .form-container {
+    width: 100%;
+    margin-left: 0;
+    .form-content {
+      width: 380px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+  }
+}
+//Tablets
+@media only screen and (min-width: 700px) and (max-width: 1050px) {
+  .form-container {
+    width: 66%;
+  }
+}
+
 $sub-color: grey;
 $main-color: black;
 
@@ -10,6 +50,10 @@ $main-color: black;
 .group {
   position: relative;
   margin: 45px 0;
+
+  .form-multi-select {
+    width: 95%;
+  }
 
   .form-input {
     background: none;
