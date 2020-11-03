@@ -1,3 +1,14 @@
 .catalogo {
-  padding: 20px;
+  max-width: 1300px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 50px;
+}
+
+@media (max-width: 1335px) {
+  .catalogo {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
 }
