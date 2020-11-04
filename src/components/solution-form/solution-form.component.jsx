@@ -107,9 +107,9 @@ class SolutionForm extends React.Component {
       const { addSolution } = this.props;
       newSolution.id = res.id;
       addSolution(newSolution);
-      setNotification({ 
-        severity: 'info', 
-        message: 'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.', 
+      setNotification({
+        severity: 'info',
+        message: 'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.',
       });
       // Add solution to state.
     }
@@ -143,86 +143,76 @@ class SolutionForm extends React.Component {
       price,
       category,
     } = this.state;
-    if (this.props.currentUser.approved) {
-      return (
-        <Form 
-          title={this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'}
-          onSubmit={this.handleSubmit}
+    return (
+      <Form
+        title={this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'}
+        onSubmit={this.handleSubmit}
+      >
+        <FormInput
+          type='text'
+          name='solutionName'
+          value={solutionName}
+          onChange={this.handleChange}
+          label='Nombre de la solución'
+          required
+        />
+        <FormSelect
+          type='text'
+          name='category'
+          value={category}
+          onChange={this.handleChange}
+          label='Categoría'
+          required
         >
-          <FormInput
-            type='text'
-            name='solutionName'
-            value={solutionName}
-            onChange={this.handleChange}
-            label='Nombre de la solución'
-            required
-          />
-          <FormSelect
-            type='text'
-            name='category'
-            value={category}
-            onChange={this.handleChange}
-            label='Categoría'
-            required
-          >
-            <FormOption value='' label='' disabled hidden />
-            {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
-              <optgroup label={category}>
-                {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
-                  <FormOption value={subcategory} label={subcategory} />
-                ))}
-              </optgroup>
-            ))}
-          </FormSelect>
-          <FormTextarea
-            type='text'
-            name='descriptionPitch'
-            value={descriptionPitch}
-            onChange={this.handleChange}
-            label='Descripción de la solución (max. 500 caracteres)'
-            rows={10}
-            required
-          />
-          <FormTextarea
-            type='text'
-            name='descriptionSuccess'
-            value={descriptionSuccess}
-            onChange={this.handleChange}
-            label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
-            rows={10}
-            required
-          />
-          <FormInput
-            type='number'
-            name='price'
-            value={price}
-            onChange={this.handleChange}
-            label='Precio'
-            required
-          />
+          <FormOption value='' label='' disabled hidden />
+          {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
+            <optgroup label={category}>
+              {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
+                <FormOption value={subcategory} label={subcategory} />
+              ))}
+            </optgroup>
+          ))}
+        </FormSelect>
+        <FormTextarea
+          type='text'
+          name='descriptionPitch'
+          value={descriptionPitch}
+          onChange={this.handleChange}
+          label='Descripción de la solución (max. 500 caracteres)'
+          rows={10}
+          required
+        />
+        <FormTextarea
+          type='text'
+          name='descriptionSuccess'
+          value={descriptionSuccess}
+          onChange={this.handleChange}
+          label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
+          rows={10}
+          required
+        />
+        <FormInput
+          type='number'
+          name='price'
+          value={price}
+          onChange={this.handleChange}
+          label='Precio'
+          required
+        />
 
-          <Button variant='contained' color='primary' type='submit'>
-            {this.props.solution ? 'Guardar cambios' : 'Crear solución'}
-          </Button>
+        <Button variant='contained' color='primary' type='submit'>
+          {this.props.solution ? 'Guardar cambios' : 'Crear solución'}
+        </Button>
           &nbsp;&nbsp;
-          {this.props.solution ?
-            <Button variant='contained' color='secondary' 
-              onClick={() => this.props.history.push('panel-org-x')}
-            >
-              Cerrar
-            </Button> 
+        {this.props.solution ?
+          <Button variant='contained' color='secondary'
+            onClick={() => this.props.history.push('panel-org-x')}
+          >
+            Cerrar
+            </Button>
           : null}
-        </Form>
-      );
-    } else {
-      // TODO: Arreglar el estilo de este bloque.
-      return (
-        <div className='unapproved-account'>
-          Tu cuenta aún no ha sido aprobada. Ponérse en contacto con el
-          administrador para dar seguimiento a su solicitud.
-        </div>
-      );
-    }
+      </Form>
+    );
   }
 }
 
