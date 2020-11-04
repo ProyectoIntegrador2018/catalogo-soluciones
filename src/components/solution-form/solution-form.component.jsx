@@ -5,7 +5,13 @@ import { createStructuredSelector } from 'reselect';
 
 import { setNotification } from '../../redux/notification/notification.actions';
 
-import { Form, FormInput, FormTextarea, FormSelect, FormOption } from '../form/form.component';
+import {
+  Form,
+  FormInput,
+  FormTextarea,
+  FormSelect,
+  FormOption,
+} from '../form/form.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
@@ -109,7 +115,12 @@ class SolutionForm extends React.Component {
       addSolution(newSolution);
       setNotification({
         severity: 'info',
+<<<<<<< HEAD
         message: 'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.',
+=======
+        message:
+          'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.',
+>>>>>>> a2d200b10ba2ac1f12dea25b89257047672eef5c
       });
       // Add solution to state.
     }
@@ -123,9 +134,9 @@ class SolutionForm extends React.Component {
   };
 
   handleChangeMultiple = (event) => {
-    console.log(event.target)
+    console.log(event.target);
     const options = event.target.value;
-    console.log(options)
+    console.log(options);
     const value = [];
     for (let i = 0, l = options.length; i < l; i += 1) {
       if (options[i].selected) {
@@ -143,6 +154,7 @@ class SolutionForm extends React.Component {
       price,
       category,
     } = this.state;
+<<<<<<< HEAD
     return (
       <Form
         title={this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'}
@@ -213,6 +225,91 @@ class SolutionForm extends React.Component {
           : null}
       </Form>
     );
+=======
+    if (this.props.currentUser.approved) {
+      return (
+        <Form
+          title={
+            this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'
+          }
+          onSubmit={this.handleSubmit}
+        >
+          <FormInput
+            type='text'
+            name='solutionName'
+            value={solutionName}
+            onChange={this.handleChange}
+            label='Nombre de la solución'
+            required
+          />
+          <FormSelect
+            type='text'
+            name='category'
+            value={category}
+            onChange={this.handleChange}
+            label='Categoría'
+            required
+          >
+            <FormOption value='' label='' disabled hidden />
+            {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
+              <optgroup label={category}>
+                {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
+                  <FormOption value={subcategory} label={subcategory} />
+                ))}
+              </optgroup>
+            ))}
+          </FormSelect>
+          <FormTextarea
+            type='text'
+            name='descriptionPitch'
+            value={descriptionPitch}
+            onChange={this.handleChange}
+            label='Descripción de la solución (max. 500 caracteres)'
+            rows={10}
+            required
+          />
+          <FormTextarea
+            type='text'
+            name='descriptionSuccess'
+            value={descriptionSuccess}
+            onChange={this.handleChange}
+            label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
+            rows={10}
+            required
+          />
+          <FormInput
+            type='number'
+            name='price'
+            value={price}
+            onChange={this.handleChange}
+            label='Precio'
+            required
+          />
+          <Button variant='contained' color='primary' type='submit'>
+            {this.props.solution ? 'Guardar cambios' : 'Crear solución'}
+          </Button>
+          &nbsp;&nbsp;
+          {this.props.solution ? (
+            <Button
+              variant='contained'
+              color='secondary'
+              onClick={() => this.props.history.push('panel-org-x')}
+            >
+              Cerrar
+            </Button>
+          ) : null}
+        </Form>
+      );
+    } else {
+      // TODO: Arreglar el estilo de este bloque.
+      return (
+        <div className='unapproved-account'>
+          Tu cuenta aún no ha sido aprobada. Ponérse en contacto con el
+          administrador para dar seguimiento a su solicitud.
+        </div>
+      );
+    }
+>>>>>>> a2d200b10ba2ac1f12dea25b89257047672eef5c
   }
 }
 

@@ -22,11 +22,13 @@ import ClearIcon from '@material-ui/icons/Clear';
 
 const HoverInfo = ({ label, icon, message }) => (
   <Tooltip className='tooltip header-block-small' title={message}>
-    <Button>{label} &nbsp; {icon}</Button>
+    <Button>
+      {label} &nbsp; {icon}
+    </Button>
   </Tooltip>
-)
+);
 
-const SolutionList = ({ solutions, ...otherProps}) => {
+const SolutionList = ({ solutions, ...otherProps }) => {
   const [state, setState] = useState({
     open: otherProps.open,
     solution: null,
@@ -43,7 +45,7 @@ const SolutionList = ({ solutions, ...otherProps}) => {
 
   const handleClose = () => {
     setState({ open: false });
-  }
+  };
 
   return (
     <div>
@@ -51,22 +53,22 @@ const SolutionList = ({ solutions, ...otherProps}) => {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: '30%' }}>
-                SOLUCIÓN
-          </TableCell>
-              <TableCell align='right'><HoverInfo
-                label='Publicada'
-                icon={<InfoOutlinedIcon />}
-                message='Si deseas puedes elegir no publicar una solución en el catálogo, si aun no esta lista o no deseas mostrarla.'
-              /></TableCell>
-              <TableCell align='right'><HoverInfo
-                label='Aprobado'
-                icon={<InfoOutlinedIcon />}
-                message='Se refiere a si la solución ha sido aprobada o no para aparecer en el catálogo. Si no lo ha sido, no se mostrará.'
-              /></TableCell>
+              <TableCell style={{ width: '30%' }}>SOLUCIÓN</TableCell>
               <TableCell align='right'>
-                OPCIONES
-          </TableCell>
+                <HoverInfo
+                  label='Publicada'
+                  icon={<InfoOutlinedIcon />}
+                  message='Si deseas puedes elegir no publicar una solución en el catálogo, si aun no esta lista o no deseas mostrarla.'
+                />
+              </TableCell>
+              <TableCell align='right'>
+                <HoverInfo
+                  label='Aprobado'
+                  icon={<InfoOutlinedIcon />}
+                  message='Se refiere a si la solución ha sido aprobada o no para aparecer en el catálogo. Si no lo ha sido, no se mostrará.'
+                />
+              </TableCell>
+              <TableCell align='right'>OPCIONES</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -83,19 +85,26 @@ const SolutionList = ({ solutions, ...otherProps}) => {
                   />
                 </TableCell>
                 <TableCell align='right'>
-                  {solution.approved ?
-                    <CheckIcon style={{ fill: 'green' }} /> :
+                  {solution.approved ? (
+                    <CheckIcon style={{ fill: 'green' }} />
+                  ) : (
                     <ClearIcon style={{ fill: 'red' }} />
-                  }
+                  )}
                 </TableCell>
                 <TableCell align='right'>
                   <span className='action-buttons'>
-                    <Button className='modify' onClick={() => modifyItem(solution)}>
+                    <Button
+                      className='modify'
+                      onClick={() => modifyItem(solution)}
+                    >
                       Ver / Editar
-                </Button>
-                    <Button className='delete' onClick={() => removeItem(solution)}>
+                    </Button>
+                    <Button
+                      className='delete'
+                      onClick={() => removeItem(solution)}
+                    >
                       Borrar
-                </Button>
+                    </Button>
                   </span>
                 </TableCell>
               </TableRow>
@@ -113,6 +122,6 @@ const SolutionList = ({ solutions, ...otherProps}) => {
       </Modal>
     </div>
   );
-}
+};
 
 export default SolutionList;

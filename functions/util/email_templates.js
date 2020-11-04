@@ -1,4 +1,10 @@
-exports.makeContactEmailHTML = function (name, fromEmail, service, message, org) {
+exports.makeContactEmailHTML = function (
+  name,
+  fromEmail,
+  service,
+  message,
+  org,
+) {
   return `
     <h3>Buen día,</h3>
     <p>
@@ -13,8 +19,8 @@ exports.makeContactEmailHTML = function (name, fromEmail, service, message, org)
     </p>
     <p>El mensaje recibido es el siguiente:</p>
     <p>${message}</p>
-  `
-}
+  `;
+};
 
 exports.makeNewUserEmailHTML = function (name, org, email) {
   return `
@@ -28,8 +34,8 @@ exports.makeNewUserEmailHTML = function (name, org, email) {
     <p>
       Gracias, buen día.
     </p>
-  `
-}
+  `;
+};
 
 exports.makeNewSolutionEmailHTML = function (name, org) {
   return `
@@ -43,10 +49,10 @@ exports.makeNewSolutionEmailHTML = function (name, org) {
     <p>
       Gracias, buen día.
     </p>
-  `
-}
+  `;
+};
 
-exports.makeUserApprovedEmailHTML = function(name, org, email) {
+exports.makeUserApprovedEmailHTML = function (name, org, email) {
   return `
     <h3>Buen día ${name},</h3>
     <p>
@@ -58,10 +64,10 @@ exports.makeUserApprovedEmailHTML = function(name, org, email) {
     <p>
       Gracias, buen día.
     </p>
-  `
-}
+  `;
+};
 
-exports.makeUserRejectedEmailHTML = function(name, org, email, message) {
+exports.makeUserRejectedEmailHTML = function (name, org, email, message) {
   return `
     <h3>Buen día ${name},</h3>
     <p>
@@ -75,10 +81,10 @@ exports.makeUserRejectedEmailHTML = function(name, org, email, message) {
       registrarte nuevamente, siguiende las siguientes indicaciones.
     </p>
     <p>${message}</p>
-  `
-}
+  `;
+};
 
-exports.makeSolutionApprovedEmailHTML = function(name, org, solutionName) {
+exports.makeSolutionApprovedEmailHTML = function (name, org, solutionName) {
   return `
     <h3>Buen día ${name},</h3>
     <p>
@@ -91,10 +97,15 @@ exports.makeSolutionApprovedEmailHTML = function(name, org, solutionName) {
     <p>
       Gracias, buen día.
     </p>
-  `
-}
+  `;
+};
 
-exports.makeSolutionRejectedEmailHTML = function(name, org, solutionName, message) {
+exports.makeSolutionRejectedEmailHTML = function (
+  name,
+  org,
+  solutionName,
+  message,
+) {
   return `
     <h3>Buen día ${name},</h3>
     <p>
@@ -105,5 +116,5 @@ exports.makeSolutionRejectedEmailHTML = function(name, org, solutionName, messag
       las siguientes correcciones que se solicitan.
     </p>
     <p>${message}</p>
-  `
-}
+  `;
+};
