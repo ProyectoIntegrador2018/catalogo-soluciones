@@ -152,7 +152,7 @@ class SolutionForm extends React.Component {
     } = this.state;
     return (
       <Form
-        title={this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'}
+        title={this.props.solution ? 'Ver / Modificar Solución' : 'Crear nueva solución'}
         onSubmit={this.handleSubmit}
       >
         <FormInput

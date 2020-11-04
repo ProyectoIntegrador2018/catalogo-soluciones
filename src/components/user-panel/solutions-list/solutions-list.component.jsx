@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { useHistory } from 'react-router-dom';
 
 import { Button, Modal, Tooltip } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -28,15 +29,16 @@ const HoverInfo = ({ label, icon, message }) => (
   </Tooltip>
 );
 
-const SolutionList = ({ solutions, ...otherProps }) => {
-  const [state, setState] = useState({
-    open: otherProps.open,
-    solution: null,
+const SolutionList = ({ solutions }) => {
+  const [state, setState] = React.useState({
+    open: false,
   });
 
-  const removeItem = (solution) => {
+  const removeItem = (solution, index) => {
     deleteUserSolution(solution.id);
     removeSolution(solution.id);
+    solutions.splice(index, 1)
+    setState({ solutions });
   };
 
   const modifyItem = (solution) => {
@@ -101,7 +103,7 @@ const SolutionList = ({ solutions, ...otherProps }) => {
                     </Button>
                     <Button
                       className='delete'
-                      onClick={() => removeItem(solution)}
+                      onClick={() => removeItem(solution, index)}
                     >
                       Borrar
                     </Button>
