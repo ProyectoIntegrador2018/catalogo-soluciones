@@ -5,7 +5,13 @@ import { createStructuredSelector } from 'reselect';
 
 import { setNotification } from '../../redux/notification/notification.actions';
 
-import { Form, FormInput, FormTextarea, FormSelect, FormOption } from '../form/form.component';
+import {
+  Form,
+  FormInput,
+  FormTextarea,
+  FormSelect,
+  FormOption,
+} from '../form/form.component';
 import { Button } from '@material-ui/core';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
 
@@ -107,9 +113,10 @@ class SolutionForm extends React.Component {
       const { addSolution } = this.props;
       newSolution.id = res.id;
       addSolution(newSolution);
-      setNotification({ 
-        severity: 'info', 
-        message: 'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.', 
+      setNotification({
+        severity: 'info',
+        message:
+          'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.',
       });
       // Add solution to state.
     }
@@ -123,9 +130,9 @@ class SolutionForm extends React.Component {
   };
 
   handleChangeMultiple = (event) => {
-    console.log(event.target)
+    console.log(event.target);
     const options = event.target.value;
-    console.log(options)
+    console.log(options);
     const value = [];
     for (let i = 0, l = options.length; i < l; i += 1) {
       if (options[i].selected) {
@@ -145,8 +152,10 @@ class SolutionForm extends React.Component {
     } = this.state;
     if (this.props.currentUser.approved) {
       return (
-        <Form 
-          title={this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'}
+        <Form
+          title={
+            this.props.solution ? 'Modificar Solución' : 'Crear nueva solución'
+          }
           onSubmit={this.handleSubmit}
         >
           <FormInput
@@ -200,18 +209,19 @@ class SolutionForm extends React.Component {
             label='Precio'
             required
           />
-
           <Button variant='contained' color='primary' type='submit'>
             {this.props.solution ? 'Guardar cambios' : 'Crear solución'}
           </Button>
           &nbsp;&nbsp;
-          {this.props.solution ?
-            <Button variant='contained' color='secondary' 
+          {this.props.solution ? (
+            <Button
+              variant='contained'
+              color='secondary'
               onClick={() => this.props.history.push('panel-org-x')}
             >
               Cerrar
-            </Button> 
-          : null}
+            </Button>
+          ) : null}
         </Form>
       );
     } else {

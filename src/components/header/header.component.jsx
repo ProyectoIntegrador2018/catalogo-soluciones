@@ -81,7 +81,7 @@ const Header = ({ currentUser }) => {
             </div>
             <div className='drawer-btn'>
               <Button onClick={toggleDrawer(true)}>
-                <MenuIcon className='icon'/> Menú
+                <MenuIcon className='icon' /> Menú
               </Button>
             </div>
           </Toolbar>

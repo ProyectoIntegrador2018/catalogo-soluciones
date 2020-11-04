@@ -21,12 +21,12 @@ const PanelOrg = ({ solutions }) => {
       items={{
         'Mis soluciones': {
           icon: <ListIcon />,
-          component: <SolutionsList solutions={solutions} />
+          component: <SolutionsList solutions={solutions} />,
         },
         'Agregar solución': {
           icon: <AddIcon />,
-          component: <SolutionForm />
-        }
+          component: <SolutionForm />,
+        },
       }}
     />
   );

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { forwardRef } from 'react';
 
 import MaterialTable from 'material-table';
@@ -18,6 +18,8 @@ import Remove from '@material-ui/icons/Remove';
 import SaveAlt from '@material-ui/icons/SaveAlt';
 import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
+import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
+import Refresh from '@material-ui/icons/Refresh';
 
 import './catalog-list.styles.scss';
 
@@ -46,11 +48,17 @@ const tableIcons = {
 };
 
 const CatalogList = ({ data }) => {
-  if (data) {
-    data.forEach((i) => {
-      i.imageUrl = <img src={i.imageUrl} width='50px' alt='logo' />;
-    });
-  }
+  const [solutions, setSolutions] = useState();
+
+  useEffect(() => {
+    if (data) {
+      data.forEach((i) => {
+        i.imageUrl = <img src={i.imageUrl} width='50px' alt='logo' />;
+      });
+    }
+    setSolutions(data);
+  }, [data]);
+
   return (
     data && (
       <MaterialTable
@@ -79,7 +87,7 @@ const CatalogList = ({ data }) => {
             },
           },
         ]}
-        data={data}
+        data={solutions}
         detailPanel={(rowData) => {
           return (
             <>
@@ -92,10 +100,32 @@ const CatalogList = ({ data }) => {
             </>
           );
         }}
+        actions={[
+          {
+            tooltip: 'Comparar soluciones',
+            icon: CompareArrowsIcon,
+            onClick: (e, selected) => {
+              selected = selected.map((i) => {
+                i.tableData.checked = false;
+                return i;
+              });
+              setSolutions(selected);
+            },
+          },
+          {
+            tooltip: 'Refrescar',
+            icon: Refresh,
+            onClick: () => {
+              setSolutions(data);
+            },
+            isFreeAction: true,
+          },
+        ]}
         localization={{
           toolbar: {
             searchTooltip: 'Buscar',
             searchPlaceholder: 'Buscar',
+            nRowsSelected: '{0} selecciones',
           },
           body: {
             emptyDataSourceMessage: 'No hay información que mostrar',
@@ -113,6 +143,8 @@ const CatalogList = ({ data }) => {
           },
         }}
         options={{
+          selection: true,
+          showSelectAllCheckbox: false,
           headerStyle: {
             fontWeight: 'bolder',
           },

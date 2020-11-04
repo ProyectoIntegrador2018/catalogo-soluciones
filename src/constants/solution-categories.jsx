@@ -7,7 +7,7 @@ const SOLUTION_CATEGORIES = {
     'E-commerce',
     'Desarrollo a la medida',
   ],
-  'Servicios': [
+  Servicios: [
     'Facturación electrónica',
     'Staffing',
     'Software as a service',
@@ -28,12 +28,9 @@ const SOLUTION_CATEGORIES = {
     'IoT',
     'Ciberseguridad',
     'Blockchain',
-    'Nube'
+    'Nube',
   ],
-  'Desarrollo' : [
-    'Uso de PLC',
-    'Redes industriales',
-  ],
+  Desarrollo: ['Uso de PLC', 'Redes industriales'],
 };
 
 export default SOLUTION_CATEGORIES;
