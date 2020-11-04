@@ -2,8 +2,10 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 
+import { auth } from '../../firebase/firebase';
+
 import { Form, FormInput } from '../form/form.component';
-import Button from '@material-ui/core/Button';
+import { Button, Modal } from '@material-ui/core';
 
 import { signIn } from '../../firebase/sessions';
 
@@ -18,6 +20,8 @@ class SignIn extends React.Component {
     this.state = {
       email: '',
       password: '',
+      emailForgot: '',
+      openForgot: false,
     };
   }
 
@@ -44,9 +48,24 @@ class SignIn extends React.Component {
     this.setState({ [name]: value });
   };
 
-  goToSignUp = () => {
-    this.props.history.push('signup');
-  };
+  handleClose = () => {
+    this.setState({ openForgot: false, emailForgot: '' });
+  }
+
+  forgotPass = () => {
+    auth.sendPasswordResetEmail(this.state.emailForgot).then(() => {
+      this.setState({ openForgot: false, emailForgot: '' });
+      this.props.setNotification({
+        severity: 'info',
+        message: 'Se ha enviado el correo electrónico de recuperación.'
+      });
+    }).catch((_) => {
+      this.props.setNotification({
+        severity: 'error',
+        message: 'Error, favor de intentar nuevamente.'
+      });
+    });
+  }
 
   render() {
     return (
@@ -74,12 +93,59 @@ class SignIn extends React.Component {
           Inicia sesión
         </Button>
 
-        <div className='sign-up'>
-          Aún no tienes cuenta?
-          <span className='sign-up-button link' onClick={this.goToSignUp}>
+        <span className='inline'>
+          ¿Olvidaste tu contraseña?
+          <span
+            className='link-button link'
+            onClick={() => this.setState({ openForgot: true })}
+          >
+            Recuperala
+          </span>
+        </span>
+        <br></br><br></br><br></br>
+        <div>
+          ¿Aún no tienes cuenta?
+          <span
+            className='link-button link'
+            onClick={() => this.props.history.push('signup')}
+          >
             Crear cuenta
           </span>
         </div>
+
+        <Modal
+          className='modal'
+          open={this.state.openForgot}
+          onClose={this.handleClose}
+        >
+          <Form 
+            title='Enviar correo de recuperación' 
+            onSubmit={this.forgotPass}
+          >
+            <span>
+              Proporciona el correo electrónico asociado a la cuenta:
+            </span>
+            <FormInput
+              name='emailForgot'
+              type='email'
+              handleChange={this.handleChange}
+              value={this.state.emailForgot}
+              label='Correo'
+              required
+            />
+            <Button type='submit' color="primary" variant='contained'>
+              Enviar
+            </Button>
+            &nbsp;&nbsp;
+            <Button 
+              onClick={this.handleClose} 
+              color="secondary" 
+              variant='contained'
+            >
+              Cancelar
+            </Button>
+          </Form>
+        </Modal>
       </Form>
     );
   }

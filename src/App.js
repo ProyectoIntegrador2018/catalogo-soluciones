@@ -17,7 +17,6 @@ import Catalogo from './pages/catalogo/catalogo.component';
 import PanelAdmin from './pages/panel-admin/panel-admin.component';
 import PanelOrg from './pages/panel-org/panel-org.component';
 import solutionInquire from './components/solution-inquire/solution-inquire.component';
-import EditSolutionPage from './pages/editar-solucion/editar-solucion.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -130,18 +129,6 @@ class App extends React.Component {
                 this.props.currentUser &&
                 !this.props.currentUser.adminAccount ? (
                   <PanelOrg />
-                ) : (
-                  <Redirect to='/' />
-                )
-              }
-            />
-            <Route
-              exact
-              path='/editar-solucion'
-              render={() =>
-                this.props.currentUser &&
-                !this.props.currentUser.adminAccount ? (
-                  <EditSolutionPage />
                 ) : (
                   <Redirect to='/' />
                 )
