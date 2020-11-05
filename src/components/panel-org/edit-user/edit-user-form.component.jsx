@@ -12,9 +12,10 @@ import { changePass } from '../../../firebase/sessions';
 import { Form, FormInput } from '../../form/form.component';
 import { Button } from '@material-ui/core';
 
+import { firestore } from '../../../firebase/firebase';
+
 import './edit-user-form.styles.scss';
 
-// TODO: Add functionality.
 const ContactInfoForm = ({ currentUser, setCurrentUser, setNotification }) => {
   let history = useHistory();
 
@@ -32,6 +33,21 @@ const ContactInfoForm = ({ currentUser, setCurrentUser, setNotification }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    firestore.collection('users').doc(currentUser.id).update({
+      displayName: state.displayName,
+      phoneNumber: state.phoneNumber,
+    }).then(() => {
+      setNotification({
+        severity: 'info',
+        message: 'Se han actualizado los datos exitosamente.'
+      });
+      history.push('panel-org-x');
+    }).catch(() => {
+      setNotification({
+        severity: 'error',
+        message: 'Error al actualizar datos. Intentar nuevamente.'
+      });
+    });
   }
 
   return (
