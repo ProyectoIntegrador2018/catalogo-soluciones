@@ -1,5 +1,4 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { Button, Modal, Tooltip } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -11,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import SolutionForm from '../../solution-form/solution-form.component';
+import SolutionForm from '../solution-form/solution-form.component';
 import { removeSolution } from '../../../redux/solutions/solutions.actions';
 import { deleteUserSolution } from '../../../firebase/user-panel';
 

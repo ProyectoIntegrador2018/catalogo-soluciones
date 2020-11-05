@@ -13,22 +13,20 @@ function TabPanel(props) {
   const { children, value, index, ...other } = props;
 
   return (
-    <center>
-      <div
-        className='panel-content max-width'
-        role='tabpanel'
-        hidden={value !== index}
-        id={`scrollable-auto-tabpanel-${index}`}
-        aria-labelledby={`scrollable-auto-tab-${index}`}
-        {...other}
-      >
-        {value === index && (
-          <Box>
-            <Typography>{children}</Typography>
-          </Box>
-        )}
-      </div>
-    </center>
+    <div
+      className='panel-content max-width'
+      role='tabpanel'
+      hidden={value !== index}
+      id={`scrollable-auto-tabpanel-${index}`}
+      aria-labelledby={`scrollable-auto-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
   );
 }
 
@@ -64,28 +62,26 @@ export default function PanelMenu({ items, ...otherProps }) {
   return (
     <div className={classes.root}>
       <AppBar className='panel-header' position='static' color='default'>
-        <center>
-          <div className='max-width'>
-            <Tabs
-              className='tab-bar'
-              value={value}
-              onChange={handleChange}
-              indicatorColor='primary'
-              textColor='primary'
-              variant='scrollable'
-              scrollButtons='auto'
-              aria-label='scrollable auto tabs example'
-            >
-              {Object.keys(items).map((title, index) => (
-                <Tab
-                  label={title}
-                  icon={items[title].icon}
-                  {...a11yProps(index)}
-                />
-              ))}
-            </Tabs>
-          </div>
-        </center>
+        <center><div className='max-width'>
+          <Tabs
+            className='tab-bar'
+            value={value}
+            onChange={handleChange}
+            indicatorColor='primary'
+            textColor='primary'
+            variant='scrollable'
+            scrollButtons='auto'
+          >
+            {Object.keys(items).map((title, index) => (
+              <Tab
+                key={index}
+                label={title}
+                icon={items[title].icon}
+                {...a11yProps(index)}
+              />
+            ))}
+          </Tabs>
+        </div></center>
       </AppBar>
       {Object.values(items).map((content, index) => (
         <TabPanel value={value} index={index} key={index}>

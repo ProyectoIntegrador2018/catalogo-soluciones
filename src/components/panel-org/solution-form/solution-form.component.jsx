@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
 
-import { setNotification } from '../../redux/notification/notification.actions';
+import { setNotification } from '../../../redux/notification/notification.actions';
 
 import {
   Form,
@@ -11,19 +11,19 @@ import {
   FormTextarea,
   FormSelect,
   FormOption,
-} from '../form/form.component';
+} from '../../form/form.component';
 import { Button } from '@material-ui/core';
-import { selectCurrentUser } from '../../redux/user/user.selectors';
+import { selectCurrentUser } from '../../../redux/user/user.selectors';
 
-import { insertNewSolution, updateSolution } from '../../firebase/catalog';
+import { insertNewSolution, updateSolution } from '../../../firebase/catalog';
 
 import './solution-form.styles.scss';
 import {
   modifySolution,
   addSolution,
-} from '../../redux/solutions/solutions.actions';
+} from '../../../redux/solutions/solutions.actions';
 
-import SOLUTION_CATEGORIES from '../../constants/solution-categories';
+import SOLUTION_CATEGORIES from '../../../constants/solution-categories';
 
 class SolutionForm extends React.Component {
   constructor(props) {

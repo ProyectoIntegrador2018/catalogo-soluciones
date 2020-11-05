@@ -5,8 +5,9 @@ import { createStructuredSelector } from 'reselect';
 import { useHistory } from 'react-router-dom';
 
 import Panel from '../../components/panel/panel.component';
-import SolutionForm from '../../components/solution-form/solution-form.component';
-import SolutionsList from '../../components/user-panel/solutions-list/solutions-list.component';
+import SolutionForm from '../../components/panel-org/solution-form/solution-form.component';
+import SolutionsList from '../../components/panel-org/solution-list/solutions-list.component';
+import EditOrgForm from '../../components/panel-org/edit-org/edit-org-form.component';
 
 import { selectUserSolutions } from '../../redux/solutions/solutions.selectors';
 import { selectCurrentUser } from '../../redux/user/user.selectors';
@@ -16,6 +17,7 @@ import './panel-org.styles.scss';
 
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
+import BusinessIcon from '@material-ui/icons/Business';
 
 const PanelOrg = ({ solutions, currentUser, setNotification }) => {
   let history = useHistory();
@@ -30,7 +32,7 @@ const PanelOrg = ({ solutions, currentUser, setNotification }) => {
   }
   return render && (
     <Panel
-      key={3}
+      key={Math.random}
       items={{
         'Mis soluciones': {
           icon: <ListIcon />,
@@ -39,6 +41,10 @@ const PanelOrg = ({ solutions, currentUser, setNotification }) => {
         'Agregar solución': {
           icon: <AddIcon />,
           component: <SolutionForm />,
+        },
+        'Mi organización': {
+          icon: <BusinessIcon />,
+          component: <EditOrgForm />,
         },
       }}
     />
