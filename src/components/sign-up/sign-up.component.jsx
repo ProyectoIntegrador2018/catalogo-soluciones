@@ -53,12 +53,26 @@ class SignUp extends React.Component {
     const { setNotification } = this.props;
 
     if (password !== confirmPassword) {
-      this.setState({ errorMssg: 'Las contraseñas no coinciden.' });
+      setNotification({
+        severity: 'error',
+        message: 'Las contraseñas no coinciden.',
+      });
+      return;
+    }
+
+    if (password.length < 6) {
+      setNotification({
+        severity: 'error',
+        message: 'La contraseña debe contener al menos 6 caracteres.',
+      });
       return;
     }
 
     if (phoneNumber < 1000000000 || phoneNumber > 9999999999) {
-      this.setState({ errorMssg: 'Formato de telefono no valido.' });
+      setNotification({
+        severity: 'error',
+        message: 'Formato de telefono no valido.',
+      });
       return;
     }
 
@@ -152,6 +166,14 @@ class SignUp extends React.Component {
           required
         />
         <FormInput
+          type='number'
+          name='phoneNumber'
+          value={phoneNumber}
+          onChange={this.handleChange}
+          label='Telefono de contacto'
+          required
+        />
+        <FormInput
           type='password'
           name='password'
           value={password}
@@ -165,14 +187,6 @@ class SignUp extends React.Component {
           value={confirmPassword}
           onChange={this.handleChange}
           label='Confirmar contraseña'
-          required
-        />
-        <FormInput
-          type='number'
-          name='phoneNumber'
-          value={phoneNumber}
-          onChange={this.handleChange}
-          label='Telefono de contacto'
           required
         />
 

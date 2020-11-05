@@ -1,5 +1,4 @@
 import { auth, firestore, storage } from './firebase';
-
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
@@ -157,5 +156,32 @@ export const updateOrg = async (data, id) => {
         reject();
       });
     }
+  });
+}
+
+export const changePass = async (oldPass, newPass) => {
+  return new Promise((resolve, reject) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      auth.currentUser.email, oldPass);
+    auth.currentUser.reauthenticateWithCredential(credential).then(() => {
+      auth.currentUser.updatePassword(newPass).then(() => {
+        resolve();
+      }).catch((error) => {
+        console.log(error);
+        reject('Error de inicio de sesión.');
+      });
+    }).catch((error) => {
+      console.log(error)
+      var errMssg;
+      switch(error.code) {
+        case 'auth/wrong-password':
+          errMssg = 'La contraseña anterior es incorrecta.';
+          break;
+        default:
+          errMssg = 'Error de inicio de sesión.';
+          break;
+      }
+      reject(errMssg);
+    });
   });
 }

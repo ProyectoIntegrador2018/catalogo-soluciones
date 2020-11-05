@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createStructuredSelector } from 'reselect';
@@ -24,7 +24,7 @@ import './edit-org-form.styles.scss'
 const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
   let history = useHistory();
 
-  const [state, setState] = useState({
+  const [state, setState] = React.useState({
     orgName: currentUser.orgName,
     orgType: currentUser.orgType,
     description: currentUser.description,
@@ -50,7 +50,7 @@ const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
       currentUser.orgName = state.orgName;
       currentUser.orgType = state.orgType;
       currentUser.description = state.description;
-      currentUser.orgLogo = (url ? url : state.orgLogo);
+      currentUser.logo = (url ? url : state.orgLogo);
       setCurrentUser(currentUser);
 
       setNotification({
@@ -101,7 +101,7 @@ const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
           label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
           required
         />
-        <img src={state.orgLogo} alt='Logotipo' width='200'/>
+        <img className='org-logo' src={state.orgLogo} alt='Logotipo' width='200'/>
         <FormFile
           name='newOrgLogo'
           onChange={handleFile}
