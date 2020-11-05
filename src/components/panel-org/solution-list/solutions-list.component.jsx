@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import { Button, Modal, Tooltip } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
@@ -10,7 +10,7 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Checkbox from '@material-ui/core/Checkbox';
 
-import SolutionForm from '../../solution-form/solution-form.component';
+import SolutionForm from '../solution-form/solution-form.component';
 import { removeSolution } from '../../../redux/solutions/solutions.actions';
 import { deleteUserSolution } from '../../../firebase/user-panel';
 
@@ -28,15 +28,16 @@ const HoverInfo = ({ label, icon, message }) => (
   </Tooltip>
 );
 
-const SolutionList = ({ solutions, ...otherProps }) => {
-  const [state, setState] = useState({
-    open: otherProps.open,
-    solution: null,
+const SolutionList = ({ solutions }) => {
+  const [state, setState] = React.useState({
+    open: false,
   });
 
-  const removeItem = (solution) => {
+  const removeItem = (solution, index) => {
     deleteUserSolution(solution.id);
     removeSolution(solution.id);
+    solutions.splice(index, 1)
+    setState({ solutions });
   };
 
   const modifyItem = (solution) => {
@@ -101,7 +102,7 @@ const SolutionList = ({ solutions, ...otherProps }) => {
                     </Button>
                     <Button
                       className='delete'
-                      onClick={() => removeItem(solution)}
+                      onClick={() => removeItem(solution, index)}
                     >
                       Borrar
                     </Button>

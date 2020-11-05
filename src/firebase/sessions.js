@@ -1,5 +1,4 @@
 import { auth, firestore, storage } from './firebase';
-
 import firebase from 'firebase/app';
 import 'firebase/functions';
 
@@ -37,6 +36,18 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
   return userRef;
 };
 
+const uploadFile = async (pathname, file) => {
+  return new Promise((resolve, reject) => {
+    storage.child(pathname).put(file).then((snapshot) => {
+      snapshot.ref.getDownloadURL().then((url) => {
+        resolve(url);
+      });
+    }).catch(() => {
+      reject();
+    });
+  });
+}
+
 export const signUp = async (
   email,
   password,
@@ -62,23 +73,18 @@ export const signUp = async (
           email,
         });
 
-        storage
-          .child(user.uid + '/logo.jpeg')
-          .put(orgLogo)
-          .then((snapshot) => {
-            snapshot.ref.getDownloadURL().then((url) => {
-              createUserProfileDocument(user, {
-                displayName,
-                phoneNumber,
-                orgName,
-                orgType,
-                description,
-                logo: url,
-              });
-              auth.signOut();
-              resolve();
-            });
+        uploadFile(user.uid + '/logo.jpeg', orgLogo).then((url) => {
+          createUserProfileDocument(user, {
+            displayName,
+            phoneNumber,
+            orgName,
+            orgType,
+            description,
+            logo: url,
           });
+          auth.signOut();
+          resolve();
+        });
       })
       .catch((error) => {
         console.log(error);
@@ -123,3 +129,59 @@ export const signIn = async (email, password) => {
       });
   });
 };
+
+export const updateOrg = async (data, id) => {
+  return new Promise((resolve, reject) => {
+    if (data.newOrgLogo) {
+      uploadFile(id + '/logo.jpeg', data.newOrgLogo).then((url) => {
+        firestore.collection('users').doc(id).update({
+          orgName: data.orgName,
+          orgType: data.orgType,
+          description: data.description,
+          logo: url,
+        }).then(() => {
+          resolve(url);
+        }).catch(() => {
+          reject();
+        });
+      });
+    } else {
+      firestore.collection('users').doc(id).update({
+        orgName: data.orgName,
+        orgType: data.orgType,
+        description: data.description,
+      }).then(() => {
+        resolve();
+      }).catch(() => {
+        reject();
+      });
+    }
+  });
+}
+
+export const changePass = async (oldPass, newPass) => {
+  return new Promise((resolve, reject) => {
+    const credential = firebase.auth.EmailAuthProvider.credential(
+      auth.currentUser.email, oldPass);
+    auth.currentUser.reauthenticateWithCredential(credential).then(() => {
+      auth.currentUser.updatePassword(newPass).then(() => {
+        resolve();
+      }).catch((error) => {
+        console.log(error);
+        reject('Error de inicio de sesión.');
+      });
+    }).catch((error) => {
+      console.log(error)
+      var errMssg;
+      switch(error.code) {
+        case 'auth/wrong-password':
+          errMssg = 'La contraseña anterior es incorrecta.';
+          break;
+        default:
+          errMssg = 'Error de inicio de sesión.';
+          break;
+      }
+      reject(errMssg);
+    });
+  });
+}
