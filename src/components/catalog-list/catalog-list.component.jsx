@@ -170,6 +170,7 @@ const CatalogList = ({ data }) => {
         options={{
           selection: true,
           showSelectAllCheckbox: false,
+          emptyRowsWhenPaging: false,
           headerStyle: {
             fontWeight: 'bolder',
           },
