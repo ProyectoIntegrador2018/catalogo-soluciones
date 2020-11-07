@@ -5,6 +5,7 @@ import MaterialTable from 'material-table';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
+import { Button } from '@material-ui/core';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -20,6 +21,7 @@ import Search from '@material-ui/icons/Search';
 import ViewColumn from '@material-ui/icons/ViewColumn';
 import CompareArrowsIcon from '@material-ui/icons/CompareArrows';
 import Refresh from '@material-ui/icons/Refresh';
+import { useHistory } from 'react-router-dom';
 
 import './catalog-list.styles.scss';
 
@@ -49,6 +51,7 @@ const tableIcons = {
 
 const CatalogList = ({ data }) => {
   const [solutions, setSolutions] = useState();
+  let history = useHistory();
 
   useEffect(() => {
     if (data) {
@@ -58,6 +61,17 @@ const CatalogList = ({ data }) => {
     }
     setSolutions(data);
   }, [data]);
+
+  const goToSolutionInquire = (data) => {
+    history.push({
+      pathname: 'solution-inquire',
+      state: {
+        solutionName: data.solutionName,
+        toEmail: data.email,
+        orgName: data.organization,
+      },
+    });
+  };
 
   return (
     data && (
@@ -96,7 +110,18 @@ const CatalogList = ({ data }) => {
                 {rowData.descriptionPitch}
               </p>
               <h3 className='description-title'>Casos de éxito del servicio</h3>
-              <p className='description-body'>{rowData.descriptionSuccess}</p>
+              <p className='description-body separate'>
+                {rowData.descriptionSuccess}
+              </p>
+              <span className='inquire-button'>
+                <Button
+                  variant='contained'
+                  color='primary'
+                  onClick={() => goToSolutionInquire(rowData)}
+                >
+                  Preguntar por este servicio
+                </Button>
+              </span>
             </>
           );
         }}
