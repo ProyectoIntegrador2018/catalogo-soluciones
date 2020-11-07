@@ -8,8 +8,11 @@ import { selectApprovedSolutions } from '../../redux/solutions/solutions.selecto
 import CatalogList from '../../components/catalog-list/catalog-list.component';
 
 import './catalogo.styles.scss';
+import { useHistory } from 'react-router-dom';
 
 const Catalogo = ({ solutions }) => {
+  let history = useHistory();
+
   return (
     <div className='catalogo'>
       <h1>Catálogo de soluciones digitales</h1>
@@ -18,7 +21,7 @@ const Catalogo = ({ solutions }) => {
         <Button
           variant='contained'
           color='primary'
-          onClick={() => alert('We need to implement this later.')}
+          onClick={() => history.push('custom-inquiry')}
         >
           Realizar consulta
         </Button>

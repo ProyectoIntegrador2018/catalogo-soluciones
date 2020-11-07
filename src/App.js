@@ -16,7 +16,8 @@ import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 import PanelAdmin from './pages/panel-admin/panel-admin.component';
 import PanelOrg from './pages/panel-org/panel-org.component';
-import solutionInquire from './components/solution-inquire/solution-inquire.component';
+import SolutionInquire from './components/solution-inquire/solution-inquire.component';
+import CustomInquiry from './components/custom-inquiry/custom-inquiry.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -92,7 +93,8 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={HomePage} />
             <Route exact path='/catalogo' component={Catalogo} />
-            <Route exact path='/solution-inquire' component={solutionInquire} />
+            <Route exact path='/solution-inquire' component={SolutionInquire} />
+            <Route exact path='/custom-inquiry' component={CustomInquiry} />
             <Route
               exact
               path='/signin'
