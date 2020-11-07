@@ -53,8 +53,12 @@ const CatalogList = ({ data }) => {
   const [solutions, setSolutions] = useState();
   let history = useHistory();
 
+  const shouldApplyEffect = (data) => {
+    return data && data[0].imageUrl && !data[0].imageUrl.props;
+  };
+
   useEffect(() => {
-    if (data) {
+    if (shouldApplyEffect(data)) {
       data.forEach((i) => {
         i.imageUrl = <img src={i.imageUrl} width='50px' alt='logo' />;
       });
