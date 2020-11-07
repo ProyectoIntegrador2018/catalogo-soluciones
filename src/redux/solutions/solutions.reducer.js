@@ -1,6 +1,6 @@
 import { SolutionsActionTypes } from './solutions.types';
 import {
-  matchOrganization,
+  matchOrganizationsWithSolutions,
   approveSolution,
   editSolution,
   addToSolutions,
@@ -17,10 +17,13 @@ const solutionsReducer = (state = INITIAL_STATE, action) => {
         ...state,
         allSolutions: action.payload,
       };
-    case SolutionsActionTypes.PAIR_ORGANIZATION_WITH_SOLUTION:
+    case SolutionsActionTypes.PAIR_ORGANIZATIONS_WITH_SOLUTIONS:
       return {
         ...state,
-        allSolutions: matchOrganization(state.allSolutions, action.payload),
+        allSolutions: matchOrganizationsWithSolutions(
+          state.allSolutions,
+          action.payload,
+        ),
       };
     case SolutionsActionTypes.REMOVE_SOLUTION:
       return {

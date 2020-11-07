@@ -16,7 +16,8 @@ import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
 import PanelAdmin from './pages/panel-admin/panel-admin.component';
 import PanelOrg from './pages/panel-org/panel-org.component';
-import solutionInquire from './components/solution-inquire/solution-inquire.component';
+import SolutionInquiry from './components/solution-inquiry/solution-inquiry.component';
+import CustomInquiry from './components/custom-inquiry/custom-inquiry.component';
 
 import { auth } from './firebase/firebase';
 import { getUserRef } from './firebase/sessions';
@@ -24,7 +25,7 @@ import { getCatalogData } from './firebase/catalog';
 import { setCurrentUser } from './redux/user/user.actions';
 import {
   setSolutions,
-  pairOrganizationWithSolution,
+  pairOrganizationsWithSolutions,
 } from './redux/solutions/solutions.actions';
 import { setOrganizations } from './redux/organizations/organizations.actions';
 
@@ -38,7 +39,7 @@ class App extends React.Component {
       setCurrentUser,
       setSolutions,
       setOrganizations,
-      pairOrganizationWithSolution,
+      pairOrganizationsWithSolutions,
     } = this.props;
 
     // Fetch catalog data and fill state with it. It's necessary to first fetch the solutions
@@ -48,9 +49,7 @@ class App extends React.Component {
       setSolutions(solutions);
 
       getCatalogData('users').then((organizations) => {
-        organizations.forEach((organization) => {
-          pairOrganizationWithSolution(organization);
-        });
+        pairOrganizationsWithSolutions(organizations);
         setOrganizations(organizations);
       });
     });
@@ -94,7 +93,8 @@ class App extends React.Component {
           <Switch>
             <Route exact path='/' component={HomePage} />
             <Route exact path='/catalogo' component={Catalogo} />
-            <Route exact path='/solution-inquire' component={solutionInquire} />
+            <Route exact path='/solution-inquiry' component={SolutionInquiry} />
+            <Route exact path='/custom-inquiry' component={CustomInquiry} />
             <Route
               exact
               path='/signin'
@@ -154,8 +154,8 @@ const mapDispatchToProps = (dispatch) => ({
   setOrganizations: (organizations) =>
     dispatch(setOrganizations(organizations)),
   setSolutions: (solutions) => dispatch(setSolutions(solutions)),
-  pairOrganizationWithSolution: (organization) =>
-    dispatch(pairOrganizationWithSolution(organization)),
+  pairOrganizationsWithSolutions: (organizations) =>
+    dispatch(pairOrganizationsWithSolutions(organizations)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
