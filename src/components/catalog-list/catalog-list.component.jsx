@@ -62,9 +62,9 @@ const CatalogList = ({ data }) => {
     setSolutions(data);
   }, [data]);
 
-  const goToSolutionInquire = (data) => {
+  const goToSolutionInquiry = (data) => {
     history.push({
-      pathname: 'solution-inquire',
+      pathname: 'solution-inquiry',
       state: {
         solutionName: data.solutionName,
         toEmail: data.email,
@@ -113,11 +113,11 @@ const CatalogList = ({ data }) => {
               <p className='description-body separate'>
                 {rowData.descriptionSuccess}
               </p>
-              <span className='inquire-button'>
+              <span className='inquiry-button'>
                 <Button
                   variant='contained'
                   color='primary'
-                  onClick={() => goToSolutionInquire(rowData)}
+                  onClick={() => goToSolutionInquiry(rowData)}
                 >
                   Preguntar por este servicio
                 </Button>

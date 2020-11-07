@@ -15,9 +15,9 @@ import {
 } from '../form/form.component';
 import { Button } from '@material-ui/core';
 
-import './solution-inquire.styles.scss';
+import './solution-inquiry.styles.scss';
 
-class SolutionInquire extends React.Component {
+class SolutionInquiry extends React.Component {
   constructor(props) {
     super(props);
 
@@ -169,4 +169,4 @@ const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(SolutionInquire));
+export default connect(null, mapDispatchToProps)(withRouter(SolutionInquiry));
