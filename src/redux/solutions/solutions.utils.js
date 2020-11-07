@@ -1,12 +1,15 @@
-export const matchOrganization = (solutions, organization) => {
+export const matchOrganizationsWithSolutions = (solutions, organizations) => {
   for (var i in solutions) {
-    if (solutions[i].organizationID === organization.id) {
-      solutions[i].organization = organization.orgName;
-      solutions[i].imageUrl = organization.logo;
-      solutions[i].email = organization.email;
+    for (var j in organizations) {
+      if (solutions[i].organizationID === organizations[j].id) {
+        solutions[i].organization = organizations[j].orgName;
+        solutions[i].imageUrl = organizations[j].logo;
+        solutions[i].email = organizations[j].email;
+        break;
+      }
     }
   }
-  return solutions;
+  return solutions.slice();
 };
 
 export const approveSolution = (solutions, solutionId) => {

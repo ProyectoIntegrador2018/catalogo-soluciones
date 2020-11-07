@@ -24,7 +24,7 @@ import { getCatalogData } from './firebase/catalog';
 import { setCurrentUser } from './redux/user/user.actions';
 import {
   setSolutions,
-  pairOrganizationWithSolution,
+  pairOrganizationsWithSolutions,
 } from './redux/solutions/solutions.actions';
 import { setOrganizations } from './redux/organizations/organizations.actions';
 
@@ -38,7 +38,7 @@ class App extends React.Component {
       setCurrentUser,
       setSolutions,
       setOrganizations,
-      pairOrganizationWithSolution,
+      pairOrganizationsWithSolutions,
     } = this.props;
 
     // Fetch catalog data and fill state with it. It's necessary to first fetch the solutions
@@ -48,9 +48,7 @@ class App extends React.Component {
       setSolutions(solutions);
 
       getCatalogData('users').then((organizations) => {
-        organizations.forEach((organization) => {
-          pairOrganizationWithSolution(organization);
-        });
+        pairOrganizationsWithSolutions(organizations);
         setOrganizations(organizations);
       });
     });
@@ -154,8 +152,8 @@ const mapDispatchToProps = (dispatch) => ({
   setOrganizations: (organizations) =>
     dispatch(setOrganizations(organizations)),
   setSolutions: (solutions) => dispatch(setSolutions(solutions)),
-  pairOrganizationWithSolution: (organization) =>
-    dispatch(pairOrganizationWithSolution(organization)),
+  pairOrganizationsWithSolutions: (organizations) =>
+    dispatch(pairOrganizationsWithSolutions(organizations)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
