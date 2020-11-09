@@ -51,11 +51,13 @@ exports.sendCustomInquiry = functions.https.onRequest((request, response) => {
         from: 'Catálogo de Soluciones Digitales',
         // TODO: Replace this.
         to: 'souzanaranjo@gmail.com',
-        subject: 'Consulta del Catálogo de Soluciones Digitales',
+        subject: 'Consulta personalizada del Catálogo de Soluciones Digitales',
         html: html,
       },
       (error) => {
         if (error) {
+          console.log('no puede ser!!!!!');
+          console.log(html);
           functions.logger.log(error);
           response.status(500).send(error);
         } else {

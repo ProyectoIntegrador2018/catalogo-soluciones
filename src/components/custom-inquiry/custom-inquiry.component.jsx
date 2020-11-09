@@ -24,38 +24,77 @@ class CustomInquiry extends React.Component {
     super(props);
 
     this.state = {
-      contact: {
-        name: '',
-        org: '',
-        position: '',
-        phone: '',
-        email: '',
-      },
-      general: {
-        name: '',
-        objective: '',
-        dates: '',
-        background: '',
-      },
-      detail: {
-        description: '',
-        optionalRequirements: '',
-        requirements: '',
-      },
-      status: {
-        userApproved: '',
-        ITApproved: '',
-        budget: '',
-        projectType: '',
-        comments: '',
-      },
+      contactName: '',
+      contactOrg: '',
+      contactPosition: '',
+      contactPhone: '',
+      contactEmail: '',
+      generalName: '',
+      generalObjective: '',
+      generalDates: '',
+      generalBackground: '',
+      detailDescription: '',
+      detailOptionalRequirements: '',
+      detailRequirements: '',
+      statusUserApproved: '',
+      statusITApproved: '',
+      statusBudget: '',
+      statusProjectType: '',
+      statusComments: '',
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const { contact, general, detail, status } = this.state;
+    const {
+      contactName,
+      contactOrg,
+      contactPosition,
+      contactPhone,
+      contactEmail,
+      generalName,
+      generalObjective,
+      generalDates,
+      generalBackground,
+      detailDescription,
+      detailOptionalRequirements,
+      detailRequirements,
+      statusUserApproved,
+      statusITApproved,
+      statusBudget,
+      statusProjectType,
+      statusComments,
+    } = this.state;
+
+    const contact = {
+      name: contactName,
+      org: contactOrg,
+      position: contactPosition,
+      phone: contactPhone,
+      email: contactEmail,
+    };
+
+    const general = {
+      name: generalName,
+      objective: generalObjective,
+      dates: generalDates,
+      background: generalBackground,
+    };
+
+    const detail = {
+      descriptiopn: detailDescription,
+      optionalRequirements: detailOptionalRequirements,
+      requirements: detailRequirements,
+    };
+
+    const status = {
+      isUserApproved: statusUserApproved,
+      isITApproved: statusITApproved,
+      hasBudget: statusBudget,
+      projectType: statusProjectType,
+      comments: statusComments,
+    };
 
     const { setNotification } = this.props;
 
@@ -86,12 +125,29 @@ class CustomInquiry extends React.Component {
 
   handleChange = (event) => {
     const { name, value } = event.target;
-
     this.setState({ [name]: value });
   };
 
   render() {
-    const { contact, general, detail, status } = this.state;
+    const {
+      contactName,
+      contactOrg,
+      contactPosition,
+      contactPhone,
+      contactEmail,
+      generalName,
+      generalObjective,
+      generalDates,
+      generalBackground,
+      detailDescription,
+      detailOptionalRequirements,
+      detailRequirements,
+      statusUserApproved,
+      statusITApproved,
+      statusBudget,
+      statusProjectType,
+      statusComments,
+    } = this.state;
 
     return (
       <div className='box'>
@@ -100,7 +156,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactName'
-            value={contact.name}
+            value={contactName}
             onChange={this.handleChange}
             label='Nombre de la persona'
             required
@@ -108,7 +164,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactOrg'
-            value={contact.org}
+            value={contactOrg}
             onChange={this.handleChange}
             label='Nombre de la organización'
             required
@@ -116,7 +172,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactPosition'
-            value={contact.position}
+            value={contactPosition}
             onChange={this.handleChange}
             label='Posición'
             required
@@ -124,7 +180,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactPhone'
-            value={contact.phone}
+            value={contactPhone}
             onChange={this.handleChange}
             label='Teléfono'
             required
@@ -132,7 +188,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='email'
             name='contactEmail'
-            value={contact.email}
+            value={contactEmail}
             onChange={this.handleChange}
             label='Correo electrónico'
             required
@@ -142,7 +198,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='generalName'
-            value={general.name}
+            value={generalName}
             onChange={this.handleChange}
             label='Nombre de la necesidad'
             required
@@ -150,7 +206,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='generalObjective'
-            value={general.objective}
+            value={generalObjective}
             onChange={this.handleChange}
             label='Objetivo'
             required
@@ -158,7 +214,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='generalDates'
-            value={general.dates}
+            value={generalDates}
             onChange={this.handleChange}
             label='Fechas relevantes'
             required
@@ -166,7 +222,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='generalBackground'
-            value={general.background}
+            value={generalBackground}
             onChange={this.handleChange}
             label='Antecedentes [Problemática actual]'
             required
@@ -176,7 +232,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='detailDescription'
-            value={detail.description}
+            value={detailDescription}
             onChange={this.handleChange}
             label='Descripcion de la necesidad'
             required
@@ -184,14 +240,14 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='detailOptionalRequirements'
-            value={detail.optionalRequirements}
+            value={detailOptionalRequirements}
             onChange={this.handleChange}
             label='Listado de requerimientos (opcional)'
           />
           <FormTextarea
             type='text'
             name='detailRequirements'
-            value={detail.requirements}
+            value={detailRequirements}
             onChange={this.handleChange}
             label='Requerimientos obligatorios'
             required
@@ -201,7 +257,7 @@ class CustomInquiry extends React.Component {
           <FormSelect
             type='text'
             name='statusUserApproved'
-            value={status.userApproved}
+            value={statusUserApproved}
             onChange={this.handleChange}
             label='¿La necesidad ha sido aprobada por el área usuaria?'
             required
@@ -213,8 +269,8 @@ class CustomInquiry extends React.Component {
           </FormSelect>
           <FormSelect
             type='text'
-            name='stausITApproved'
-            value={status.ITApproved}
+            name='statusITApproved'
+            value={statusITApproved}
             onChange={this.handleChange}
             label='¿La necesidad ha sido aprobada por el área de TI?'
             required
@@ -227,7 +283,7 @@ class CustomInquiry extends React.Component {
           <FormSelect
             type='text'
             name='statusBudget'
-            value={status.budget}
+            value={statusBudget}
             onChange={this.handleChange}
             label='¿La necesidad tiene un presupuseto asignado?'
             required
@@ -239,7 +295,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='statusProjectType'
-            value={status.projectType}
+            value={statusProjectType}
             onChange={this.handleChange}
             label='Tipo de Proyecto'
             required
@@ -247,7 +303,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='statusComments'
-            value={status.comments}
+            value={statusComments}
             onChange={this.handleChange}
             label='Comentarios adicionales'
             required

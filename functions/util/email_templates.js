@@ -149,9 +149,9 @@ exports.makeCustomInquiryEmailHTML = function (
       Requerimientos obligatorios: ${detail.requirements}
 
       <h2>Estatus de la necesidad</h2>
-      ¿Aprobado por área usuaria? <b>${status.userApprobed}</b>
-      ¿Aprobado por área IT? <b>${status.ITApproved}</b>
-      ¿Presupuesto asignado? <b>${status.budget}</b>
+      ¿Aprobado por área usuaria? <b>${status.isUserApproved}</b>
+      ¿Aprobado por área IT? <b>${status.isITApproved}</b>
+      ¿Presupuesto asignado? <b>${status.hasBudget}</b>
       Tipo de proyecto: ${status.projectType}
       Comentarios adicionales: ${status.comments}
     </p>
