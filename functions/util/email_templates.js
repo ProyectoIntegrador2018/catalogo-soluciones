@@ -118,3 +118,42 @@ exports.makeSolutionRejectedEmailHTML = function (
     <p>${message}</p>
   `;
 };
+
+exports.makeCustomInquiryEmailHTML = function (
+  contact,
+  general,
+  detail,
+  status,
+) {
+  return `
+    <h3>Buen día,</h3>
+    <p>
+      Se ha recibido la siguiente consulta personalizada:
+
+      <h2>Datos de Contacto</h2>
+      Nombre de la persona: ${contact.name}
+      Nombre de la organización: ${contact.org}
+      Posición: ${contact.position}
+      Teléfono: ${contact.phone}
+      Correo electrónico: ${contact.email}
+
+      <h2>General</h2>
+      Nombre de la necesidad: ${general.name}
+      Objetivo: ${general.objective}
+      Fechas relevantes: ${general.dates}
+      Antecedentes: ${general.background}
+
+      <h2>Detalle</h2>
+      Descripción de la necesidad: ${detail.description}
+      Listado de requerimientos: ${detail.optionalRequirements}
+      Requerimientos obligatorios: ${detail.requirements}
+
+      <h2>Estatus de la necesidad</h2>
+      ¿Aprobado por área usuaria? <b>${status.userApprobed}</b>
+      ¿Aprobado por área IT? <b>${status.ITApproved}</b>
+      ¿Presupuesto asignado? <b>${status.budget}</b>
+      Tipo de proyecto: ${status.projectType}
+      Comentarios adicionales: ${status.comments}
+    </p>
+  `;
+};

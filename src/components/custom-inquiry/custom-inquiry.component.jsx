@@ -24,59 +24,49 @@ class CustomInquiry extends React.Component {
     super(props);
 
     this.state = {
-      contactName: '',
-      contactOrg: '',
-      contactPosition: '',
-      contactPhone: '',
-      contactEmail: '',
-      generalName: '',
-      generalObjective: '',
-      generalDates: '',
-      generalBackground: '',
-      detailDescription: '',
-      detailOptionalRequirements: '',
-      detailRequirements: '',
-      statusUserApproved: '',
-      statusITApproved: '',
-      statusBudget: '',
-      statusProjectType: '',
-      statusComments: '',
+      contact: {
+        name: '',
+        org: '',
+        position: '',
+        phone: '',
+        email: '',
+      },
+      general: {
+        name: '',
+        objective: '',
+        dates: '',
+        background: '',
+      },
+      detail: {
+        description: '',
+        optionalRequirements: '',
+        requirements: '',
+      },
+      status: {
+        userApproved: '',
+        ITApproved: '',
+        budget: '',
+        projectType: '',
+        comments: '',
+      },
     };
   }
 
   handleSubmit = async (event) => {
     event.preventDefault();
 
-    const {
-      contactName,
-      contactOrg,
-      contactPosition,
-      contactPhone,
-      contactEmail,
-      generalName,
-      generalObjective,
-      generalDates,
-      generalBackground,
-      detailDescription,
-      detailOptionalRequirements,
-      detailRequirements,
-      statusUserApproved,
-      statusITApproved,
-      statusBudget,
-      statusProjectType,
-      statusComments,
-    } = this.state;
+    const { contact, general, detail, status } = this.state;
 
     const { setNotification } = this.props;
 
-    const sendContactEmail = firebase
+    const sendCustomInquiry = firebase
       .functions()
-      .httpsCallable('sendContactEmail');
-    sendContactEmail({
-      contactEmail,
-      contactName,
-      org: contactOrg,
-      statusComments,
+      .httpsCallable('sendCustomInquiry');
+    sendCustomInquiry({
+      contact,
+      general,
+      detail,
+      status,
     })
       .then(() => {
         setNotification({
@@ -101,25 +91,7 @@ class CustomInquiry extends React.Component {
   };
 
   render() {
-    const {
-      contactName,
-      contactOrg,
-      contactPosition,
-      contactPhone,
-      contactEmail,
-      generalName,
-      generalObjective,
-      generalDates,
-      generalBackground,
-      detailDescription,
-      detailOptionalRequirements,
-      detailRequirements,
-      statusUserApproved,
-      statusITApproved,
-      statusBudget,
-      statusProjectType,
-      statusComments,
-    } = this.state;
+    const { contact, general, detail, status } = this.state;
 
     return (
       <div className='box'>
@@ -128,7 +100,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactName'
-            value={contactName}
+            value={contact.name}
             onChange={this.handleChange}
             label='Nombre de la persona'
             required
@@ -136,7 +108,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactOrg'
-            value={contactOrg}
+            value={contact.org}
             onChange={this.handleChange}
             label='Nombre de la organización'
             required
@@ -144,7 +116,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactPosition'
-            value={contactPosition}
+            value={contact.position}
             onChange={this.handleChange}
             label='Posición'
             required
@@ -152,7 +124,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='contactPhone'
-            value={contactPhone}
+            value={contact.phone}
             onChange={this.handleChange}
             label='Teléfono'
             required
@@ -160,7 +132,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='email'
             name='contactEmail'
-            value={contactEmail}
+            value={contact.email}
             onChange={this.handleChange}
             label='Correo electrónico'
             required
@@ -170,7 +142,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='generalName'
-            value={generalName}
+            value={general.name}
             onChange={this.handleChange}
             label='Nombre de la necesidad'
             required
@@ -178,7 +150,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='generalObjective'
-            value={generalObjective}
+            value={general.objective}
             onChange={this.handleChange}
             label='Objetivo'
             required
@@ -186,7 +158,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='generalDates'
-            value={generalDates}
+            value={general.dates}
             onChange={this.handleChange}
             label='Fechas relevantes'
             required
@@ -194,7 +166,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='generalBackground'
-            value={generalBackground}
+            value={general.background}
             onChange={this.handleChange}
             label='Antecedentes [Problemática actual]'
             required
@@ -204,7 +176,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='detailDescription'
-            value={detailDescription}
+            value={detail.description}
             onChange={this.handleChange}
             label='Descripcion de la necesidad'
             required
@@ -212,14 +184,14 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='detailOptionalRequirements'
-            value={detailOptionalRequirements}
+            value={detail.optionalRequirements}
             onChange={this.handleChange}
             label='Listado de requerimientos (opcional)'
           />
           <FormTextarea
             type='text'
             name='detailRequirements'
-            value={detailRequirements}
+            value={detail.requirements}
             onChange={this.handleChange}
             label='Requerimientos obligatorios'
             required
@@ -229,7 +201,7 @@ class CustomInquiry extends React.Component {
           <FormSelect
             type='text'
             name='statusUserApproved'
-            value={statusUserApproved}
+            value={status.userApproved}
             onChange={this.handleChange}
             label='¿La necesidad ha sido aprobada por el área usuaria?'
             required
@@ -242,7 +214,7 @@ class CustomInquiry extends React.Component {
           <FormSelect
             type='text'
             name='stausITApproved'
-            value={statusITApproved}
+            value={status.ITApproved}
             onChange={this.handleChange}
             label='¿La necesidad ha sido aprobada por el área de TI?'
             required
@@ -255,7 +227,7 @@ class CustomInquiry extends React.Component {
           <FormSelect
             type='text'
             name='statusBudget'
-            value={statusBudget}
+            value={status.budget}
             onChange={this.handleChange}
             label='¿La necesidad tiene un presupuseto asignado?'
             required
@@ -267,7 +239,7 @@ class CustomInquiry extends React.Component {
           <FormInput
             type='text'
             name='statusProjectType'
-            value={statusProjectType}
+            value={status.projectType}
             onChange={this.handleChange}
             label='Tipo de Proyecto'
             required
@@ -275,7 +247,7 @@ class CustomInquiry extends React.Component {
           <FormTextarea
             type='text'
             name='statusComments'
-            value={statusComments}
+            value={status.comments}
             onChange={this.handleChange}
             label='Comentarios adicionales'
             required
