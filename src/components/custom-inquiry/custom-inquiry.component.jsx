@@ -83,7 +83,7 @@ class CustomInquiry extends React.Component {
     };
 
     const detail = {
-      descriptiopn: detailDescription,
+      description: detailDescription,
       optionalRequirements: detailOptionalRequirements,
       requirements: detailRequirements,
     };
@@ -263,9 +263,9 @@ class CustomInquiry extends React.Component {
             required
           >
             <FormOption value='' label='' disabled hidden />
-            <FormOption value='Yes' label='Si' />
+            <FormOption value='Si' label='Si' />
             <FormOption value='No' label='No' />
-            <FormOption value='NotNeeded' label='No es necesario' />
+            <FormOption value='No es necesario' label='No es necesario' />
           </FormSelect>
           <FormSelect
             type='text'
@@ -276,9 +276,9 @@ class CustomInquiry extends React.Component {
             required
           >
             <FormOption value='' label='' disabled hidden />
-            <FormOption value='Yes' label='Si' />
+            <FormOption value='Si' label='Si' />
             <FormOption value='No' label='No' />
-            <FormOption value='NotNeeded' label='No es necesario' />
+            <FormOption value='No es necesario' label='No es necesario' />
           </FormSelect>
           <FormSelect
             type='text'
@@ -289,7 +289,7 @@ class CustomInquiry extends React.Component {
             required
           >
             <FormOption value='' label='' disabled hidden />
-            <FormOption value='Yes' label='Si' />
+            <FormOption value='Si' label='Si' />
             <FormOption value='No' label='No' />
           </FormSelect>
           <FormInput

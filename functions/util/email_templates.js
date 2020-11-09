@@ -126,34 +126,34 @@ exports.makeCustomInquiryEmailHTML = function (
   status,
 ) {
   return `
-    <h3>Buen día,</h3>
+    <p>Buen día,</p>
     <p>
       Se ha recibido la siguiente consulta personalizada:
 
-      <h2>Datos de Contacto</h2>
-      Nombre de la persona: ${contact.name}
-      Nombre de la organización: ${contact.org}
-      Posición: ${contact.position}
-      Teléfono: ${contact.phone}
-      Correo electrónico: ${contact.email}
+      <h3>Datos de Contacto</h3>
+      <p><b>Nombre de la persona:</b> ${contact.name}</p>
+      <p><b>Nombre de la organización:</b> ${contact.org}</p>
+      <p><b>Posición</b>: ${contact.position}</p>
+      <p><b>Teléfono:</b> ${contact.phone}</p>
+      <p><b>Correo electrónico:</b> ${contact.email}</p>
 
-      <h2>General</h2>
-      Nombre de la necesidad: ${general.name}
-      Objetivo: ${general.objective}
-      Fechas relevantes: ${general.dates}
-      Antecedentes: ${general.background}
+      <h3>General</h3>
+      <p><b>Nombre de la necesidad:</b> ${general.name}</p>
+      <p><b>Objetivo:</b> ${general.objective}</p>
+      <p><b>Fechas relevantes:</b> ${general.dates}</p>
+      <p><b>Antecedentes:</b> ${general.background}</p>
 
-      <h2>Detalle</h2>
-      Descripción de la necesidad: ${detail.description}
-      Listado de requerimientos: ${detail.optionalRequirements}
-      Requerimientos obligatorios: ${detail.requirements}
+      <h3>Detalle</h3>
+      <p><b>Descripción de la necesidad:</b> ${detail.description}</p>
+      <p><b>Listado de requerimientos:</b> ${detail.optionalRequirements}</p>
+      <p><b>Requerimientos obligatorios:</b> ${detail.requirements}</p>
 
-      <h2>Estatus de la necesidad</h2>
-      ¿Aprobado por área usuaria? <b>${status.isUserApproved}</b>
-      ¿Aprobado por área IT? <b>${status.isITApproved}</b>
-      ¿Presupuesto asignado? <b>${status.hasBudget}</b>
-      Tipo de proyecto: ${status.projectType}
-      Comentarios adicionales: ${status.comments}
+      <h3>Estatus de la necesidad</h3>
+      <p><b>¿Aprobado por área usuaria?</b> ${status.isUserApproved}</p>
+      <p><b>¿Aprobado por área IT?</b> ${status.isITApproved}</p>
+      <p><b>¿Presupuesto asignado?</b> ${status.hasBudget}</p>
+      <p><b>Tipo de proyecto:</b> ${status.projectType}</p>
+      <p><b>Comentarios adicionales:</b> ${status.comments}</p>
     </p>
   `;
 };
