@@ -37,6 +37,36 @@ exports.sendContactEmail = functions.https.onRequest((request, response) => {
   });
 });
 
+exports.sendCustomInquiry = functions.https.onRequest((request, response) => {
+  cors(request, response, () => {
+    const body = request.body.data;
+    const html = templates.makeCustomInquiryEmailHTML(
+      body.contact,
+      body.general,
+      body.detail,
+      body.status,
+    );
+    transporter.sendMail(
+      {
+        from: 'Catálogo de Soluciones Digitales',
+        // TODO: Replace this.
+        to: 'souzanaranjo@gmail.com',
+        cc: body.contact.email,
+        subject: 'Consulta personalizada del Catálogo de Soluciones Digitales',
+        html: html,
+      },
+      (error) => {
+        if (error) {
+          functions.logger.log(error);
+          response.status(500).send(error);
+        } else {
+          response.send({ data: 'success' });
+        }
+      },
+    );
+  });
+});
+
 exports.sendNewUserEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const body = request.body.data;
