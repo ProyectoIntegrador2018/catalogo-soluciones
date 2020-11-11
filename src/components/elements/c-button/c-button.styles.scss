@@ -3,22 +3,42 @@
   
   .red {
     background-color: #d44844;
+    &:hover {
+      background-color: #d44844;
+      opacity: 0.8;
+    }
   }
   
   .green {
     background-color: rgb(103, 172, 91);
+    &:hover {
+      background-color: rgb(103, 172, 91);
+      opacity: 0.8;
+    }
   }
   
   .grey {
     background-color: #5D5B5B;
+    &:hover {
+      background-color: #5D5B5B;
+      opacity: 0.8;
+    }
   }
   
   .blue {
     background-color: #428bca;
+    &:hover {
+      background-color: #428bca;
+      opacity: 0.8;
+    }
   }
   
   .orange {
     background-color: #e0663b;
+    &:hover {
+      background-color: #e0663b;
+      opacity: 0.8;
+    }
   }
 
   .white-text {
