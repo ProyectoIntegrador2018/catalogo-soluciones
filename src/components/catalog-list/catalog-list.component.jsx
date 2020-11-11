@@ -5,7 +5,7 @@ import MaterialTable from 'material-table';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import { Button } from '@material-ui/core';
+import { Button, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -77,109 +77,124 @@ const CatalogList = ({ data }) => {
     });
   };
 
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#E0663B',
+      },
+      secondary: {
+        main: '#E0663B',
+      },
+    },
+  });
+
   return (
     data && (
-      <MaterialTable
-        title=''
-        icons={tableIcons}
-        columns={[
-          {
-            title: '',
-            field: 'imageUrl',
-            cellStyle: {
-              width: '5%',
+      <MuiThemeProvider theme={theme}>
+        <MaterialTable
+          title=''
+          icons={tableIcons}
+          columns={[
+            {
+              title: '',
+              field: 'imageUrl',
+              cellStyle: {
+                width: '5%',
+              },
+              headerStyle: {
+                width: '5%',
+              },
             },
+            { title: 'Organización', field: 'organization' },
+            { title: 'Solución', field: 'solutionName' },
+            { title: 'Categoría', field: 'category' },
+            {
+              title: 'Precio',
+              field: 'price',
+              type: 'currency',
+              filterCellStyle: {
+                textAlign: 'right',
+              },
+            },
+          ]}
+          data={solutions}
+          detailPanel={(rowData) => {
+            return (
+              <>
+                <h3 className='description-title'>Descripción del servicio</h3>
+                <p className='description-body separate'>
+                  {rowData.descriptionPitch}
+                </p>
+                <h3 className='description-title'>
+                  Casos de éxito del servicio
+                </h3>
+                <p className='description-body separate'>
+                  {rowData.descriptionSuccess}
+                </p>
+                <div className='inquiry-button separate'>
+                  <Button
+                    variant='contained'
+                    color='primary'
+                    onClick={() => goToSolutionInquiry(rowData)}
+                  >
+                    Preguntar por este servicio
+                  </Button>
+                </div>
+              </>
+            );
+          }}
+          actions={[
+            {
+              tooltip: 'Comparar soluciones',
+              icon: () => <CompareArrowsIcon className='catalogo-icon' />,
+              onClick: (e, selected) => {
+                selected = selected.map((i) => {
+                  i.tableData.checked = false;
+                  return i;
+                });
+                setSolutions(selected);
+              },
+            },
+            {
+              tooltip: 'Refrescar',
+              icon: () => <Refresh className='catalogo-icon' />,
+              onClick: () => {
+                setSolutions(data);
+              },
+              isFreeAction: true,
+            },
+          ]}
+          localization={{
+            toolbar: {
+              searchTooltip: 'Buscar',
+              searchPlaceholder: 'Buscar',
+              nRowsSelected: '{0} selecciones',
+            },
+            body: {
+              emptyDataSourceMessage: 'No hay información que mostrar',
+              filterRow: {
+                filterTooltip: 'Filtrar',
+              },
+            },
+            pagination: {
+              labelRowsSelect: 'filas',
+              labelDisplayedRows: '{from}-{to} de {count}',
+              firstTooltip: 'Primera página',
+              previousTooltip: 'Página anterior',
+              nextTooltip: 'Siguiente página',
+              lastTooltip: 'Última página',
+            },
+          }}
+          options={{
+            selection: true,
+            showSelectAllCheckbox: false,
+            emptyRowsWhenPaging: false,
             headerStyle: {
-              width: '5%',
+              fontWeight: 'bolder',
             },
-          },
-          { title: 'Organización', field: 'organization' },
-          { title: 'Solución', field: 'solutionName' },
-          { title: 'Categoría', field: 'category' },
-          {
-            title: 'Precio',
-            field: 'price',
-            type: 'currency',
-            filterCellStyle: {
-              textAlign: 'right',
-            },
-          },
-        ]}
-        data={solutions}
-        detailPanel={(rowData) => {
-          return (
-            <>
-              <h3 className='description-title'>Descripción del servicio</h3>
-              <p className='description-body separate'>
-                {rowData.descriptionPitch}
-              </p>
-              <h3 className='description-title'>Casos de éxito del servicio</h3>
-              <p className='description-body separate'>
-                {rowData.descriptionSuccess}
-              </p>
-              <span className='inquiry-button'>
-                <Button
-                  variant='contained'
-                  color='primary'
-                  onClick={() => goToSolutionInquiry(rowData)}
-                >
-                  Preguntar por este servicio
-                </Button>
-              </span>
-            </>
-          );
-        }}
-        actions={[
-          {
-            tooltip: 'Comparar soluciones',
-            icon: CompareArrowsIcon,
-            onClick: (e, selected) => {
-              selected = selected.map((i) => {
-                i.tableData.checked = false;
-                return i;
-              });
-              setSolutions(selected);
-            },
-          },
-          {
-            tooltip: 'Refrescar',
-            icon: Refresh,
-            onClick: () => {
-              setSolutions(data);
-            },
-            isFreeAction: true,
-          },
-        ]}
-        localization={{
-          toolbar: {
-            searchTooltip: 'Buscar',
-            searchPlaceholder: 'Buscar',
-            nRowsSelected: '{0} selecciones',
-          },
-          body: {
-            emptyDataSourceMessage: 'No hay información que mostrar',
-            filterRow: {
-              filterTooltip: 'Filtrar',
-            },
-          },
-          pagination: {
-            labelRowsSelect: 'filas',
-            labelDisplayedRows: '{from}-{to} de {count}',
-            firstTooltip: 'Primera página',
-            previousTooltip: 'Página anterior',
-            nextTooltip: 'Siguiente página',
-            lastTooltip: 'Última página',
-          },
-        }}
-        options={{
-          selection: true,
-          showSelectAllCheckbox: false,
-          emptyRowsWhenPaging: false,
-          headerStyle: {
-            fontWeight: 'bolder',
-          },
-        }}
-      />
+          }}
+        />
+      </MuiThemeProvider>
     )
   );
 };
