@@ -31,7 +31,6 @@ class SolutionForm extends React.Component {
     super(props);
 
     if (this.props.solution) {
-      console.log(this.props.solution);
       this.state = {
         solutionName: this.props.solution.solutionName,
         descriptionPitch: this.props.solution.descriptionPitch,
