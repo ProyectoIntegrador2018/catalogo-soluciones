@@ -110,8 +110,9 @@ exports.makeSolutionRejectedEmailHTML = function (
       Tu solicitud para registrar la solución <b>${solutionName}</b> de la 
       organización <b>${org}</b> en el <b> Catálogo de Soluciones Digitales 
       CSOFTMTY</b> ha sido rechazada. Te invitamos a 
-      <a href='catalogo-soluciones.web.app'>acceder al sistema</a> para hacer
-      las siguientes correcciones que se solicitan.
+      <a href='catalogo-soluciones.web.app'>acceder al sistema</a> para 
+      registrar nuevamente la solución tomando en cuenta las siguientes 
+      indicaciones:
     </p>
     <p>${message}</p>
   `;

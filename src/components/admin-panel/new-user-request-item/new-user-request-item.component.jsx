@@ -88,7 +88,10 @@ const NewUserRequestItem = ({
           </div>
         </AccordionDetails>
       </Accordion>
-      <CButton text='&#10004;' color='green' onClick={approveOrganization} />
+      <CButton 
+        text='&#10004;' alertMessage='¿Seguro que deseas aprobar al usuario?' 
+        color='green' onClick={approveOrganization} 
+      />
       <CButton 
         text='&#x2717;' color='red' 
         onClick={() => setState({...state, open: true})} 
