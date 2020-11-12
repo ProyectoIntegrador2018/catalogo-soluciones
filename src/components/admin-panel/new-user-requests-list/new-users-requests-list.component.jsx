@@ -19,7 +19,7 @@ const NewUsersRequestsList = ({ userRequests }) => {
           <span>Punto de contacto</span>
         </div>
         <div className='header-action-button'>
-          <span>Accion</span>
+          <span>Acción</span>
         </div>
       </div>
       {userRequests.map((value, index) => {

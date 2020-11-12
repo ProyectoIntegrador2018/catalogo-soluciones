@@ -12,7 +12,7 @@ import {
   FormSelect,
   FormOption,
 } from '../../form/form.component';
-import { Button } from '@material-ui/core';
+import CButton from '../../elements/c-button/c-button.component';
 import { selectCurrentUser } from '../../../redux/user/user.selectors';
 
 import { insertNewSolution, updateSolution } from '../../../firebase/catalog';
@@ -207,16 +207,16 @@ class SolutionForm extends React.Component {
           required
         />
 
-        <Button variant='contained' color='primary' type='submit'>
-          {this.props.solution ? 'Guardar cambios' : 'Crear solución'}
-        </Button>
+        <CButton 
+          text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}
+          color='orange' type='submit'
+        />
           &nbsp;&nbsp;
         {this.props.solution ?
-          <Button variant='contained' color='secondary'
+          <CButton  
+            text='Cerrar' color='grey'
             onClick={() => this.props.history.push('panel-org-x')}
-          >
-            Cerrar
-            </Button>
+          />
           : null}
       </Form>
     );

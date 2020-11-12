@@ -9,7 +9,7 @@ import { setNotification } from '../../../redux/notification/notification.action
 
 import { updateOrg } from '../../../firebase/sessions';
 
-import { Button } from '@material-ui/core';
+import CButton from '../../elements/c-button/c-button.component';
 import { 
   Form, 
   FormInput, 
@@ -109,9 +109,7 @@ const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
           accept='image/jpeg'
         />
 
-        <Button variant='contained' color='primary' type='submit'>
-          Guardar cambios
-        </Button>
+        <CButton text='Guardar cambios' color='orange' type='submit'/>
     </Form>
   );
 }

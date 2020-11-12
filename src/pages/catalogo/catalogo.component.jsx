@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { Button } from '@material-ui/core';
+import CButton from '../../components/elements/c-button/c-button.component';
 
 import { selectApprovedSolutions } from '../../redux/solutions/solutions.selectors';
 
@@ -18,13 +18,11 @@ const Catalogo = ({ solutions }) => {
       <h1>Catálogo de soluciones digitales</h1>
       <div className='custom-inquiry'>
         <p>No encuentras los que buscas? Realiza una consulta personalizada</p>
-        <Button
-          variant='contained'
-          color='primary'
+        <CButton
+          text='Realizar consulta'
+          color='orange'
           onClick={() => history.push('custom-inquiry')}
-        >
-          Realizar consulta
-        </Button>
+        />
       </div>
 
       <CatalogList data={solutions}></CatalogList>

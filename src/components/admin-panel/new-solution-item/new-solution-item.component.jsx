@@ -4,7 +4,7 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { Button } from '@material-ui/core';
+import CButton from '../../elements/c-button/c-button.component';
 
 import './new-solution-item.styles.scss';
 import {
@@ -63,14 +63,8 @@ const NewSolutionItem = ({
           </div>
         </AccordionDetails>
       </Accordion>
-      <span className='action-buttons'>
-        <Button className='accept' onClick={approveSolution}>
-          &#10004;
-        </Button>
-        <Button className='reject' onClick={rejectSolution}>
-          &#x2717;
-        </Button>
-      </span>
+      <CButton text='&#10004;' color='green' onClick={approveSolution} />
+      <CButton text='&#x2717;' color='red' onClick={rejectSolution} />
     </div>
   );
 };

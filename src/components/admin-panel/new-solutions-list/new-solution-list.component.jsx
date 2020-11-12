@@ -10,16 +10,16 @@ const NewSolutionList = ({ newSolutions }) => {
       <h1>Solicitudes de nuevas soluciones</h1>
       <div className='new-solutions-header'>
         <div className='header-block'>
-          <span>Organizacion</span>
+          <span>Organización</span>
         </div>
         <div className='header-block'>
-          <span>Solucion</span>
+          <span>Solución</span>
         </div>
         <div className='header-block-small'>
           <span>Precio</span>
         </div>
         <div className='header-action-button'>
-          <span>Accion</span>
+          <span>Acción</span>
         </div>
       </div>
       {newSolutions.map((value, index) => {
