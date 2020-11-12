@@ -4,16 +4,19 @@ import { createStructuredSelector } from 'reselect';
 
 import { selectUnapprovedSolutions } from '../../redux/solutions/solutions.selectors';
 import { selectUnapprovedOrganizations } from '../../redux/organizations/organizations.selectors';
+import { setNotification } from '../../redux/notification/notification.actions';
 
 import Panel from '../../components/panel/panel.component';
 import NewUsersRequestsList from '../../components/admin-panel/new-user-requests-list/new-users-requests-list.component';
 import NewSolutionsList from '../../components/admin-panel/new-solutions-list/new-solution-list.component';
+import NewPassForm from '../../components/new-pass-form/new-pass-form.component';
 
 import './panel-admin.styles.scss';
 
 import { PlaylistAddCheck } from '@material-ui/icons';
+import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
-const PanelAdmin = ({ organizations, solutions }) => {
+const PanelAdmin = ({ organizations, solutions, setNotification }) => {
   return (
     <Panel
       items={{
@@ -25,6 +28,10 @@ const PanelAdmin = ({ organizations, solutions }) => {
           icon: <PlaylistAddCheck />,
           component: <NewSolutionsList newSolutions={solutions} />,
         },
+        'Mi usuario': {
+          icon: <PersonOutlineIcon />,
+          component: <NewPassForm setNotification={setNotification} />,
+        },
       }}
     />
   );
@@ -35,4 +42,11 @@ const mapStateToProps = createStructuredSelector({
   solutions: selectUnapprovedSolutions,
 });
 
-export default connect(mapStateToProps)(PanelAdmin);
+const mapDispatchToProps = (dispatch) => ({
+  setNotification: (notification) => dispatch(setNotification(notification)),
+});
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(PanelAdmin);
