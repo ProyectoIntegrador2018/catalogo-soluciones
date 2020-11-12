@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import { auth } from '../../firebase/firebase';
 
 import { Form, FormInput } from '../form/form.component';
-import { Button, Modal } from '@material-ui/core';
+import CButton from '../elements/c-button/c-button.component';
+import CModal from '../elements/c-modal/c-modal.component';
 
 import { signIn } from '../../firebase/sessions';
 
@@ -89,9 +90,7 @@ class SignIn extends React.Component {
           required
         />
 
-        <Button variant='contained' color='primary' type='submit'>
-          Inicia sesión
-        </Button>
+        <CButton text='Inicia sesión' color='orange' type='submit' />
 
         <span className='inline'>
           ¿Olvidaste tu contraseña?
@@ -113,8 +112,7 @@ class SignIn extends React.Component {
           </span>
         </div>
 
-        <Modal
-          className='modal'
+        <CModal
           open={this.state.openForgot}
           onClose={this.handleClose}
         >
@@ -133,19 +131,11 @@ class SignIn extends React.Component {
               label='Correo'
               required
             />
-            <Button type='submit' color="primary" variant='contained'>
-              Enviar
-            </Button>
+            <CButton text='Enviar' type='submit' color="orange" />
             &nbsp;&nbsp;
-            <Button 
-              onClick={this.handleClose} 
-              color="secondary" 
-              variant='contained'
-            >
-              Cancelar
-            </Button>
+            <CButton text='Cancelar' onClick={this.handleClose} color="grey" />
           </Form>
-        </Modal>
+        </CModal>
       </Form>
     );
   }

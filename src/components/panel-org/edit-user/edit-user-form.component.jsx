@@ -10,7 +10,7 @@ import { setNotification } from '../../../redux/notification/notification.action
 import { changePass } from '../../../firebase/sessions';
 
 import { Form, FormInput } from '../../form/form.component';
-import { Button } from '@material-ui/core';
+import CButton from '../../elements/c-button/c-button.component';
 
 import { firestore } from '../../../firebase/firebase';
 
@@ -81,9 +81,7 @@ const ContactInfoForm = ({ currentUser, setCurrentUser, setNotification }) => {
         required
       />
 
-      <Button variant='contained' color='primary' type='submit'>
-        Guardar cambios
-      </Button>
+      <CButton text='Guardar cambios' color='orange' type='submit' />
     </Form>
   );
 }
@@ -167,9 +165,7 @@ const NewPassForm = ({ setNotification }) => {
         required
       />
 
-      <Button variant='contained' color='primary' type='submit'>
-        Guardar cambios
-      </Button>
+      <CButton text='Guardar cambios' color='orange' type='submit' />
     </Form>
   );
 }

@@ -5,7 +5,8 @@ import MaterialTable from 'material-table';
 
 import AddBox from '@material-ui/icons/AddBox';
 import ArrowDownward from '@material-ui/icons/ArrowDownward';
-import { Button, createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core';
+import CButton from '../elements/c-button/c-button.component';
 import Check from '@material-ui/icons/Check';
 import ChevronLeft from '@material-ui/icons/ChevronLeft';
 import ChevronRight from '@material-ui/icons/ChevronRight';
@@ -132,13 +133,11 @@ const CatalogList = ({ data }) => {
                   {rowData.descriptionSuccess}
                 </p>
                 <div className='inquiry-button separate'>
-                  <Button
-                    variant='contained'
-                    color='primary'
+                  <CButton
+                    text='Preguntar por este servicio'
+                    color='orange'
                     onClick={() => goToSolutionInquiry(rowData)}
-                  >
-                    Preguntar por este servicio
-                  </Button>
+                  />
                 </div>
               </>
             );

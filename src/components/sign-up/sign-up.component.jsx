@@ -13,7 +13,7 @@ import {
   FormTextarea,
   FormFile,
 } from '../form/form.component';
-import { Button } from '@material-ui/core';
+import CButton from '../elements/c-button/c-button.component';
 
 import { signUp } from '../../firebase/sessions';
 
@@ -229,9 +229,7 @@ class SignUp extends React.Component {
           required
         />
 
-        <Button variant='contained' color='primary' type='submit'>
-          Crear cuenta
-        </Button>
+        <CButton text='Crear cuenta' color='orange' type='submit' />
       </Form>
     );
   }

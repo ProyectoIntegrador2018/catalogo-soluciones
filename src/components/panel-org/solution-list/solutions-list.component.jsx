@@ -1,6 +1,5 @@
 import React from 'react';
 
-import { Button, Modal, Tooltip } from '@material-ui/core';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -8,7 +7,9 @@ import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
-import Checkbox from '@material-ui/core/Checkbox';
+import CButton from '../../elements/c-button/c-button.component';
+import CModal from '../../elements/c-modal/c-modal.component';
+import CTooltip from '../../elements/c-tooltip/c-tooltip.component';
 
 import SolutionForm from '../solution-form/solution-form.component';
 import { removeSolution } from '../../../redux/solutions/solutions.actions';
@@ -16,17 +17,8 @@ import { deleteUserSolution } from '../../../firebase/user-panel';
 
 import './solutions-list.styles.scss';
 
-import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import CheckIcon from '@material-ui/icons/Check';
 import ClearIcon from '@material-ui/icons/Clear';
-
-const HoverInfo = ({ label, icon, message }) => (
-  <Tooltip className='tooltip header-block-small' title={message}>
-    <Button>
-      {label} &nbsp; {icon}
-    </Button>
-  </Tooltip>
-);
 
 const SolutionList = ({ solutions }) => {
   const [state, setState] = React.useState({
@@ -54,18 +46,16 @@ const SolutionList = ({ solutions }) => {
         <Table aria-label='simple table'>
           <TableHead>
             <TableRow>
-              <TableCell style={{ width: '30%' }}>SOLUCIÓN</TableCell>
-              <TableCell align='right'>
-                <HoverInfo
+              <TableCell style={{ width: '50%' }}>SOLUCIÓN</TableCell>
+              {/* <TableCell align='right'>
+                <CTooltip
                   label='Publicada'
-                  icon={<InfoOutlinedIcon />}
                   message='Si deseas puedes elegir no publicar una solución en el catálogo, si aun no esta lista o no deseas mostrarla.'
                 />
-              </TableCell>
+              </TableCell> */}
               <TableCell align='right'>
-                <HoverInfo
+                <CTooltip
                   label='Aprobado'
-                  icon={<InfoOutlinedIcon />}
                   message='Se refiere a si la solución ha sido aprobada o no para aparecer en el catálogo. Si no lo ha sido, no se mostrará.'
                 />
               </TableCell>
@@ -78,13 +68,13 @@ const SolutionList = ({ solutions }) => {
                 <TableCell component='th' scope='row'>
                   {solution.solutionName}
                 </TableCell>
-                <TableCell align='right'>
+                {/* <TableCell align='right'>
                   <Checkbox
                     color='primary'
                     checked={solution.published ? true : false}
                     disabled={solution.approved ? false : true}
                   />
-                </TableCell>
+                </TableCell> */}
                 <TableCell align='right'>
                   {solution.approved ? (
                     <CheckIcon style={{ fill: 'green' }} />
@@ -93,34 +83,30 @@ const SolutionList = ({ solutions }) => {
                   )}
                 </TableCell>
                 <TableCell align='right'>
-                  <span className='action-buttons'>
-                    <Button
-                      className='modify'
+                    <CButton
+                      text='Ver / Editar'
                       onClick={() => modifyItem(solution)}
-                    >
-                      Ver / Editar
-                    </Button>
-                    <Button
-                      className='delete'
+                      color='blue'
+                    />
+                    &nbsp;&nbsp;
+                    <CButton
+                      text='Borrar'
                       onClick={() => removeItem(solution, index)}
-                    >
-                      Borrar
-                    </Button>
-                  </span>
+                      alertMessage='¿Seguro que quieres eliminar la solución?'
+                      color='red'
+                    />
                 </TableCell>
               </TableRow>
             ))}
           </TableBody>
         </Table>
       </TableContainer>
-      <Modal
-        className='modal'
+      <CModal
         open={state.open}
         onClose={handleClose}
-        closeAfterTransition
       >
         <SolutionForm {...state} />
-      </Modal>
+      </CModal>
     </div>
   );
 };

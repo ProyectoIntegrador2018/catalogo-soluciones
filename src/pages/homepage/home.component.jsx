@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { selectCurrentUser } from '../../redux/user/user.selectors';
-import { Container, Button } from '@material-ui/core';
+import { Container } from '@material-ui/core';
 import PhotoCarousel from '../../components/carousel/carousel.component';
+import CButton from '../../components/elements/c-button/c-button.component';
 
 import './home.styles.scss';
 
@@ -28,13 +29,11 @@ const HomePage = ({ currentUser }) => {
               Consulta soluciones de TI ofrecidas por las empresas de tecnología
               del estado de Nuevo León.
             </p>
-            <Button
-              variant='contained'
-              color='primary'
+            <CButton
+              text='Acceder al catálogo'
+              color='orange'
               onClick={() => goTo('catalogo')}
-            >
-              Acceder al catálogo
-            </Button>
+            />
           </div>
 
           <Container className='photoCarrousel'>
