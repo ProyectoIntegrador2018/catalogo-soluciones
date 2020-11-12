@@ -22,6 +22,16 @@ export const approveRequest = (id, collection, message) => {
   const sendUserApprovedEmail = firebase
     .functions().httpsCallable('sendUserApprovedEmail');
   sendUserApprovedEmail(message);
+
+  if (message.solutionName) {
+    const sendSolutionApprovedEmail = firebase
+      .functions().httpsCallable('sendSolutionApprovedEmail');
+    sendSolutionApprovedEmail(message);
+  } else {
+    const sendUserApprovedEmail = firebase
+      .functions().httpsCallable('sendUserApprovedEmail');
+    sendUserApprovedEmail(message);
+  }
 };
 
 export const rejectRequest = (id, collection, message) => {
@@ -37,8 +47,14 @@ export const rejectRequest = (id, collection, message) => {
     .catch((err) => {
       console.log('There was an error!', err);
     });
-  
-  const sendUserRejectedEmail = firebase
-    .functions().httpsCallable('sendUserRejectedEmail');
-  sendUserRejectedEmail(message);
+
+  if (message.solutionName) {
+    const sendSolutionRejectedEmail = firebase
+      .functions().httpsCallable('sendSolutionRejectedEmail');
+    sendSolutionRejectedEmail(message);
+  } else {
+    const sendUserRejectedEmail = firebase
+      .functions().httpsCallable('sendUserRejectedEmail');
+    sendUserRejectedEmail(message);
+  }
 };

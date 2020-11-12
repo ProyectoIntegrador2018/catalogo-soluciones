@@ -44,7 +44,7 @@ const CButton = ({text, onClick, alertMessage, color, ...otherProps}) => {
             &nbsp;&nbsp;
             <ButtonContainer
               variant='contained'
-              className='red'
+              className='orange'
               onClick={onClick}
             >
               Continuar

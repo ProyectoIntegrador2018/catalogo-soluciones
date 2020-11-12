@@ -101,7 +101,7 @@ const NewUserRequestItem = ({
           title='Motivo del rechazo'
           onSubmit={rejectOrganization}
         >
-          <span>Especifíca el mótivo del rechazo para el rechazo.</span>
+          <span>Especifíca el mótivo del rechazo.</span>
           <FormTextarea 
             type='text'
             name='rejectReason'

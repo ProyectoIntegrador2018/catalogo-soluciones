@@ -83,9 +83,9 @@ exports.makeUserRejectedEmailHTML = function (name, org, email, message) {
   `;
 };
 
-exports.makeSolutionApprovedEmailHTML = function (name, org, solutionName) {
+exports.makeSolutionApprovedEmailHTML = function (org, solutionName) {
   return `
-    <h3>Buen día ${name},</h3>
+    <h3>Buen día,</h3>
     <p>
       Tu solicitud para registrar la solución <b>${solutionName}</b> de la 
       organización <b>${org}</b> en el <b> Catálogo de Soluciones Digitales 
@@ -100,13 +100,12 @@ exports.makeSolutionApprovedEmailHTML = function (name, org, solutionName) {
 };
 
 exports.makeSolutionRejectedEmailHTML = function (
-  name,
   org,
   solutionName,
   message,
 ) {
   return `
-    <h3>Buen día ${name},</h3>
+    <h3>Buen día,</h3>
     <p>
       Tu solicitud para registrar la solución <b>${solutionName}</b> de la 
       organización <b>${org}</b> en el <b> Catálogo de Soluciones Digitales 

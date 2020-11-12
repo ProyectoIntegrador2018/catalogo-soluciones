@@ -191,7 +191,6 @@ exports.sendSolutionApprovedEmail = functions.https.onRequest(
     cors(request, response, () => {
       const body = request.body.data;
       const html = templates.makeSolutionApprovedEmailHTML(
-        body.name,
         body.org,
         body.solutionName,
       );
@@ -221,7 +220,6 @@ exports.sendSolutionRejectedEmail = functions.https.onRequest(
     cors(request, response, () => {
       const body = request.body.data;
       const html = templates.makeSolutionRejectedEmailHTML(
-        body.name,
         body.org,
         body.solutionName,
         body.message,
@@ -231,7 +229,7 @@ exports.sendSolutionRejectedEmail = functions.https.onRequest(
           from: 'Catálogo de Soluciones Digitales',
           to: body.email,
           subject:
-            'Tu solución ha sido aprobada en el Catálogo de Soluciones Digitales CSOFTMTY',
+            'Tu solución ha sido rechazada en el Catálogo de Soluciones Digitales CSOFTMTY',
           html: html,
         },
         (error) => {
