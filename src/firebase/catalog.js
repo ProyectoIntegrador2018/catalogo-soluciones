@@ -1,4 +1,4 @@
-import { firestore } from './firebase';
+import { firestore, storage } from './firebase';
 
 import firebase from 'firebase/app';
 import 'firebase/functions';
@@ -26,8 +26,57 @@ export const getCatalogData = async (attribute) => {
   return data;
 };
 
+const uploadFile = async (pathname, file) => {
+  return new Promise((resolve, reject) => {
+    storage
+      .child(pathname)
+      .put(file)
+      .then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((url) => {
+          resolve(url);
+        });
+      })
+      .catch(() => {
+        reject();
+      });
+  });
+};
+
 export const insertNewSolution = async (solution, orgName) => {
-  const solutionId = await firestore.collection('solutions').add(solution);
+  const {
+    solutionName,
+    descriptionPitch,
+    descriptionSuccess,
+    price,
+    category,
+    organizationID,
+    approved,
+    solutionFlyer,
+  } = solution;
+  const solutionId = await firestore
+    .collection('solutions')
+    .add({
+      solutionName,
+      descriptionPitch,
+      descriptionSuccess,
+      price,
+      category,
+      organizationID,
+      approved,
+    })
+    .then((docRef) => {
+      if (solutionFlyer) {
+        uploadFile(
+          `${organizationID}/${docRef.id}/flyer.jpeg`,
+          solutionFlyer,
+        ).then((url) => {
+          firestore.collection('solutions').doc(docRef.id).update({
+            flyer: url,
+          });
+        });
+      }
+      return docRef.id;
+    });
 
   const sendNewSolutionEmail = firebase
     .functions()
@@ -40,6 +89,29 @@ export const insertNewSolution = async (solution, orgName) => {
   return solutionId;
 };
 
-export const updateSolution = async (solution, id) => {
-  firestore.collection('solutions').doc(id).update(solution);
+export const updateSolution = async (solution, id, organizationID) => {
+  const {
+    solutionName,
+    descriptionPitch,
+    descriptionSuccess,
+    price,
+    category,
+    solutionFlyer,
+  } = solution;
+  if (solutionFlyer) {
+    uploadFile(`${organizationID}/${id}/flyer.jpeg`, solutionFlyer).then(
+      (url) => {
+        firestore.collection('solutions').doc(id).update({
+          flyer: url,
+        });
+      },
+    );
+  }
+  firestore.collection('solutions').doc(id).update({
+    solutionName,
+    descriptionPitch,
+    descriptionSuccess,
+    price,
+    category,
+  });
 };

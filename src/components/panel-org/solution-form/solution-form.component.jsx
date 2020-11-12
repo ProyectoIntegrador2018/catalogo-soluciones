@@ -11,6 +11,7 @@ import {
   FormTextarea,
   FormSelect,
   FormOption,
+  FormFile,
 } from '../../form/form.component';
 import CButton from '../../elements/c-button/c-button.component';
 import { selectCurrentUser } from '../../../redux/user/user.selectors';
@@ -36,6 +37,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess: this.props.solution.descriptionSuccess,
         price: this.props.solution.price,
         category: this.props.solution.category,
+        solutionFlyer: this.props.solution.flyer,
       };
     } else {
       this.state = {
@@ -44,6 +46,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess: '',
         price: '',
         category: '',
+        solutionFlyer: '',
       };
     }
   }
@@ -57,6 +60,7 @@ class SolutionForm extends React.Component {
       descriptionSuccess,
       price,
       category,
+      solutionFlyer,
     } = this.state;
 
     const { setNotification } = this.props;
@@ -82,8 +86,10 @@ class SolutionForm extends React.Component {
           descriptionSuccess,
           price,
           category,
+          solutionFlyer,
         },
         this.props.solution.id,
+        this.props.currentUser.id,
       );
       const solutionToEdit = {
         id: this.props.solution.id,
@@ -92,6 +98,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess,
         price,
         category,
+        solutionFlyer,
       };
       const { modifySolution } = this.props;
       modifySolution(solutionToEdit);
@@ -105,6 +112,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess,
         price,
         category,
+        solutionFlyer,
       };
       const res = await insertNewSolution(
         newSolution,
@@ -115,12 +123,18 @@ class SolutionForm extends React.Component {
       addSolution(newSolution);
       setNotification({
         severity: 'info',
-        message: 
+        message:
           'Se ha guardado la solución. Una vez que sea revisada por CSOFTMTY se mostrará en el catálogo.',
       });
       // Add solution to state.
     }
     this.props.history.push('panel-org-x');
+  };
+
+  handleFile = (event) => {
+    const { name } = event.target;
+
+    this.setState({ [name]: event.target.files[0] });
   };
 
   handleChange = (event) => {
@@ -149,10 +163,15 @@ class SolutionForm extends React.Component {
       descriptionSuccess,
       price,
       category,
+      solutionFlyer,
     } = this.state;
     return (
       <Form
-        title={this.props.solution ? 'Ver / Modificar Solución' : 'Crear nueva solución'}
+        title={
+          this.props.solution
+            ? 'Ver / Modificar Solución'
+            : 'Crear nueva solución'
+        }
         onSubmit={this.handleSubmit}
       >
         <FormInput
@@ -206,18 +225,28 @@ class SolutionForm extends React.Component {
           label='Precio'
           required
         />
-
-        <CButton 
-          text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}
-          color='orange' type='submit'
+        <FormFile
+          name='solutionFlyer'
+          onChange={this.handleFile}
+          label='Flyer de la solución'
+          accept='image/jpeg'
         />
-          &nbsp;&nbsp;
-        {this.props.solution ?
-          <CButton  
-            text='Cerrar' color='grey'
+        {solutionFlyer && (
+          <img src={solutionFlyer} className='edit-flyer' alt='flyer' />
+        )}
+        <CButton
+          text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}
+          color='orange'
+          type='submit'
+        />
+        &nbsp;&nbsp;
+        {this.props.solution ? (
+          <CButton
+            text='Cerrar'
+            color='grey'
             onClick={() => this.props.history.push('panel-org-x')}
           />
-          : null}
+        ) : null}
       </Form>
     );
   }
