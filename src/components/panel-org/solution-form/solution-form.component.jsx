@@ -38,7 +38,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess: this.props.solution.descriptionSuccess,
         price: this.props.solution.price,
         category: this.props.solution.category,
-        solutionFlyer: '',
+        solutionFlyer: this.props.solution.flyer,
       };
     } else {
       this.state = {
@@ -164,6 +164,7 @@ class SolutionForm extends React.Component {
       descriptionSuccess,
       price,
       category,
+      solutionFlyer,
     } = this.state;
     return (
       <Form
@@ -231,6 +232,9 @@ class SolutionForm extends React.Component {
           label='Flyer de la solución'
           accept='image/jpeg'
         />
+        {solutionFlyer && (
+          <img src={solutionFlyer} className='edit-flyer' alt='flyer' />
+        )}
         <CButton
           text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}
           color='orange'
