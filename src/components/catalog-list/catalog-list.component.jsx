@@ -132,6 +132,13 @@ const CatalogList = ({ data }) => {
                 <p className='description-body separate'>
                   {rowData.descriptionSuccess}
                 </p>
+                {rowData.flyer && (
+                  <img
+                    src={rowData.flyer}
+                    className='flyer separate'
+                    alt='flyer'
+                  />
+                )}
                 <div className='inquiry-button separate'>
                   <CButton
                     text='Preguntar por este servicio'
