@@ -6,6 +6,8 @@ const templates = require('./util/email_templates');
 
 const { transporter } = require('./util/email_credentials');
 
+firebase.initializeApp();
+
 exports.sendContactEmail = functions.https.onRequest((request, response) => {
   cors(request, response, () => {
     const body = request.body.data;
@@ -155,9 +157,6 @@ exports.sendUserApprovedEmail = functions.https.onRequest(
 exports.sendUserRejectedEmail = functions.https.onRequest(
   (request, response) => {
     cors(request, response, () => {
-      // Aqui se borra el id de usuario, se debe borrar el documento de la BD en
-      // frontend.
-      firebase.auth().deleteUser(body.uid);
       const body = request.body.data;
       const html = templates.makeUserRejectedEmailHTML(
         body.name,
@@ -165,12 +164,13 @@ exports.sendUserRejectedEmail = functions.https.onRequest(
         body.email,
         body.message,
       );
+      firebase.auth().deleteUser(body.uid);
       transporter.sendMail(
         {
           from: 'Catálogo de Soluciones Digitales',
           to: body.email,
           subject:
-            'Tu cuenta ha sido aprobada en el Catálogo de Soluciones Digitales CSOFTMTY',
+            'Tu cuenta ha sido rechazada en el Catálogo de Soluciones Digitales CSOFTMTY',
           html: html,
         },
         (error) => {
@@ -191,7 +191,6 @@ exports.sendSolutionApprovedEmail = functions.https.onRequest(
     cors(request, response, () => {
       const body = request.body.data;
       const html = templates.makeSolutionApprovedEmailHTML(
-        body.name,
         body.org,
         body.solutionName,
       );
@@ -221,7 +220,6 @@ exports.sendSolutionRejectedEmail = functions.https.onRequest(
     cors(request, response, () => {
       const body = request.body.data;
       const html = templates.makeSolutionRejectedEmailHTML(
-        body.name,
         body.org,
         body.solutionName,
         body.message,
@@ -231,7 +229,7 @@ exports.sendSolutionRejectedEmail = functions.https.onRequest(
           from: 'Catálogo de Soluciones Digitales',
           to: body.email,
           subject:
-            'Tu solución ha sido aprobada en el Catálogo de Soluciones Digitales CSOFTMTY',
+            'Tu solución ha sido rechazada en el Catálogo de Soluciones Digitales CSOFTMTY',
           html: html,
         },
         (error) => {

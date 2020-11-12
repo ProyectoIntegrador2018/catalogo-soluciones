@@ -5,6 +5,8 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import CButton from '../../elements/c-button/c-button.component';
+import CModal from '../../elements/c-modal/c-modal.component';
+import { Form, FormTextarea } from '../../form/form.component';
 
 import './new-user-request-item.styles.scss';
 import {
@@ -29,14 +31,35 @@ const NewUserRequestItem = ({
     phoneNumber,
   } = userRequest;
 
+  const [state, setState] = React.useState({
+    open: false,
+    rejectReason: '',
+  });
+
   const approveOrganization = () => {
-    approveRequest(id, 'users');
+    approveRequest(id, 'users', {
+      name: displayName,
+      org: orgName,
+      email: email,
+    });
     adminApproveOrganization(id);
   };
 
   const rejectOrganization = () => {
-    rejectRequest(id, 'users');
+    rejectRequest(id, 'users', {
+      name: displayName,
+      org: orgName,
+      email: email,
+      message: state.rejectReason,
+      uid: id,
+    });
     removeOrganization(id);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+
+    setState({ ...state, [name]: value });
   };
 
   return (
@@ -65,8 +88,38 @@ const NewUserRequestItem = ({
           </div>
         </AccordionDetails>
       </Accordion>
-      <CButton text='&#10004;' color='green' onClick={approveOrganization} />
-      <CButton text='&#x2717;' color='red' onClick={rejectOrganization} />
+      <CButton 
+        text='&#10004;' alertMessage='¿Seguro que deseas aprobar al usuario?' 
+        color='green' onClick={approveOrganization} 
+      />
+      <CButton 
+        text='&#x2717;' color='red' 
+        onClick={() => setState({...state, open: true})} 
+      />
+      <CModal
+        open={state.open}
+        onClose={() => setState({...state, open: false})}
+      >
+        <Form
+          title='Motivo del rechazo'
+          onSubmit={rejectOrganization}
+        >
+          <span>Especifíca el mótivo del rechazo.</span>
+          <FormTextarea 
+            type='text'
+            name='rejectReason'
+            value={state.rejectReason}
+            onChange={handleChange}
+            label='Motivo del rechazo'
+            required
+          />
+          <CButton text='Enviar' color='orange' type='submit' />
+          <CButton 
+            text='Cancelar' color='grey' 
+            onClick={() => setState({...state, open: false})} 
+          />
+        </Form>
+      </CModal>
     </div>
   );
 };

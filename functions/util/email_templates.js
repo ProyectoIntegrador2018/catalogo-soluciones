@@ -73,20 +73,19 @@ exports.makeUserRejectedEmailHTML = function (name, org, email, message) {
     <p>
       Tu solicitud para registrar la organización <b>${org}</b> con el usuario 
       <b>${email}</b> en el <b> Catálogo de Soluciones Digitales CSOFTMTY</b> 
-      ha sido rechazada. Te invitamos a <a href='catalogo-soluciones.web.app'>
-      acceder al sistema</a> para comenzar a agregar soluciones.
+      ha sido rechazada.
     </p>
     <p>
-      Por <a href='catalogo-soluciones.web.app'>ingresa al sistema</a> para 
-      registrarte nuevamente, siguiende las siguientes indicaciones.
+      Por favor <a href='catalogo-soluciones.web.app'>ingresa al sistema</a> 
+      para registrarte nuevamente, siguiende las siguientes indicaciones.
     </p>
     <p>${message}</p>
   `;
 };
 
-exports.makeSolutionApprovedEmailHTML = function (name, org, solutionName) {
+exports.makeSolutionApprovedEmailHTML = function (org, solutionName) {
   return `
-    <h3>Buen día ${name},</h3>
+    <h3>Buen día,</h3>
     <p>
       Tu solicitud para registrar la solución <b>${solutionName}</b> de la 
       organización <b>${org}</b> en el <b> Catálogo de Soluciones Digitales 
@@ -101,19 +100,19 @@ exports.makeSolutionApprovedEmailHTML = function (name, org, solutionName) {
 };
 
 exports.makeSolutionRejectedEmailHTML = function (
-  name,
   org,
   solutionName,
   message,
 ) {
   return `
-    <h3>Buen día ${name},</h3>
+    <h3>Buen día,</h3>
     <p>
       Tu solicitud para registrar la solución <b>${solutionName}</b> de la 
       organización <b>${org}</b> en el <b> Catálogo de Soluciones Digitales 
       CSOFTMTY</b> ha sido rechazada. Te invitamos a 
-      <a href='catalogo-soluciones.web.app'>acceder al sistema</a> para hacer
-      las siguientes correcciones que se solicitan.
+      <a href='catalogo-soluciones.web.app'>acceder al sistema</a> para 
+      registrar nuevamente la solución tomando en cuenta las siguientes 
+      indicaciones:
     </p>
     <p>${message}</p>
   `;
