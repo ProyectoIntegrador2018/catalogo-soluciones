@@ -1,6 +1,8 @@
 import { firestore } from './firebase';
+import firebase from 'firebase/app';
+import 'firebase/functions';
 
-export const approveRequest = (id, collection) => {
+export const approveRequest = (id, collection, message) => {
   firestore
     .collection(collection)
     .doc(id)
@@ -16,9 +18,13 @@ export const approveRequest = (id, collection) => {
     .catch((err) => {
       console.log('There was an error!', err);
     });
+
+  const sendUserApprovedEmail = firebase
+    .functions().httpsCallable('sendUserApprovedEmail');
+  sendUserApprovedEmail(message);
 };
 
-export const rejectRequest = (id, collection) => {
+export const rejectRequest = (id, collection, message) => {
   console.log('rejected :(', id);
 
   firestore
@@ -31,4 +37,8 @@ export const rejectRequest = (id, collection) => {
     .catch((err) => {
       console.log('There was an error!', err);
     });
+  
+  const sendUserRejectedEmail = firebase
+    .functions().httpsCallable('sendUserRejectedEmail');
+  sendUserRejectedEmail(message);
 };

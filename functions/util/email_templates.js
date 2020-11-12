@@ -73,12 +73,11 @@ exports.makeUserRejectedEmailHTML = function (name, org, email, message) {
     <p>
       Tu solicitud para registrar la organización <b>${org}</b> con el usuario 
       <b>${email}</b> en el <b> Catálogo de Soluciones Digitales CSOFTMTY</b> 
-      ha sido rechazada. Te invitamos a <a href='catalogo-soluciones.web.app'>
-      acceder al sistema</a> para comenzar a agregar soluciones.
+      ha sido rechazada.
     </p>
     <p>
-      Por <a href='catalogo-soluciones.web.app'>ingresa al sistema</a> para 
-      registrarte nuevamente, siguiende las siguientes indicaciones.
+      Por favor <a href='catalogo-soluciones.web.app'>ingresa al sistema</a> 
+      para registrarte nuevamente, siguiende las siguientes indicaciones.
     </p>
     <p>${message}</p>
   `;
