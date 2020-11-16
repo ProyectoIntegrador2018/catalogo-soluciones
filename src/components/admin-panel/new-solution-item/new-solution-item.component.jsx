@@ -73,7 +73,7 @@ const NewSolutionItem = ({
           id='panel1a-header'
         >
           <div className='image-container'>
-            <img className='logo' src={imageUrl} alt='logo' />
+            <img src={imageUrl} alt='logo' />
           </div>
           <span className='organization'>{organization}</span>
           <span className='solution-name'>{solutionName}</span>
