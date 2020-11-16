@@ -109,14 +109,6 @@ const CatalogList = ({ data }) => {
             { title: 'Organización', field: 'organization' },
             { title: 'Solución', field: 'solutionName' },
             { title: 'Categoría', field: 'category' },
-            {
-              title: 'Precio',
-              field: 'price',
-              type: 'currency',
-              filterCellStyle: {
-                textAlign: 'right',
-              },
-            },
           ]}
           data={solutions}
           detailPanel={(rowData) => {
