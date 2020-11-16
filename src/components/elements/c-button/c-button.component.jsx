@@ -4,20 +4,25 @@ import CModal from '../c-modal/c-modal.component';
 import { Button } from '@material-ui/core';
 import { Form } from '../../form/form.component';
 
-import './c-button.styles.scss'
+import './c-button.styles.scss';
 
-const ButtonContainer = ({className, ...props}) => (
+const ButtonContainer = ({ className, ...props }) => (
   <span className='button-container'>
     <Button className={`white-text ${className}`} {...props} />
   </span>
 );
 
-const CButton = ({text, onClick, alertMessage, color, ...otherProps}) => {
+const confirmationAction = (onClickAction, setOpen) => {
+  onClickAction();
+  setOpen(false);
+};
+
+const CButton = ({ text, onClick, alertMessage, color, ...otherProps }) => {
   const [open, setOpen] = React.useState(false);
 
   return (
     <span>
-      <ButtonContainer 
+      <ButtonContainer
         variant='contained'
         className={color}
         onClick={alertMessage ? () => setOpen(true) : onClick}
@@ -25,14 +30,9 @@ const CButton = ({text, onClick, alertMessage, color, ...otherProps}) => {
       >
         {text}
       </ButtonContainer>
-      {alertMessage ?
-        <CModal
-          open={open}
-          onClose={() => setOpen(false)}
-        >
-          <Form
-            title={alertMessage}
-          >
+      {alertMessage ? (
+        <CModal open={open} onClose={() => setOpen(false)}>
+          <Form title={alertMessage}>
             <br></br>
             <ButtonContainer
               variant='contained'
@@ -45,16 +45,15 @@ const CButton = ({text, onClick, alertMessage, color, ...otherProps}) => {
             <ButtonContainer
               variant='contained'
               className='orange'
-              onClick={onClick}
+              onClick={() => confirmationAction(onClick, setOpen)}
             >
               Continuar
             </ButtonContainer>
           </Form>
         </CModal>
-      : null}
+      ) : null}
     </span>
   );
 };
-
 
 export default CButton;

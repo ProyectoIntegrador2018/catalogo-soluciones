@@ -114,12 +114,12 @@ class SolutionForm extends React.Component {
         category,
         solutionFlyer,
       };
-      const res = await insertNewSolution(
+      const newSolutionId = await insertNewSolution(
         newSolution,
         this.props.currentUser.orgName,
       );
       const { addSolution } = this.props;
-      newSolution.id = res.id;
+      newSolution.id = newSolutionId;
       addSolution(newSolution);
       setNotification({
         severity: 'info',
@@ -165,6 +165,7 @@ class SolutionForm extends React.Component {
       category,
       solutionFlyer,
     } = this.state;
+
     return (
       <Form
         title={
