@@ -29,6 +29,8 @@ const NewSolutionItem = ({
     descriptionPitch,
     descriptionSuccess,
     email,
+    category,
+    flyer,
   } = newSolution;
 
   const [state, setState] = React.useState({
@@ -71,39 +73,44 @@ const NewSolutionItem = ({
           id='panel1a-header'
         >
           <div className='image-container'>
-            <img src={imageUrl} alt='logo' />
+            <img className='logo' src={imageUrl} alt='logo' />
           </div>
           <span className='organization'>{organization}</span>
           <span className='solution-name'>{solutionName}</span>
-          <span className='price'>${price}</span>
+          <span className='category'>{category}</span>
         </AccordionSummary>
         <AccordionDetails>
           <div>
+            <h4>Esquema de precios:</h4>
+            <p>{price}</p>
             <h4>Descripción del servicio:</h4>
             <p>{descriptionPitch}</p>
             <h4>Casos de éxito del servicio:</h4>
             <p>{descriptionSuccess}</p>
+            {flyer && (
+              <img className='catalog-solution-flyer' src={flyer} alt='flyer' />
+            )}
           </div>
         </AccordionDetails>
       </Accordion>
-      <CButton 
-        text='&#10004;' alertMessage='¿Seguro que deseas aprobar la solución?' 
-        color='green' onClick={approveSolution} 
+      <CButton
+        text='&#10004;'
+        alertMessage='¿Seguro que deseas aprobar la solución?'
+        color='green'
+        onClick={approveSolution}
       />
-      <CButton 
-        text='&#x2717;' color='red' 
-        onClick={() => setState({...state, open: true})} 
+      <CButton
+        text='&#x2717;'
+        color='red'
+        onClick={() => setState({ ...state, open: true })}
       />
       <CModal
         open={state.open}
-        onClose={() => setState({...state, open: false})}
+        onClose={() => setState({ ...state, open: false })}
       >
-        <Form
-          title='Motivo del rechazo'
-          onSubmit={rejectSolution}
-        >
+        <Form title='Motivo del rechazo' onSubmit={rejectSolution}>
           <span>Especifíca el mótivo del rechazo.</span>
-          <FormTextarea 
+          <FormTextarea
             type='text'
             name='rejectReason'
             value={state.rejectReason}
@@ -112,9 +119,10 @@ const NewSolutionItem = ({
             required
           />
           <CButton text='Enviar' color='orange' type='submit' />
-          <CButton 
-            text='Cancelar' color='grey' 
-            onClick={() => setState({...state, open: false})} 
+          <CButton
+            text='Cancelar'
+            color='grey'
+            onClick={() => setState({ ...state, open: false })}
           />
         </Form>
       </CModal>
