@@ -27,12 +27,21 @@ const CatalogSolutionList = ({ solutions }) => {
           onChange={handleChange}
         />
       </span></center>
-      
+
       <div className='solutions'>
-        {solutions.slice((state.page - 1) * 10, (state.page - 1) * 10 + 10)
-          .map((solution, _) => (
-            <CatalogSolutionItem solution={solution} />
-          ))}
+        {solutions.length ? 
+          <span>
+            {solutions.slice((state.page - 1) * 10, (state.page - 1) * 10 + 10)
+              .map((solution, _) => (
+                <CatalogSolutionItem solution={solution} />
+              ))}
+          </span>
+        :  
+          <center>
+            <h3>No hay soluciones para mostrar.</h3>
+            <h4>Intenta eliminar algunos filtros.</h4>
+          </center>
+        }
       </div>
       
       <center><span className='page-text'>
