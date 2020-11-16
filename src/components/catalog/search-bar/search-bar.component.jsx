@@ -12,6 +12,7 @@ const SearchBar = ({ setSearchQuery }) => {
 
   const handleChange = (event) => {
     setState({...state, searchQuery: event.target.value});
+    setSearchQuery(event.target.value);
   }
 
   return (

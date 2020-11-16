@@ -1,5 +1,4 @@
 .solutions-container {
-  padding-left: 60px;
   justify-content: center;
 
   .pagination {
@@ -8,5 +7,6 @@
 
   .solutions {
     margin: 30px 0;
+    min-height: 70vh;
   }
 }
