@@ -2,17 +2,17 @@
   max-width: 1300px;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 20px;
-  padding-bottom: 50px;
+  padding: 20px 20px 50px 20px;
+}
 
-  .custom-inquiry {
-    margin: 30px 0 30px 30px;
+@media only screen and (max-device-width: 1024px) {
+  .web-catalog {
+    display: none;
   }
 }
 
-@media (max-width: 1335px) {
-  .catalogo {
-    padding-left: 10px;
-    padding-right: 10px;
+@media only screen and (min-device-width: 1024px) { 
+  .mobile-catalog {
+    display: none;
   }
 }
