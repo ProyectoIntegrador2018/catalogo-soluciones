@@ -28,7 +28,7 @@ export const editSolution = (solutions, solution) => {
     if (solutions[i].id === solution.id) {
       solutions[i].solutionName = solution.solutionName;
       solutions[i].descriptionPitch = solution.descriptionPitch;
-      solutions[i].descriptionSuccess = solution.descriptionsuccess;
+      solutions[i].descriptionSuccess = solution.descriptionSuccess;
       solutions[i].price = solution.price;
       // Slice needed to trigger change detection.
       return solutions.slice();

@@ -165,6 +165,7 @@ class SolutionForm extends React.Component {
       category,
       solutionFlyer,
     } = this.state;
+
     return (
       <Form
         title={
