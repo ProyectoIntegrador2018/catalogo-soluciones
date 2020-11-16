@@ -25,6 +25,10 @@ const SolutionList = ({ solutions }) => {
     open: false,
   });
 
+  if (solutions.length == 0) {
+
+  }
+
   const removeItem = (solution, index) => {
     deleteUserSolution(solution.id);
     removeSolution(solution.id);
@@ -42,65 +46,59 @@ const SolutionList = ({ solutions }) => {
 
   return (
     <div>
-      <TableContainer component={Paper}>
-        <Table aria-label='simple table'>
-          <TableHead>
-            <TableRow>
-              <TableCell style={{ width: '50%' }}>SOLUCIÓN</TableCell>
-              {/* <TableCell align='right'>
-                <CTooltip
-                  label='Publicada'
-                  message='Si deseas puedes elegir no publicar una solución en el catálogo, si aun no esta lista o no deseas mostrarla.'
-                />
-              </TableCell> */}
-              <TableCell align='right'>
-                <CTooltip
-                  label='Aprobado'
-                  message='Se refiere a si la solución ha sido aprobada o no para aparecer en el catálogo. Si no lo ha sido, no se mostrará.'
-                />
-              </TableCell>
-              <TableCell align='right'>OPCIONES</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {solutions.map((solution, index) => (
-              <TableRow key={index}>
-                <TableCell component='th' scope='row'>
-                  {solution.solutionName}
-                </TableCell>
-                {/* <TableCell align='right'>
-                  <Checkbox
-                    color='primary'
-                    checked={solution.published ? true : false}
-                    disabled={solution.approved ? false : true}
-                  />
-                </TableCell> */}
-                <TableCell align='right'>
-                  {solution.approved ? (
-                    <CheckIcon style={{ fill: 'green' }} />
-                  ) : (
-                    <ClearIcon style={{ fill: 'red' }} />
-                  )}
-                </TableCell>
-                <TableCell align='right'>
-                    <CButton
-                      text='Ver / Editar'
-                      onClick={() => modifyItem(solution)}
-                      color='blue'
+      {
+        solutions.length > 0 ?
+          <TableContainer component={Paper}>
+            <Table aria-label='simple table'>
+              <TableHead>
+                <TableRow>
+                  <TableCell style={{ width: '50%' }}>SOLUCIÓN</TableCell>
+                  <TableCell align='right'>
+                    <CTooltip
+                      label='Aprobado'
+                      message='Se refiere a si la solución ha sido aprobada o no para aparecer en el catálogo. Si no lo ha sido, no se mostrará.'
                     />
-                    &nbsp;&nbsp;
-                    <CButton
-                      text='Borrar'
-                      onClick={() => removeItem(solution, index)}
-                      alertMessage='¿Seguro que quieres eliminar la solución?'
-                      color='red'
-                    />
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+                  </TableCell>
+                  <TableCell align='right'>OPCIONES</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {solutions.map((solution, index) => (
+                  <TableRow key={index}>
+                    <TableCell component='th' scope='row'>
+                      {solution.solutionName}
+                    </TableCell>
+                    <TableCell align='right'>
+                      {solution.approved ? (
+                        <CheckIcon style={{ fill: 'green' }} />
+                      ) : (
+                        <ClearIcon style={{ fill: 'red' }} />
+                      )}
+                    </TableCell>
+                    <TableCell align='right'>
+                        <CButton
+                          text='Ver / Editar'
+                          onClick={() => modifyItem(solution)}
+                          color='blue'
+                        />
+                        &nbsp;&nbsp;
+                        <CButton
+                          text='Borrar'
+                          onClick={() => removeItem(solution, index)}
+                          alertMessage='¿Seguro que quieres eliminar la solución?'
+                          color='red'
+                        />
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        :
+          <center><h2>
+            Cuando agregues soluciones se mostraran aquí.
+          </h2></center>
+      }
       <CModal
         open={state.open}
         onClose={handleClose}
