@@ -43,21 +43,16 @@ const CatalogSolutionItem = ({ solution }) => {
             : null}
           </Grid>
           <Grid item xs={12}>
-            <Grid container spacing={3} alignItems='center'>
-              <Grid item xs={8}>
-                <p>Ofrecida por: <b>{solution.organization}</b></p>
-                <p>Tipo de solución: <i>{solution.category}</i></p>
-                <p>Casos de éxito: {solution.descriptionSuccess}</p>
-                <p>Esquema de precios: {solution.price}</p>
-              </Grid>
-              <Grid item xs={4}>
-                <CButton
-                  text='Preguntar por este servicio'
-                  color='grey'
-                  onClick={() => goToSolutionInquiry(solution)}
-                />
-              </Grid>
-            </Grid>
+            <p>Ofrecida por: <b>{solution.organization}</b></p>
+            <p>Tipo de solución: <i>{solution.category}</i></p>
+            <p>Casos de éxito: {solution.descriptionSuccess}</p>
+            <p>Esquema de precios: {solution.price}</p>
+            <br></br>
+            <center><CButton
+              text='Preguntar por este servicio'
+              color='grey'
+              onClick={() => goToSolutionInquiry(solution)}
+            /></center>
           </Grid>
         </Grid>
       </AccordionDetails>
