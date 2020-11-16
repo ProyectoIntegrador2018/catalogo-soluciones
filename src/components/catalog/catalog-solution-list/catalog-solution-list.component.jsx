@@ -20,7 +20,7 @@ const CatalogSolutionList = ({ solutions }) => {
         Página: &nbsp;
         <Pagination
           className='pagination'
-          count={Math.ceil(solutions.length / 10)}
+          count={Math.ceil(solutions.length / 5)}
           variant='outlined'
           color='primary'
           page={state.page}
@@ -31,7 +31,7 @@ const CatalogSolutionList = ({ solutions }) => {
       <div className='solutions'>
         {solutions.length ? 
           <span>
-            {solutions.slice((state.page - 1) * 10, (state.page - 1) * 10 + 10)
+            {solutions.slice((state.page - 1) * 5, (state.page - 1) * 5 + 5)
               .map((solution, _) => (
                 <CatalogSolutionItem solution={solution} />
               ))}
@@ -48,7 +48,7 @@ const CatalogSolutionList = ({ solutions }) => {
         Página: &nbsp;
         <Pagination
           className='pagination'
-          count={Math.ceil(solutions.length / 10)}
+          count={Math.ceil(solutions.length / 5)}
           variant='outlined'
           color='primary'
           page={state.page}
