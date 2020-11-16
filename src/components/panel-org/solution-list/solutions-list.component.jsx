@@ -25,10 +25,6 @@ const SolutionList = ({ solutions }) => {
     open: false,
   });
 
-  if (solutions.length == 0) {
-
-  }
-
   const removeItem = (solution, index) => {
     deleteUserSolution(solution.id);
     removeSolution(solution.id);

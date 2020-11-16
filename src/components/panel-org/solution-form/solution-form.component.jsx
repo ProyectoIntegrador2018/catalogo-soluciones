@@ -218,11 +218,11 @@ class SolutionForm extends React.Component {
           required
         />
         <FormInput
-          type='number'
+          type='text'
           name='price'
           value={price}
           onChange={this.handleChange}
-          label='Precio'
+          label='Explicación del esquema de precios para la solución'
           required
         />
         <FormFile
