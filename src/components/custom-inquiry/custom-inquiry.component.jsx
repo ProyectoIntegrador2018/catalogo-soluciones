@@ -15,7 +15,7 @@ import {
   FormOption,
   FormTextarea,
 } from '../form/form.component';
-import { Button } from '@material-ui/core';
+import CButton from '../elements/c-button/c-button.component';
 
 import './custom-inquiry.styles.scss';
 
@@ -309,9 +309,7 @@ class CustomInquiry extends React.Component {
             required
           />
 
-          <Button variant='contained' color='primary' type='submit'>
-            Enviar consulta
-          </Button>
+          <CButton text='Enviar consulta' color='orange' type='submit' />
         </Form>
       </div>
     );
