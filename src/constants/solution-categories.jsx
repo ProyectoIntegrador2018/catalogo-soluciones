@@ -23,7 +23,6 @@ const SOLUTION_CATEGORIES = {
     'Business intelligence',
     'Big data y Analítica de datos',
     'Inteligencia artificial',
-    'Inteligencia artificial',
     'Robótica',
     'IoT',
     'Ciberseguridad',

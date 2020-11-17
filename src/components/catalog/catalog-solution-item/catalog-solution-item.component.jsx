@@ -8,6 +8,15 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import './catalog-solution-item.styles.scss'
 
+const MultiLine = ({title, text}) => (
+  <p>
+    {title}
+    {text.split('\n').map((str) => (
+      <div style={{paddingLeft: '2em'}}>{str}</div>
+    ))}
+  </p>
+);
+
 const CatalogSolutionItem = ({ solution }) => {
   let history = useHistory()
 
@@ -45,8 +54,14 @@ const CatalogSolutionItem = ({ solution }) => {
           <Grid item xs={12}>
             <p>Ofrecida por: <b>{solution.organization}</b></p>
             <p>Tipo de solución: <i>{solution.category}</i></p>
-            <p>Casos de éxito: {solution.descriptionSuccess}</p>
-            <p>Esquema de precios: {solution.price}</p>
+            <MultiLine 
+              title='Casos de éxito:'
+              text={solution.descriptionSuccess}
+            />
+            <MultiLine 
+              title='Esquema de precio:'
+              text={solution.price}
+            />
             <br></br>
             <center><CButton
               text='Preguntar por este servicio'

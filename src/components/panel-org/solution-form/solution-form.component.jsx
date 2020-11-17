@@ -214,27 +214,27 @@ class SolutionForm extends React.Component {
           name='descriptionSuccess'
           value={descriptionSuccess}
           onChange={this.handleChange}
-          label='Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
+          label='(Opcional) Descripción de casos de éxito previos de la solución (max. 500 caracteres)'
           rows={10}
-          required
         />
-        <FormInput
+        <FormTextarea
           type='text'
           name='price'
           value={price}
           onChange={this.handleChange}
           label='Explicación del esquema de precios para la solución'
+          rows={5}
           required
         />
         <FormFile
           name='solutionFlyer'
           onChange={this.handleFile}
-          label='Flyer de la solución'
+          label='(Opcional) Flyer de la solución'
           accept='image/jpeg'
         />
-        {solutionFlyer && (
+        {/* {solutionFlyer && (
           <img src={solutionFlyer} className='edit-flyer' alt='flyer' />
-        )}
+        )} */}
         <CButton
           text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}
           color='orange'
