@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { Pagination } from '@material-ui/lab';
@@ -7,7 +8,7 @@ import CButton from '../../elements/c-button/c-button.component';
 
 import './catalog-solution-list.styles.scss';
 
-const CatalogSolutionList = ({ solutions }) => {
+const CatalogSolutionList = ({ solutions, currentUser }) => {
   let history = useHistory();
 
   const [state, setState] = React.useState({
@@ -37,7 +38,10 @@ const CatalogSolutionList = ({ solutions }) => {
           <span>
             {solutions.slice((state.page - 1) * 5, (state.page - 1) * 5 + 5)
               .map((solution, _) => (
-                <CatalogSolutionItem solution={solution} />
+                <CatalogSolutionItem 
+                  solution={solution} 
+                  currentUser={currentUser}
+                />
               ))}
           </span>
         :  
@@ -72,4 +76,8 @@ const CatalogSolutionList = ({ solutions }) => {
   );
 }
 
-export default CatalogSolutionList;
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+export default connect(mapStateToProps)(CatalogSolutionList);

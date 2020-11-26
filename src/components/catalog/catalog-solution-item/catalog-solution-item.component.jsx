@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -98,8 +97,4 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
-});
-
-export default connect(mapStateToProps)(CatalogSolutionItem);
+export default CatalogSolutionItem;
