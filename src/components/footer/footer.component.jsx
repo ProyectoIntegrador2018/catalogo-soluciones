@@ -8,7 +8,12 @@ const Footer = () => (
       <h4>Consejo de Software de Nuevo León AC</h4>
       <p>Copyright @2020</p>
       <p>Padre Mier #1251 Cuarto piso, Zona Centro. Monterrey, NL.</p>
-      <a className='orange' href='/'>
+      <a
+        className='orange'
+        href='https://csoftmty.org/Aviso%20de%20Privacidad.html'
+        target='_blank'
+        rel='noreferrer'
+      >
         Aviso de Privacidad
       </a>
     </div>

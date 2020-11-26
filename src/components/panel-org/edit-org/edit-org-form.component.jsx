@@ -110,7 +110,7 @@ const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
         name='newOrgLogo'
         onChange={handleFile}
         label='Modificar logotipo de la organización'
-        accept='image/jpeg, image/png'
+        accept='image/jpeg, image/jpg, image/png'
       />
 
       <CButton text='Guardar cambios' color='orange' type='submit' />

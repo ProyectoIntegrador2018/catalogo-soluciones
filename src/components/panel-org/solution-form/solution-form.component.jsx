@@ -61,6 +61,7 @@ class SolutionForm extends React.Component {
       descriptionPitch,
       descriptionSuccess,
       price,
+      reciprocity,
       category,
       solutionFlyer,
     } = this.state;
@@ -87,6 +88,7 @@ class SolutionForm extends React.Component {
           descriptionPitch,
           descriptionSuccess,
           price,
+          reciprocity,
           category,
           solutionFlyer,
         },
@@ -99,6 +101,7 @@ class SolutionForm extends React.Component {
         descriptionPitch,
         descriptionSuccess,
         price,
+        reciprocity,
         category,
         solutionFlyer,
       };
@@ -113,6 +116,7 @@ class SolutionForm extends React.Component {
         descriptionPitch,
         descriptionSuccess,
         price,
+        reciprocity,
         category,
         solutionFlyer,
       };
@@ -241,7 +245,7 @@ class SolutionForm extends React.Component {
           name='solutionFlyer'
           onChange={this.handleFile}
           label='(Opcional) Flyer de la solución en formato jpeg o png.'
-          accept='image/jpeg, image/png'
+          accept='image/jpeg, image/jpg, image/png'
         />
         {this.props.solution && solutionFlyer && (
           <img src={solutionFlyer} className='edit-flyer' alt='flyer' />
