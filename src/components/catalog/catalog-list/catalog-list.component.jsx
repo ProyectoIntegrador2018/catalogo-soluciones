@@ -97,7 +97,10 @@ const CatalogList = ({ data }) => {
           </div>
         </Grid>
         <Grid item xs={8}>
-          <CatalogSolutionList solutions={state.solutions || data} />
+          <CatalogSolutionList 
+            solutions={state.solutions || data} 
+            page={1}
+          />
         </Grid>
       </Grid>
     </div>

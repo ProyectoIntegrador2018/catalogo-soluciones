@@ -8,15 +8,11 @@ import CButton from '../../elements/c-button/c-button.component';
 
 import './catalog-solution-list.styles.scss';
 
-const CatalogSolutionList = ({ solutions, currentUser }) => {
+const CatalogSolutionList = ({ solutions, page, currentUser }) => {
   let history = useHistory();
 
-  const [state, setState] = React.useState({
-    page: 1,
-  });
-
   const handleChange = (event, value) => {
-    setState({ ...state, page: value });
+    page = value
   }
 
   return solutions && (
@@ -28,7 +24,7 @@ const CatalogSolutionList = ({ solutions, currentUser }) => {
           count={Math.ceil(solutions.length / 5)}
           variant='outlined'
           color='primary'
-          page={state.page}
+          page={page}
           onChange={handleChange}
         />
       </span></center>
@@ -36,7 +32,7 @@ const CatalogSolutionList = ({ solutions, currentUser }) => {
       <div className='solutions'>
         {solutions.length ? 
           <span>
-            {solutions.slice((state.page - 1) * 5, (state.page - 1) * 5 + 5)
+            {solutions.slice((page - 1) * 5, (page - 1) * 5 + 5)
               .map((solution, _) => (
                 <CatalogSolutionItem 
                   solution={solution} 
@@ -68,7 +64,7 @@ const CatalogSolutionList = ({ solutions, currentUser }) => {
           count={Math.ceil(solutions.length / 5)}
           variant='outlined'
           color='primary'
-          page={state.page}
+          page={page}
           onChange={handleChange}
         />
       </span></center>
