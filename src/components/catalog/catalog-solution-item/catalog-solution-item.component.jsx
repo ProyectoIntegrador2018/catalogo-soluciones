@@ -1,24 +1,30 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
-import { Accordion, AccordionDetails, AccordionSummary, Grid } from '@material-ui/core';
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+  Grid,
+} from '@material-ui/core';
 import CButton from '../../elements/c-button/c-button.component';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-import './catalog-solution-item.styles.scss'
+import './catalog-solution-item.styles.scss';
 
-const MultiLine = ({title, text}) => (
+const MultiLine = ({ title, text }) => (
   <p>
     {title}
     {text.split('\n').map((str) => (
-      <div style={{paddingLeft: '2em'}}>{str}</div>
+      <div style={{ paddingLeft: '2em' }}>{str}</div>
     ))}
   </p>
 );
 
-const CatalogSolutionItem = ({ solution }) => {
-  let history = useHistory()
+const CatalogSolutionItem = ({ solution, currentUser }) => {
+  let history = useHistory();
 
   const goToSolutionInquiry = (data) => {
     history.push({
@@ -36,7 +42,11 @@ const CatalogSolutionItem = ({ solution }) => {
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <Grid container spacing={3} alignItems='center'>
           <Grid item xs={3}>
-            <img className='catalog-solution-logo' src={solution.imageUrl} alt='logo' />
+            <img
+              className='catalog-solution-logo'
+              src={solution.imageUrl}
+              alt='logo'
+            />
           </Grid>
           <Grid item xs={9}>
             <h3 className='solutionName'>{solution.solutionName}</h3>
@@ -47,27 +57,40 @@ const CatalogSolutionItem = ({ solution }) => {
       <AccordionDetails>
         <Grid container spacing={3} alignItems='center'>
           <Grid item xs={12}>
-            {solution.flyer ?
-              <img className='catalog-solution-flyer' src={solution.flyer} alt='flyer' />
-            : null}
+            {solution.flyer ? (
+              <img
+                className='catalog-solution-flyer'
+                src={solution.flyer}
+                alt='flyer'
+              />
+            ) : null}
           </Grid>
           <Grid item xs={12}>
-            <p>Ofrecida por: <b>{solution.organization}</b></p>
-            <p>Tipo de solución: <i>{solution.category}</i></p>
-            <MultiLine 
+            <p>
+              Ofrecida por: <b>{solution.organization}</b>
+            </p>
+            <p>
+              Tipo de solución: <i>{solution.category}</i>
+            </p>
+            <MultiLine
               title='Casos de éxito:'
               text={solution.descriptionSuccess}
             />
-            <MultiLine 
-              title='Esquema de precio:'
-              text={solution.price}
-            />
+            <MultiLine title='Esquema de precio:' text={solution.price} />
+            {currentUser.adminAccount && solution.reciprocity ? (
+              <MultiLine
+                title='Porcentaje de reciprocidad:'
+                text={solution.reciprocity}
+              />
+            ) : null}
             <br></br>
-            <center><CButton
-              text='Preguntar por este servicio'
-              color='grey'
-              onClick={() => goToSolutionInquiry(solution)}
-            /></center>
+            <center>
+              <CButton
+                text='Preguntar por este servicio'
+                color='grey'
+                onClick={() => goToSolutionInquiry(solution)}
+              />
+            </center>
           </Grid>
         </Grid>
       </AccordionDetails>
@@ -75,4 +98,8 @@ const CatalogSolutionItem = ({ solution }) => {
   );
 };
 
-export default CatalogSolutionItem
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+export default connect(mapStateToProps)(CatalogSolutionItem);

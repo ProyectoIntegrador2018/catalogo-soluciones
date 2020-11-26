@@ -48,6 +48,7 @@ export const insertNewSolution = async (solution, orgName) => {
     descriptionPitch,
     descriptionSuccess,
     price,
+    reciprocity,
     category,
     organizationID,
     approved,
@@ -60,6 +61,7 @@ export const insertNewSolution = async (solution, orgName) => {
       descriptionPitch,
       descriptionSuccess,
       price,
+      reciprocity,
       category,
       organizationID,
       approved,
@@ -95,6 +97,7 @@ export const updateSolution = async (solution, id, organizationID) => {
     descriptionPitch,
     descriptionSuccess,
     price,
+    reciprocity,
     category,
     solutionFlyer,
   } = solution;
@@ -112,6 +115,7 @@ export const updateSolution = async (solution, id, organizationID) => {
     descriptionPitch,
     descriptionSuccess,
     price,
+    reciprocity,
     category,
   });
 };

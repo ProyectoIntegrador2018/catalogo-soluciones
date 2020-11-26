@@ -10,16 +10,16 @@ import { setNotification } from '../../../redux/notification/notification.action
 import { updateOrg } from '../../../firebase/sessions';
 
 import CButton from '../../elements/c-button/c-button.component';
-import { 
-  Form, 
-  FormInput, 
-  FormSelect, 
-  FormOption, 
-  FormTextarea, 
-  FormFile 
+import {
+  Form,
+  FormInput,
+  FormSelect,
+  FormOption,
+  FormTextarea,
+  FormFile,
 } from '../../form/form.component';
 
-import './edit-org-form.styles.scss'
+import './edit-org-form.styles.scss';
 
 const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
   let history = useHistory();
@@ -46,73 +46,77 @@ const EditOrgForm = ({ currentUser, setCurrentUser, setNotification }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    updateOrg(state, currentUser.id).then((url) => {
-      currentUser.orgName = state.orgName;
-      currentUser.orgType = state.orgType;
-      currentUser.description = state.description;
-      currentUser.logo = (url ? url : state.orgLogo);
-      setCurrentUser(currentUser);
+    updateOrg(state, currentUser.id)
+      .then((url) => {
+        currentUser.orgName = state.orgName;
+        currentUser.orgType = state.orgType;
+        currentUser.description = state.description;
+        currentUser.logo = url ? url : state.orgLogo;
+        setCurrentUser(currentUser);
 
-      setNotification({
-        severity: 'info',
-        message: 'Se guardaron los cambios con éxito.',
+        setNotification({
+          severity: 'info',
+          message: 'Se guardaron los cambios con éxito.',
+        });
+        history.push('panel-org-x');
+      })
+      .catch(() => {
+        setNotification({
+          severity: 'error',
+          message: 'Error, intente nuevamente.',
+        });
       });
-      history.push('panel-org-x');
-    }).catch(() => {
-      setNotification({
-        severity: 'error',
-        message: 'Error, intente nuevamente.',
-      });
-    });
-  }
+  };
 
   return (
-    <Form
-      title='Detalles de la organización'
-      onSubmit={handleSubmit}
-    >
+    <Form title='Detalles de la organización' onSubmit={handleSubmit}>
       <FormInput
-          type='text'
-          name='orgName'
-          value={state.orgName}
-          onChange={handleChange}
-          label='Nombre de la organización'
-          required
-        />
-        <FormSelect
-          type='text'
-          name='orgType'
-          value={state.orgType}
-          onChange={handleChange}
-          label='Tipo de organización'
-          required
-        >
-          <FormOption value='' label='' disabled hidden />
-          <FormOption value='micro' label='Micro' />
-          <FormOption value='pequeña' label='Pequeña' />
-          <FormOption value='mediana' label='Mediana' />
-          <FormOption value='grande' label='Grande' />
-        </FormSelect>
-        <FormTextarea
-          type='text'
-          name='description'
-          value={state.description}
-          onChange={handleChange}
-          label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
-          required
-        />
-        <img className='org-logo' src={state.orgLogo} alt='Logotipo' width='200'/>
-        <FormFile
-          name='newOrgLogo'
-          onChange={handleFile}
-          label='Modificar logotipo de la organización'
-          accept='image/jpeg'
-        />
+        type='text'
+        name='orgName'
+        value={state.orgName}
+        onChange={handleChange}
+        label='Nombre de la organización'
+        required
+      />
+      <FormSelect
+        type='text'
+        name='orgType'
+        value={state.orgType}
+        onChange={handleChange}
+        label='Tipo de organización'
+        required
+      >
+        <FormOption value='' label='' disabled hidden />
+        <FormOption value='micro' label='Micro' />
+        <FormOption value='pequeña' label='Pequeña' />
+        <FormOption value='mediana' label='Mediana' />
+        <FormOption value='grande' label='Grande' />
+      </FormSelect>
+      <FormTextarea
+        type='text'
+        name='description'
+        value={state.description}
+        onChange={handleChange}
+        label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
+        required
+      />
+      <img
+        className='org-logo'
+        src={state.orgLogo}
+        alt='Logotipo'
+        width='200'
+      />
+      <FormFile
+        name='newOrgLogo'
+        onChange={handleFile}
+        label='Modificar logotipo de la organización'
+        accept='image/jpeg, image/jpg, image/png'
+      />
 
-        <CButton text='Guardar cambios' color='orange' type='submit'/>
+      <CButton text='Guardar cambios' color='orange' type='submit' />
     </Form>
   );
-}
+};
 
 const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
@@ -123,7 +127,4 @@ const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(EditOrgForm);
+export default connect(mapStateToProps, mapDispatchToProps)(EditOrgForm);
