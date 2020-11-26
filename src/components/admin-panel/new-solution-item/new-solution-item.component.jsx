@@ -26,6 +26,7 @@ const NewSolutionItem = ({
     organization,
     solutionName,
     price,
+    reciprocity,
     descriptionPitch,
     descriptionSuccess,
     email,
@@ -83,6 +84,8 @@ const NewSolutionItem = ({
           <div>
             <h4>Esquema de precios:</h4>
             <p>{price}</p>
+            <h4>Porcentaje de reciprocidad:</h4>
+            <p>{reciprocity}</p>
             <h4>Descripción del servicio:</h4>
             <p>{descriptionPitch}</p>
             <h4>Casos de éxito del servicio:</h4>

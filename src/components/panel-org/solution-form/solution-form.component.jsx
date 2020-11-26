@@ -38,6 +38,7 @@ class SolutionForm extends React.Component {
         price: this.props.solution.price,
         category: this.props.solution.category,
         solutionFlyer: this.props.solution.flyer,
+        reciprocity: this.props.solution.reciprocity,
       };
     } else {
       this.state = {
@@ -47,6 +48,7 @@ class SolutionForm extends React.Component {
         price: '',
         category: '',
         solutionFlyer: '',
+        reciprocity: '',
       };
     }
   }
@@ -164,6 +166,7 @@ class SolutionForm extends React.Component {
       price,
       category,
       solutionFlyer,
+      reciprocity,
     } = this.state;
 
     return (
@@ -223,18 +226,26 @@ class SolutionForm extends React.Component {
           value={price}
           onChange={this.handleChange}
           label='Explicación del esquema de precios para la solución'
-          rows={5}
+          rows={3}
           required
+        />
+        <FormTextarea
+          type='text'
+          name='reciprocity'
+          value={reciprocity}
+          onChange={this.handleChange}
+          label='(Opcional) Porcentaje de reciprocidad al clúster.'
+          rows={3}
         />
         <FormFile
           name='solutionFlyer'
           onChange={this.handleFile}
-          label='(Opcional) Flyer de la solución'
-          accept='image/jpeg'
+          label='(Opcional) Flyer de la solución en formato jpeg o png.'
+          accept='image/jpeg, image/png'
         />
-        {/* {solutionFlyer && (
+        {this.props.solution && solutionFlyer && (
           <img src={solutionFlyer} className='edit-flyer' alt='flyer' />
-        )} */}
+        )}
         <CButton
           text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}
           color='orange'

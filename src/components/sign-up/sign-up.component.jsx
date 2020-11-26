@@ -225,7 +225,7 @@ class SignUp extends React.Component {
           name='orgLogo'
           onChange={this.handleFile}
           label='Logotipo de la organización'
-          accept='image/jpeg'
+          accept='image/jpeg, image/png'
           required
         />
 
