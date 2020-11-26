@@ -22,8 +22,7 @@ exports.sendContactEmail = functions.https.onRequest((request, response) => {
       {
         from: 'Catálogo de Soluciones Digitales',
         to: body.toEmail,
-        // TODO: reemplazar por email CSOFTMTY.
-        cc: 'mauriciogm97@hotmail.com',
+        cc: 'comunicacion@csoftmty.org',
         subject: 'Consulta del Catálogo de Soluciones Digitales',
         html: html,
       },
@@ -51,8 +50,7 @@ exports.sendCustomInquiry = functions.https.onRequest((request, response) => {
     transporter.sendMail(
       {
         from: 'Catálogo de Soluciones Digitales',
-        // TODO: Replace this.
-        to: 'souzanaranjo@gmail.com',
+        to: 'comunicacion@csoftmty.org',
         cc: body.contact.email,
         subject: 'Consulta personalizada del Catálogo de Soluciones Digitales',
         html: html,
@@ -80,8 +78,7 @@ exports.sendNewUserEmail = functions.https.onRequest((request, response) => {
     transporter.sendMail(
       {
         from: 'Catálogo de Soluciones Digitales',
-        // TODO: reemplazar por email CSOFTMTY.
-        to: 'mauriciogm97@hotmail.com',
+        to: 'comunicacion@csoftmty.org',
         subject: 'Nuevo Usuario en Catálogo de Soluciones Digitales CSOFTMTY',
         html: html,
       },
@@ -105,8 +102,7 @@ exports.sendNewSolutionEmail = functions.https.onRequest(
       transporter.sendMail(
         {
           from: 'Catálogo de Soluciones Digitales',
-          // TODO: reemplazar por email CSOFTMTY.
-          to: 'mauriciogm97@hotmail.com',
+          to: 'comunicacion@csoftmty.org',
           subject:
             'Nueva Solución en Catálogo de Soluciones Digitales CSOFTMTY',
           html: html,
