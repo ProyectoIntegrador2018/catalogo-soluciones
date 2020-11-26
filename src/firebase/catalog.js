@@ -52,7 +52,7 @@ export const insertNewSolution = async (solution, orgName) => {
     category,
     organizationID,
     approved,
-    solutionFlyer,
+    flyer,
   } = solution;
   const solutionId = await firestore
     .collection('solutions')
@@ -67,10 +67,10 @@ export const insertNewSolution = async (solution, orgName) => {
       approved,
     })
     .then((docRef) => {
-      if (solutionFlyer) {
+      if (flyer) {
         uploadFile(
           `${organizationID}/${docRef.id}/flyer.jpeg`,
-          solutionFlyer,
+          flyer,
         ).then((url) => {
           firestore.collection('solutions').doc(docRef.id).update({
             flyer: url,
@@ -91,31 +91,29 @@ export const insertNewSolution = async (solution, orgName) => {
   return solutionId;
 };
 
-export const updateSolution = async (solution, id, organizationID) => {
-  const {
-    solutionName,
-    descriptionPitch,
-    descriptionSuccess,
-    price,
-    reciprocity,
-    category,
-    solutionFlyer,
-  } = solution;
-  if (solutionFlyer) {
-    uploadFile(`${organizationID}/${id}/flyer.jpeg`, solutionFlyer).then(
-      (url) => {
-        firestore.collection('solutions').doc(id).update({
-          flyer: url,
-        });
-      },
-    );
-  }
-  firestore.collection('solutions').doc(id).update({
-    solutionName,
-    descriptionPitch,
-    descriptionSuccess,
-    price,
-    reciprocity,
-    category,
+export const updateSolution = async(solution, id, organizationID) => {
+  return new Promise((resolve, _) => {
+    const sol = {...solution, id};
+    if (typeof sol.flyer !== 'string') {
+      uploadFile(`${organizationID}/${id}/flyer.jpeg`, 
+        sol.flyer).then(
+        (url) => {
+          firestore.collection('solutions').doc(id).update({
+            flyer: url,
+          });
+          resolve({...sol, flyer: url})
+        },
+      );
+    } else {
+      firestore.collection('solutions').doc(id).update({
+        solutionName: sol.solutionName,
+        descriptionPitch: sol.descriptionPitch,
+        descriptionSuccess: sol.descriptionSuccess,
+        price: sol.price,
+        reciprocity: sol.reciprocity,
+        category: sol.category,
+      });
+      resolve(sol)
+    }
   });
 };
