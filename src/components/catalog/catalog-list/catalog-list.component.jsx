@@ -15,7 +15,8 @@ const CatalogList = ({ data }) => {
   const [state, setState] = React.useState({
     searchQuery: '',
     selectedSubcategory: 'Todas las categorías',
-    solutions: data
+    solutions: data,
+    page: 1,
   });
 
   const matchInArray = (string, expressions) => {
@@ -64,6 +65,7 @@ const CatalogList = ({ data }) => {
       ...state, 
       selectedSubcategory: subcategory,
       solutions: newSolutions,
+      page: 1,
     });
   }
 
@@ -73,7 +75,12 @@ const CatalogList = ({ data }) => {
       ...state, 
       searchQuery: query,
       solutions: newSolutions,
+      page: 1,
     });
+  }
+
+  const setPage = (p) => {
+    setState({...state, page:p});
   }
 
   return (
@@ -99,7 +106,8 @@ const CatalogList = ({ data }) => {
         <Grid item xs={8}>
           <CatalogSolutionList 
             solutions={state.solutions || data} 
-            page={1}
+            page={state.page}
+            setPage={setPage}
           />
         </Grid>
       </Grid>

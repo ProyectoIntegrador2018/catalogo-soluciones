@@ -8,11 +8,11 @@ import CButton from '../../elements/c-button/c-button.component';
 
 import './catalog-solution-list.styles.scss';
 
-const CatalogSolutionList = ({ solutions, page, currentUser }) => {
+const CatalogSolutionList = ({ solutions, page, setPage, currentUser }) => {
   let history = useHistory();
 
   const handleChange = (event, value) => {
-    page = value
+    setPage(value)
   }
 
   return solutions && (
