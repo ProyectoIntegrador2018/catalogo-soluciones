@@ -77,7 +77,7 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
               text={solution.descriptionSuccess}
             />
             <MultiLine title='Esquema de precio:' text={solution.price} />
-            {currentUser.adminAccount && solution.reciprocity ? (
+            {currentUser && currentUser.adminAccount && solution.reciprocity ? (
               <MultiLine
                 title='Porcentaje de reciprocidad:'
                 text={solution.reciprocity}
