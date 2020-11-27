@@ -37,7 +37,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess: this.props.solution.descriptionSuccess,
         price: this.props.solution.price,
         category: this.props.solution.category,
-        solutionFlyer: this.props.solution.flyer,
+        flyer: this.props.solution.flyer,
         reciprocity: this.props.solution.reciprocity,
       };
     } else {
@@ -47,7 +47,7 @@ class SolutionForm extends React.Component {
         descriptionSuccess: '',
         price: '',
         category: '',
-        solutionFlyer: '',
+        flyer: '',
         reciprocity: '',
       };
     }
@@ -63,7 +63,7 @@ class SolutionForm extends React.Component {
       price,
       reciprocity,
       category,
-      solutionFlyer,
+      flyer,
     } = this.state;
 
     const { setNotification } = this.props;
@@ -90,23 +90,19 @@ class SolutionForm extends React.Component {
           price,
           reciprocity,
           category,
-          solutionFlyer,
+          flyer,
         },
         this.props.solution.id,
         this.props.currentUser.id,
-      );
-      const solutionToEdit = {
-        id: this.props.solution.id,
-        solutionName,
-        descriptionPitch,
-        descriptionSuccess,
-        price,
-        reciprocity,
-        category,
-        solutionFlyer,
-      };
-      const { modifySolution } = this.props;
-      modifySolution(solutionToEdit);
+      ).then((solutionToEdit) => {
+        const { modifySolution } = this.props;
+        modifySolution(solutionToEdit);
+        setNotification({
+          severity: 'info',
+          message:
+            'Se han guardado los cambios a la solución.',
+        });
+      });
       // Update solution in state.
     } else {
       const newSolution = {
@@ -118,7 +114,7 @@ class SolutionForm extends React.Component {
         price,
         reciprocity,
         category,
-        solutionFlyer,
+        flyer,
       };
       const newSolutionId = await insertNewSolution(
         newSolution,
@@ -169,7 +165,7 @@ class SolutionForm extends React.Component {
       descriptionSuccess,
       price,
       category,
-      solutionFlyer,
+      flyer,
       reciprocity,
     } = this.state;
 
@@ -242,13 +238,13 @@ class SolutionForm extends React.Component {
           rows={3}
         />
         <FormFile
-          name='solutionFlyer'
+          name='flyer'
           onChange={this.handleFile}
           label='(Opcional) Flyer de la solución en formato jpeg o png.'
           accept='image/jpeg, image/jpg, image/png'
         />
-        {this.props.solution && solutionFlyer && (
-          <img src={solutionFlyer} className='edit-flyer' alt='flyer' />
+        {this.props.solution && flyer && typeof flyer === 'string' && (
+          <img src={flyer} className='edit-flyer' alt='Si no se muestra la foto favor de recargar la página.' />
         )}
         <CButton
           text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}

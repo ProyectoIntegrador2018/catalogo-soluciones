@@ -1,4 +1,5 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { Pagination } from '@material-ui/lab';
@@ -7,15 +8,11 @@ import CButton from '../../elements/c-button/c-button.component';
 
 import './catalog-solution-list.styles.scss';
 
-const CatalogSolutionList = ({ solutions }) => {
+const CatalogSolutionList = ({ solutions, page, setPage, currentUser }) => {
   let history = useHistory();
 
-  const [state, setState] = React.useState({
-    page: 1,
-  });
-
   const handleChange = (event, value) => {
-    setState({ ...state, page: value });
+    setPage(value)
   }
 
   return solutions && (
@@ -27,7 +24,7 @@ const CatalogSolutionList = ({ solutions }) => {
           count={Math.ceil(solutions.length / 5)}
           variant='outlined'
           color='primary'
-          page={state.page}
+          page={page}
           onChange={handleChange}
         />
       </span></center>
@@ -35,9 +32,12 @@ const CatalogSolutionList = ({ solutions }) => {
       <div className='solutions'>
         {solutions.length ? 
           <span>
-            {solutions.slice((state.page - 1) * 5, (state.page - 1) * 5 + 5)
+            {solutions.slice((page - 1) * 5, (page - 1) * 5 + 5)
               .map((solution, _) => (
-                <CatalogSolutionItem solution={solution} />
+                <CatalogSolutionItem 
+                  solution={solution} 
+                  currentUser={currentUser}
+                />
               ))}
           </span>
         :  
@@ -64,7 +64,7 @@ const CatalogSolutionList = ({ solutions }) => {
           count={Math.ceil(solutions.length / 5)}
           variant='outlined'
           color='primary'
-          page={state.page}
+          page={page}
           onChange={handleChange}
         />
       </span></center>
@@ -72,4 +72,8 @@ const CatalogSolutionList = ({ solutions }) => {
   );
 }
 
-export default CatalogSolutionList;
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+export default connect(mapStateToProps)(CatalogSolutionList);

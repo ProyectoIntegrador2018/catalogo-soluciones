@@ -1,5 +1,4 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import {
@@ -77,7 +76,7 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
               text={solution.descriptionSuccess}
             />
             <MultiLine title='Esquema de precio:' text={solution.price} />
-            {currentUser.adminAccount && solution.reciprocity ? (
+            {currentUser && currentUser.adminAccount && solution.reciprocity ? (
               <MultiLine
                 title='Porcentaje de reciprocidad:'
                 text={solution.reciprocity}
@@ -98,8 +97,4 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
   );
 };
 
-const mapStateToProps = ({ user }) => ({
-  currentUser: user.currentUser,
-});
-
-export default connect(mapStateToProps)(CatalogSolutionItem);
+export default CatalogSolutionItem;
