@@ -28,9 +28,9 @@ Catálogo web que permite a empresas de tecnología de Nuevo León registrar sus
 
 ### Project URL
 
-**Production** - [TBD](TBD)
+**Production** - https://catalogo-soluciones.web.app/
 
-### The team
+### The team - Ago-Nov 2020
 
 | Name              | Email                     | Role        |
 | ----------------- | ------------------------- | ----------- |
@@ -38,6 +38,15 @@ Catálogo web que permite a empresas de tecnología de Nuevo León registrar sus
 | David Souza       | A00818141@itesm.mx        | Administrador del proyecto y configuración, developer |
 | Mauricio Guadiana | A01281897@itesm.mx        | Proxy product owner, developer |
 | Enrique Villa     | A01193635@itesm.mx        | Scrum master, developer |
+
+### The team - Feb-Jun 2021
+
+| Name              | Email                     | Role        |
+| ----------------- | ------------------------- | ----------- |
+| Mariel Román      | mariel.roman@csoftmty.org | Product owner |
+| Ian Granados      | A00818648@itesm.mx        | Proxy product owner, developer |
+| Adán López        | A01281920@itesm.mx        | SCRUM master, Administrador de configuración, developer |
+| Daniel Castro     | A01089938@itesm.mx        | Adm. del Proyecto, developer |
 
 ### Technology Stack
 | Technology    |
