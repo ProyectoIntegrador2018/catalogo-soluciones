@@ -62,7 +62,7 @@ You should ask for access to this tools if you don't have it already, we are cur
 * [Backlog](https://trello.com/b/lFvmyLPa/cat%C3%A1logo-de-soluciones-digitales)
 * [Documentation](https://github.com/ProyectoIntegrador2018/catalogo-soluciones/blob/master/README.md)
 
-* [Backlog v2] https://trello.com/b/RhBtS8yH/catalogo-de-soluciones-digitales-v2
+* [Backlog v2](https://trello.com/b/RhBtS8yH/catalogo-de-soluciones-digitales-v2)
 
 
 ## Development
