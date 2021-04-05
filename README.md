@@ -93,13 +93,26 @@ Clone the GitHub repository:
 ```
 git clone https://github.com/ProyectoIntegrador2018/catalogo-soluciones.git
 ```
+Add some files to the project (secrets):
+
+	\catalogo-soluciones\functions\util\email_credentials.js
+	\catalogo-soluciones\src\firebase\firebase.config.js
+
+Note # 1 : firebaseconfig can be obtained from firebase console project configuration.
+Note # 2 : email_credentials must be requested or created with your own credentials.
 
 Install the project dependencies:
 
-*First cd into the project directory*
+*First cd into the project directory catalogo-soluciones*
 ```
 npm install
 ```
+
+*Second cd into the project directory catalogo-soluciones/functions*
+```
+npm install
+```
+
 
 Login into Firebase (you must have been invited to the project to work on it): 
 ```
