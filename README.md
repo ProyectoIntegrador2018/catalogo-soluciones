@@ -98,8 +98,7 @@ Add some files to the project (secrets):
 	\catalogo-soluciones\functions\util\email_credentials.js
 	\catalogo-soluciones\src\firebase\firebase.config.js
 
-Note # 1 : firebaseconfig can be obtained from firebase console project configuration.
-Note # 2 : email_credentials must be requested or created with your own credentials.
+Notes: firebaseconfig can be obtained from firebase console project configuration. For email_credentials must be requested or created with your own credentials.
 
 Install the project dependencies:
 
