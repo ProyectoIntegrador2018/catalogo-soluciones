@@ -1,7 +1,4 @@
-import { firestore, storage } from './firebase';
-
-import firebase from 'firebase/app';
-import 'firebase/functions';
+import { firestore, storage, functions } from './firebase';
 
 export const getCatalogData = async (attribute) => {
   const ref = firestore.collection(attribute);
@@ -68,21 +65,18 @@ export const insertNewSolution = async (solution, orgName) => {
     })
     .then((docRef) => {
       if (flyer) {
-        uploadFile(
-          `${organizationID}/${docRef.id}/flyer.jpeg`,
-          flyer,
-        ).then((url) => {
-          firestore.collection('solutions').doc(docRef.id).update({
-            flyer: url,
-          });
-        });
+        uploadFile(`${organizationID}/${docRef.id}/flyer.jpeg`, flyer).then(
+          (url) => {
+            firestore.collection('solutions').doc(docRef.id).update({
+              flyer: url,
+            });
+          },
+        );
       }
       return docRef.id;
     });
 
-  const sendNewSolutionEmail = firebase
-    .functions()
-    .httpsCallable('sendNewSolutionEmail');
+  const sendNewSolutionEmail = functions.httpsCallable('sendNewSolutionEmail');
   sendNewSolutionEmail({
     name: solution.solutionName,
     org: orgName,
@@ -91,17 +85,16 @@ export const insertNewSolution = async (solution, orgName) => {
   return solutionId;
 };
 
-export const updateSolution = async(solution, id, organizationID) => {
+export const updateSolution = async (solution, id, organizationID) => {
   return new Promise((resolve, _) => {
-    const sol = {...solution, id};
+    const sol = { ...solution, id };
     if (typeof sol.flyer !== 'string') {
-      uploadFile(`${organizationID}/${id}/flyer.jpeg`, 
-        sol.flyer).then(
+      uploadFile(`${organizationID}/${id}/flyer.jpeg`, sol.flyer).then(
         (url) => {
           firestore.collection('solutions').doc(id).update({
             flyer: url,
           });
-          resolve({...sol, flyer: url})
+          resolve({ ...sol, flyer: url });
         },
       );
     } else {
@@ -113,7 +106,7 @@ export const updateSolution = async(solution, id, organizationID) => {
         reciprocity: sol.reciprocity,
         category: sol.category,
       });
-      resolve(sol)
+      resolve(sol);
     }
   });
 };

@@ -1,13 +1,12 @@
-import { createStore, applyMiddleware } from 'redux';
-import logger from 'redux-logger';
+import { createStore } from 'redux';
 
 import rootReducer from './root-reducer';
 
-// If you want to log the redux actions, remove this comment.
-// const middlewares = [logger];
-// Comment this line if you remove the comment from the previous line.
-const middlewares = [];
-
-const store = createStore(rootReducer, applyMiddleware(...middlewares));
+// Configured to enable redux's Devtools chrome extension, which facilitates debugging.
+// https://github.com/zalmoxisus/redux-devtools-extension#usage
+const store = createStore(
+  rootReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
+);
 
 export default store;

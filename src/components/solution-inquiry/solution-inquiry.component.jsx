@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { setNotification } from '../../redux/notification/notification.actions';
 
-import firebase from 'firebase/app';
-import 'firebase/functions';
+import { functions } from '../../firebase/firebase';
 
 import {
   Form,
@@ -57,9 +56,7 @@ class SolutionInquiry extends React.Component {
 
     const { setNotification } = this.props;
 
-    const sendContactEmail = firebase
-      .functions()
-      .httpsCallable('sendContactEmail');
+    const sendContactEmail = functions.httpsCallable('sendContactEmail');
     sendContactEmail({
       toEmail,
       fromEmail,
