@@ -4,8 +4,7 @@ import { withRouter } from 'react-router-dom';
 
 import { setNotification } from '../../redux/notification/notification.actions';
 
-import firebase from 'firebase/app';
-import 'firebase/functions';
+import { functions } from '../../firebase/firebase';
 
 import {
   Form,
@@ -98,9 +97,7 @@ class CustomInquiry extends React.Component {
 
     const { setNotification } = this.props;
 
-    const sendCustomInquiry = firebase
-      .functions()
-      .httpsCallable('sendCustomInquiry');
+    const sendCustomInquiry = functions.httpsCallable('sendCustomInquiry');
     sendCustomInquiry({
       contact,
       general,

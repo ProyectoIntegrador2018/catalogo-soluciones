@@ -1,6 +1,4 @@
-import { firestore } from './firebase';
-import firebase from 'firebase/app';
-import 'firebase/functions';
+import { firestore, functions } from './firebase';
 
 export const approveRequest = (id, collection, message) => {
   firestore
@@ -19,17 +17,20 @@ export const approveRequest = (id, collection, message) => {
       console.log('There was an error!', err);
     });
 
-  const sendUserApprovedEmail = firebase
-    .functions().httpsCallable('sendUserApprovedEmail');
+  const sendUserApprovedEmail = functions.httpsCallable(
+    'sendUserApprovedEmail',
+  );
   sendUserApprovedEmail(message);
 
   if (message.solutionName) {
-    const sendSolutionApprovedEmail = firebase
-      .functions().httpsCallable('sendSolutionApprovedEmail');
+    const sendSolutionApprovedEmail = functions.httpsCallable(
+      'sendSolutionApprovedEmail',
+    );
     sendSolutionApprovedEmail(message);
   } else {
-    const sendUserApprovedEmail = firebase
-      .functions().httpsCallable('sendUserApprovedEmail');
+    const sendUserApprovedEmail = functions.httpsCallable(
+      'sendUserApprovedEmail',
+    );
     sendUserApprovedEmail(message);
   }
 };
@@ -49,12 +50,14 @@ export const rejectRequest = (id, collection, message) => {
     });
 
   if (message.solutionName) {
-    const sendSolutionRejectedEmail = firebase
-      .functions().httpsCallable('sendSolutionRejectedEmail');
+    const sendSolutionRejectedEmail = functions.httpsCallable(
+      'sendSolutionRejectedEmail',
+    );
     sendSolutionRejectedEmail(message);
   } else {
-    const sendUserRejectedEmail = firebase
-      .functions().httpsCallable('sendUserRejectedEmail');
+    const sendUserRejectedEmail = functions.httpsCallable(
+      'sendUserRejectedEmail',
+    );
     sendUserRejectedEmail(message);
   }
 };

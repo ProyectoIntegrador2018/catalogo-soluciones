@@ -1,6 +1,5 @@
-import { auth, firestore, storage } from './firebase';
+import { auth, firestore, storage, functions } from './firebase';
 import firebase from 'firebase/app';
-import 'firebase/functions';
 
 export const getUserRef = async (userAuth) => {
   if (!userAuth) return;
@@ -38,15 +37,19 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 
 const uploadFile = async (pathname, file) => {
   return new Promise((resolve, reject) => {
-    storage.child(pathname).put(file).then((snapshot) => {
-      snapshot.ref.getDownloadURL().then((url) => {
-        resolve(url);
+    storage
+      .child(pathname)
+      .put(file)
+      .then((snapshot) => {
+        snapshot.ref.getDownloadURL().then((url) => {
+          resolve(url);
+        });
+      })
+      .catch(() => {
+        reject();
       });
-    }).catch(() => {
-      reject();
-    });
   });
-}
+};
 
 export const signUp = async (
   email,
@@ -64,9 +67,7 @@ export const signUp = async (
       .then(({ user }) => {
         user.sendEmailVerification();
 
-        const sendNewUserEmail = firebase
-          .functions()
-          .httpsCallable('sendNewUserEmail');
+        const sendNewUserEmail = functions.httpsCallable('sendNewUserEmail');
         sendNewUserEmail({
           name: displayName,
           org: orgName,
@@ -134,54 +135,72 @@ export const updateOrg = async (data, id) => {
   return new Promise((resolve, reject) => {
     if (data.newOrgLogo) {
       uploadFile(id + '/logo.jpeg', data.newOrgLogo).then((url) => {
-        firestore.collection('users').doc(id).update({
+        firestore
+          .collection('users')
+          .doc(id)
+          .update({
+            orgName: data.orgName,
+            orgType: data.orgType,
+            description: data.description,
+            logo: url,
+          })
+          .then(() => {
+            resolve(url);
+          })
+          .catch(() => {
+            reject();
+          });
+      });
+    } else {
+      firestore
+        .collection('users')
+        .doc(id)
+        .update({
           orgName: data.orgName,
           orgType: data.orgType,
           description: data.description,
-          logo: url,
-        }).then(() => {
-          resolve(url);
-        }).catch(() => {
+        })
+        .then(() => {
+          resolve();
+        })
+        .catch(() => {
           reject();
         });
-      });
-    } else {
-      firestore.collection('users').doc(id).update({
-        orgName: data.orgName,
-        orgType: data.orgType,
-        description: data.description,
-      }).then(() => {
-        resolve();
-      }).catch(() => {
-        reject();
-      });
     }
   });
-}
+};
 
 export const changePass = async (oldPass, newPass) => {
   return new Promise((resolve, reject) => {
     const credential = firebase.auth.EmailAuthProvider.credential(
-      auth.currentUser.email, oldPass);
-    auth.currentUser.reauthenticateWithCredential(credential).then(() => {
-      auth.currentUser.updatePassword(newPass).then(() => {
-        resolve();
-      }).catch((error) => {
+      auth.currentUser.email,
+      oldPass,
+    );
+    auth.currentUser
+      .reauthenticateWithCredential(credential)
+      .then(() => {
+        auth.currentUser
+          .updatePassword(newPass)
+          .then(() => {
+            resolve();
+          })
+          .catch((error) => {
+            console.log(error);
+            reject('Error de inicio de sesión.');
+          });
+      })
+      .catch((error) => {
         console.log(error);
-        reject('Error de inicio de sesión.');
+        var errMssg;
+        switch (error.code) {
+          case 'auth/wrong-password':
+            errMssg = 'La contraseña anterior es incorrecta.';
+            break;
+          default:
+            errMssg = 'Error de inicio de sesión.';
+            break;
+        }
+        reject(errMssg);
       });
-    }).catch((error) => {
-      console.log(error)
-      var errMssg;
-      switch(error.code) {
-        case 'auth/wrong-password':
-          errMssg = 'La contraseña anterior es incorrecta.';
-          break;
-        default:
-          errMssg = 'Error de inicio de sesión.';
-          break;
-      }
-      reject(errMssg);
-    });
   });
-}
+};
