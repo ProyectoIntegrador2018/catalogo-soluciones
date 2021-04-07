@@ -30,9 +30,9 @@ const HomePage = ({ currentUser }) => {
               del estado de Nuevo León.
             </p>
             <CButton
-              text='Acceder al catálogo'
+              text={currentUser ? 'Acceder al catálogo' : 'Iniciar Sesión'}
               color='orange'
-              onClick={() => goTo('catalogo')}
+              onClick={() => currentUser ? goTo('catalogo') : goTo('signin') }
             />
           </div>
 
@@ -42,14 +42,12 @@ const HomePage = ({ currentUser }) => {
         </div>
       </div>
 
-      <Container className='home-container'>
-        <h2 className='orange'>
-          ¿Quiéres listar tus servicios en nuestro catálogo?
-        </h2>
-        {currentUser ? (
-          <p>Accede al menu de superior de opciones.</p>
-        ) : (
-          <div>
+      {!currentUser && (
+        <Container className='home-container'>
+          <h2 className='orange'>
+            ¡Inicia sesión para ver el catálogo de soluciones!
+          </h2>
+          <div className="login-links">
             <span className='link' onClick={() => goTo('signup')}>
               Crea una cuenta
             </span>
@@ -57,7 +55,22 @@ const HomePage = ({ currentUser }) => {
             <span className='link' onClick={() => goTo('signin')}>
               Inicia sesión
             </span>
-            <p>No es necesaria una cuenta para visualizar el catálogo.</p>
+          </div>
+        </Container>
+      )}
+
+      <Container className='home-container'>
+        <h2 className='orange'>
+          ¿Quiéres listar tus servicios en nuestro catálogo?
+        </h2>
+        {currentUser ? (
+          currentUser.orgAccount ?
+            (<p>Accede al menu de superior de opciones.</p>) : (<p>Cierra sesión y crea una cuenta de organziación.</p>)
+          ) : (
+          <div className="login-links">
+            <span className='link' onClick={() => goTo('signup-org')}>
+              Crea una cuenta de organización
+            </span>
           </div>
         )}
       </Container>

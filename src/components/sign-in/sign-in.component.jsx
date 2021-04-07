@@ -79,6 +79,7 @@ class SignIn extends React.Component {
           handleChange={this.handleChange}
           value={this.state.email}
           label='Correo'
+          autoComplete="username"
           required
         />
         <FormInput
@@ -87,6 +88,7 @@ class SignIn extends React.Component {
           handleChange={this.handleChange}
           value={this.state.password}
           label='Contraseña'
+          autoComplete="current-password"
           required
         />
 
