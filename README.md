@@ -56,11 +56,14 @@ Catálogo web que permite a empresas de tecnología de Nuevo León registrar sus
 
 ### Management tools
 
-You should ask for access to this tools if you don't have it already:
+You should ask for access to this tools if you don't have it already, we are currently in v2:
 
 * [Github repo](https://github.com/ProyectoIntegrador2018/catalogo-soluciones)
 * [Backlog](https://trello.com/b/lFvmyLPa/cat%C3%A1logo-de-soluciones-digitales)
 * [Documentation](https://github.com/ProyectoIntegrador2018/catalogo-soluciones/blob/master/README.md)
+
+* [Backlog v2](https://trello.com/b/RhBtS8yH/catalogo-de-soluciones-digitales-v2)
+
 
 ## Development
 
@@ -90,13 +93,25 @@ Clone the GitHub repository:
 ```
 git clone https://github.com/ProyectoIntegrador2018/catalogo-soluciones.git
 ```
+Add some files to the project (secrets):
+
+	\catalogo-soluciones\functions\util\email_credentials.js
+	\catalogo-soluciones\src\firebase\firebase.config.js
+
+Notes: firebaseconfig can be obtained from firebase console project configuration. For email_credentials must be requested or created with your own credentials.
 
 Install the project dependencies:
 
-*First cd into the project directory*
+*First cd into the project directory catalogo-soluciones*
 ```
 npm install
 ```
+
+*Second cd into the project directory catalogo-soluciones/functions*
+```
+npm install
+```
+
 
 Login into Firebase (you must have been invited to the project to work on it): 
 ```
