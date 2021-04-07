@@ -15,6 +15,7 @@ import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
 import MenuIcon from '@material-ui/icons/Menu';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 const HeaderContent = ({ currentUser, goTo }) => {
   return (
@@ -22,15 +23,22 @@ const HeaderContent = ({ currentUser, goTo }) => {
       <Button onClick={() => goTo('/')}>
         <HomeIcon className='icon' /> Inicio
       </Button>
-      <Button onClick={() => goTo('/catalogo')}>
-        <ListIcon className='icon' /> Consultar Catálogo
-      </Button>
+      { !currentUser && (
+        <Button onClick={() => goTo('/signin')}>
+          <AccountCircleIcon className='icon' /> Iniciar Sesión
+        </Button>
+      )}
+      { currentUser && (
+        <Button onClick={() => goTo('/catalogo')}>
+          <ListIcon className='icon' /> Consultar Catálogo
+        </Button>
+      )}
       {currentUser && currentUser.adminAccount && (
         <Button onClick={() => goTo('panel-admin')}>
           <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
-      {currentUser && !currentUser.adminAccount && (
+      {currentUser && currentUser.orgAccount && (
         <Button onClick={() => goTo('panel-org')}>
           <SettingsIcon className='icon' /> Herramientas
         </Button>

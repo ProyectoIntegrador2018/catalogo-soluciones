@@ -51,16 +51,48 @@ const uploadFile = async (pathname, file) => {
   });
 };
 
-export const signUp = async (
-  email,
-  password,
-  displayName,
-  phoneNumber,
-  orgName,
-  orgType,
-  description,
-  orgLogo,
-) => {
+export const signUp = async (params) => {
+  const {
+    email,
+    password,
+    displayName,
+    phoneNumber,
+  } = params;
+  return new Promise((resolve, reject) => {
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(({ user }) => {
+        user.sendEmailVerification();
+        createUserProfileDocument(user, {
+          displayName,
+          phoneNumber,
+          orgAccount: false,
+        });
+        auth.signOut();
+        resolve();
+      })
+      .catch((error) => {
+        console.log(error);
+        var errorMssg = 'Error al registrar al usuario.';
+        if (error.code === 'auth/email-already-in-use') {
+          errorMssg = 'Ya existe una cuenta para este correo electrónico.';
+        }
+        reject(errorMssg);
+      });
+  });
+};
+
+export const signUpOrg = async (params) => {
+  const {
+    email,
+    password,
+    displayName,
+    phoneNumber,
+    orgName,
+    orgType,
+    description,
+    orgLogo,
+  } = params;
   return new Promise((resolve, reject) => {
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -82,6 +114,7 @@ export const signUp = async (
             orgType,
             description,
             logo: url,
+            orgAccount: true,
           });
           auth.signOut();
           resolve();

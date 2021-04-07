@@ -6,15 +6,20 @@ import { setNotification } from '../../redux/notification/notification.actions';
 
 import {
   Form,
+  FormSubTitle,
   FormInput,
+  FormSelect,
+  FormOption,
+  FormTextarea,
+  FormFile,
 } from '../form/form.component';
 import CButton from '../elements/c-button/c-button.component';
 
-import { signUp } from '../../firebase/sessions';
+import { signUpOrg } from '../../firebase/sessions';
 
-import './sign-up.styles.scss';
+import './sign-up-org.styles.scss';
 
-class SignUp extends React.Component {
+class SignUpOrg extends React.Component {
   constructor() {
     super();
 
@@ -24,6 +29,9 @@ class SignUp extends React.Component {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
+      orgName: '',
+      orgType: '',
+      description: '',
     };
   }
 
@@ -36,6 +44,10 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
+      orgName,
+      orgType,
+      orgLogo,
+      description,
     } = this.state;
 
     const { setNotification } = this.props;
@@ -63,35 +75,41 @@ class SignUp extends React.Component {
       });
       return;
     }
-    try {
-      await signUp({
-        email,
-        password,
-        displayName,
-        phoneNumber,
-      });
 
-      this.setState({
-        displayName: '',
-        email: '',
-        password: '',
-        confirmPassword: '',
-        phoneNumber: '',
+    signUpOrg({
+      email,
+      password,
+      displayName,
+      phoneNumber,
+      orgName,
+      orgType,
+      description,
+      orgLogo,
+    })
+      .then(() => {
+        this.setState({
+          displayName: '',
+          email: '',
+          password: '',
+          confirmPassword: '',
+          phoneNumber: '',
+          orgName: '',
+          orgType: '',
+          orgLogo: '',
+          description: '',
+        });
+        setNotification({
+          severity: 'info',
+          message: 'Se ha enviado un correo para confirmar la cuenta.',
+        });
+        this.props.history.push('signin');
+      })
+      .catch((errorMssg) => {
+        setNotification({
+          severity: 'error',
+          message: errorMssg,
+        });
       });
-
-      setNotification({
-        severity: 'info',
-        message: 'Se ha enviado un correo para confirmar la cuenta.',
-      });
-      
-      this.props.history.push('signin');
-
-    } catch (errorMssg) {
-      setNotification({
-        severity: 'error',
-        message: errorMssg,
-      });
-    }
   };
 
   handleChange = (event) => {
@@ -100,12 +118,14 @@ class SignUp extends React.Component {
     this.setState({ [name]: value });
   };
 
-  goToSignIn = () => {
-    this.props.history.push('signin');
+  handleFile = (event) => {
+    const { name } = event.target;
+
+    this.setState({ [name]: event.target.files[0] });
   };
 
-  goToSignUpOrg = () => {
-    this.props.history.push('signup-org');
+  goToSignIn = () => {
+    this.props.history.push('signin');
   };
 
   render() {
@@ -115,28 +135,26 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
+      orgName,
+      orgType,
+      description,
     } = this.state;
     return (
-      <Form title='Crear nueva cuenta' onSubmit={this.handleSubmit}>
-        <span>Crea una nueva cuenta para consultar el catálogo</span>
+      <Form title='Crear nueva cuenta como organización' onSubmit={this.handleSubmit}>
+        <span>Registra tu organización</span>
         <div className='sign-in'>
           ¿Ya tienes cuenta?
           <span className='sign-in-button link' onClick={this.goToSignIn}>
             Inicia sesión
           </span>
         </div>
-        <div className="sign-up-line">
-          ¿Quieres subir tus soluciones?
-          <span className='sign-up-button link' onClick={this.goToSignUpOrg}>
-            Crea una cuenta de organización
-          </span>
-        </div>
+        <FormSubTitle subtitle='Datos del administrador' />
         <FormInput
           type='text'
           name='displayName'
           value={displayName}
           onChange={this.handleChange}
-          label='Nombre'
+          label='Nombre del administrador de la cuenta'
           required
         />
         <FormInput
@@ -172,6 +190,45 @@ class SignUp extends React.Component {
           required
         />
 
+        <FormSubTitle subtitle='Datos de la organización' />
+        <FormInput
+          type='text'
+          name='orgName'
+          value={orgName}
+          onChange={this.handleChange}
+          label='Nombre de la organización'
+          required
+        />
+        <FormSelect
+          type='text'
+          name='orgType'
+          value={orgType}
+          onChange={this.handleChange}
+          label='Tipo de organización'
+          required
+        >
+          <FormOption value='' label='' disabled hidden />
+          <FormOption value='micro' label='Micro' />
+          <FormOption value='pequeña' label='Pequeña' />
+          <FormOption value='mediana' label='Mediana' />
+          <FormOption value='grande' label='Grande' />
+        </FormSelect>
+        <FormTextarea
+          type='text'
+          name='description'
+          value={description}
+          onChange={this.handleChange}
+          label='Describe tu organización. Esto será mostrado a los usuarios del catálogo.'
+          required
+        />
+        <FormFile
+          name='orgLogo'
+          onChange={this.handleFile}
+          label='Logotipo de la organización'
+          accept='image/jpeg, image/jpg, image/png'
+          required
+        />
+
         <CButton text='Crear cuenta' color='orange' type='submit' />
       </Form>
     );
@@ -182,4 +239,4 @@ const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(SignUp));
+export default connect(null, mapDispatchToProps)(withRouter(SignUpOrg));
