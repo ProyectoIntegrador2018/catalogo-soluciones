@@ -71,6 +71,10 @@ const HomePage = ({ currentUser }) => {
             <span className='link' onClick={() => goTo('signup-org')}>
               Crea una cuenta de organización
             </span>
+            &nbsp; o &nbsp;
+            <span className='link' onClick={() => goTo('signin')}>
+              Inicia sesión
+            </span>
           </div>
         )}
       </Container>
