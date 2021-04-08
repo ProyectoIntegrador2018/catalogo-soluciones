@@ -45,6 +45,14 @@ export const CustomChart = ({
     ],
   };
   const options = {
+    layout: {
+      padding: {
+        left: 40,
+        right: 40,
+        top: 40,
+        bottom: 40,
+      },
+    },
     legend: {
       display: false,
     },
@@ -78,8 +86,6 @@ export const CustomChart = ({
   return (
     <HorizontalBar
       data={data}
-      width={80}
-      height={50}
       options={options}
       onElementsClick={([elem]) => {
         if (elem) onBarSelect(elem._index);
