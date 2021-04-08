@@ -8,6 +8,8 @@ import {
   chartColors,
   CustomChart,
 } from '../../components/dashboard/custom-chart.component';
+import Button from '@material-ui/core/Button';
+import { ArrowBackIos } from '@material-ui/icons';
 
 const countMatches = (solutions, categories) => {
   var count = 0;
@@ -46,12 +48,21 @@ const Dashboard = ({ solutions }) => {
         history.push(`/catalogo?category=${index}`);
       const preferredColor = chartColors[categoryIndex % chartColors.length];
       return (
-        <CustomChart
-          labels={labels}
-          frequencies={frequencies}
-          onBarSelect={onBarSelect}
-          preferredColor={preferredColor}
-        />
+        <div>
+          <Button
+            style={{ marginLeft: '20px' }}
+            onClick={() => history.push('/dashboard')}
+          >
+            {' '}
+            <ArrowBackIos /> Volver{' '}
+          </Button>
+          <CustomChart
+            labels={labels}
+            frequencies={frequencies}
+            onBarSelect={onBarSelect}
+            preferredColor={preferredColor}
+          />
+        </div>
       );
     }
   };
