@@ -10,7 +10,7 @@ import { auth } from '../../firebase/firebase';
 
 import './header.styles.scss';
 
-import HomeIcon from '@material-ui/icons/Home';
+import { Home, BarChart } from '@material-ui/icons';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 import ListIcon from '@material-ui/icons/List';
 import SettingsIcon from '@material-ui/icons/Settings';
@@ -21,14 +21,17 @@ const HeaderContent = ({ currentUser, goTo }) => {
   return (
     <div className='buttons'>
       <Button onClick={() => goTo('/')}>
-        <HomeIcon className='icon' /> Inicio
+        <Home className='icon' /> Inicio
       </Button>
-      { !currentUser && (
+      <Button onClick={() => goTo('/dashboard')}>
+        <BarChart className='icon' /> Dashboard
+      </Button>
+      {!currentUser && (
         <Button onClick={() => goTo('/signin')}>
           <AccountCircleIcon className='icon' /> Iniciar Sesión
         </Button>
       )}
-      { currentUser && (
+      {currentUser && (
         <Button onClick={() => goTo('/catalogo')}>
           <ListIcon className='icon' /> Consultar Catálogo
         </Button>
@@ -80,7 +83,7 @@ const Header = ({ currentUser }) => {
           <Toolbar className='toolbar'>
             <img
               className='logo'
-              src='./logoCSOFTMTY.png'
+              src='/logoCSOFTMTY.png'
               alt='Logo CSOFTMTY'
               onClick={() => goTo('/')}
             />

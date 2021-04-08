@@ -15,6 +15,7 @@ import SignUpPage from './pages/sign-up/sign-up.component';
 import SignUpOrgPage from './pages/sign-up-org/sign-up-org.component';
 import HomePage from './pages/homepage/home.component';
 import Catalogo from './pages/catalogo/catalogo.component';
+import Dashboard from './pages/dashboard/dashboard.component';
 import PanelAdmin from './pages/panel-admin/panel-admin.component';
 import PanelOrg from './pages/panel-org/panel-org.component';
 import SolutionInquiry from './components/solution-inquiry/solution-inquiry.component';
@@ -51,7 +52,7 @@ class App extends React.Component {
 
       getCatalogData('users').then((organizations) => {
         pairOrganizationsWithSolutions(organizations);
-        setOrganizations(organizations.filter(org => org.orgAccount));
+        setOrganizations(organizations.filter((org) => org.orgAccount));
       });
     });
 
@@ -96,24 +97,29 @@ class App extends React.Component {
             <Route
               exact
               path='/catalogo'
-              render={() => 
-                this.props.currentUser ?  <Catalogo /> : <Redirect to='/' />
+              render={() =>
+                this.props.currentUser ? <Catalogo /> : <Redirect to='/' />
               }
             />
             <Route
               exact
               path='/solution-inquiry'
-              render={() => 
-                this.props.currentUser ? <SolutionInquiry /> : <Redirect to='/' />
+              render={() =>
+                this.props.currentUser ? (
+                  <SolutionInquiry />
+                ) : (
+                  <Redirect to='/' />
+                )
               }
             />
             <Route
               exact
               path='/custom-inquiry'
-              render={() => 
+              render={() =>
                 this.props.currentUser ? <CustomInquiry /> : <Redirect to='/' />
               }
             />
+            <Route path='/dashboard/:categoryIndex?' component={Dashboard} />
             <Route
               exact
               path='/signin'
@@ -152,8 +158,7 @@ class App extends React.Component {
               exact
               path='/panel-org'
               render={() =>
-                this.props.currentUser &&
-                this.props.currentUser.orgAccount ? (
+                this.props.currentUser && this.props.currentUser.orgAccount ? (
                   <PanelOrg />
                 ) : (
                   <Redirect to='/' />
