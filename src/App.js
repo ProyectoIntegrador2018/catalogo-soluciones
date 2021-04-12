@@ -96,7 +96,7 @@ class App extends React.Component {
             <Route exact path='/' component={HomePage} />
             <Route
               exact
-              path='/catalogo'
+              path='/catalogo/:selectedCategory/:selectedSubcategory?'
               render={() =>
                 this.props.currentUser ? <Catalogo /> : <Redirect to='/' />
               }
@@ -119,7 +119,11 @@ class App extends React.Component {
                 this.props.currentUser ? <CustomInquiry /> : <Redirect to='/' />
               }
             />
-            <Route path='/dashboard/:categoryIndex?' component={Dashboard} />
+            <Route
+              exact
+              path='/dashboard/:categoryIndex?'
+              component={Dashboard}
+            />
             <Route
               exact
               path='/signin'
