@@ -6,6 +6,7 @@ import CategoryList from '../category-list/category-list.component';
 import SearchBar from '../search-bar/search-bar.component';
 import CButton from '../../elements/c-button/c-button.component';
 import CatalogSolutionList from '../catalog-solution-list/catalog-solution-list.component';
+import SOLUTION_CATEGORIES from '../../../constants/solution-categories';
 
 import './catalog-list.styles.scss';
 
@@ -38,6 +39,11 @@ const CatalogList = ({ data }) => {
     var categorySolutions = [];
     if (selectedCategory === 'todas') {
       categorySolutions = data;
+    } else if (!selectedSubcategory) {
+      const subcategories = SOLUTION_CATEGORIES[selectedCategory];
+      categorySolutions = data.filter(({ category }) =>
+        subcategories.includes(category),
+      );
     } else {
       for (let x = 0; x < data.length; x++) {
         if (data[x].category === selectedSubcategory) {
