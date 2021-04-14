@@ -32,7 +32,7 @@ const HeaderContent = ({ currentUser, goTo }) => {
         </Button>
       )}
       {currentUser && (
-        <Button onClick={() => goTo('/catalogo')}>
+        <Button onClick={() => goTo('/catalogo/todas')}>
           <ListIcon className='icon' /> Consultar Catálogo
         </Button>
       )}

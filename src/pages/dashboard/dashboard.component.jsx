@@ -45,7 +45,9 @@ const Dashboard = ({ solutions }) => {
       );
       // TODO: Url parameter is a no-op for now. Implementation needed.
       const onBarSelect = (index) =>
-        history.push(`/catalogo?category=${index}`);
+        history.push(
+          `/catalogo/${solutionCategoryNames[categoryIndex]}/${labels[index]}`,
+        );
       const preferredColor = chartColors[categoryIndex % chartColors.length];
       return (
         <div>

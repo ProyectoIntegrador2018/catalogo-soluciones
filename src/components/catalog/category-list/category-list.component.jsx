@@ -1,79 +1,83 @@
 import React from 'react';
 
-import { Collapse, List, ListItem, ListItemIcon, ListItemText, Paper } from '@material-ui/core';
+import { useHistory, useParams } from 'react-router-dom';
+import {
+  Collapse,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Paper,
+} from '@material-ui/core';
 import SOLUTION_CATEGORIES from '../../../constants/solution-categories';
 import { ExpandLess, ExpandMore } from '@material-ui/icons';
 
 const CategoryList = ({ selectSubcategory }) => {
-  const [state, setState] = React.useState({
-    selectedCategory: '',
-    selectedSubcategory: 'Todas las categorías'
-  });
+  const { selectedCategory, selectedSubcategory } = useParams();
+  const history = useHistory();
 
   const setCategory = (category) => {
-    if (category === state.selectedCategory) {
-      setState({...state, selectedCategory: ''})
+    if (category === 'todas' || category === selectedCategory) {
+      history.push(`/catalogo/todas/`);
     } else {
-      setState({...state, selectedCategory: category})
+      history.push(`/catalogo/${category}/${selectedSubcategory || ''}`);
     }
-  }
+  };
 
   const setSubcategory = (subcategory) => {
-    setState({...state, selectedSubcategory: subcategory});
-    selectSubcategory(subcategory);
-  }
+    history.push(`/catalogo/${selectedCategory}/${subcategory}`);
+  };
 
   return (
     <Paper>
       <List component='nav'>
-        <ListItem 
-          button 
-          selected={state.selectedSubcategory === 'Todas las categorías'}
-          onClick={() => setSubcategory('Todas las categorías')}
+        <ListItem
+          button
+          selected={selectedCategory === 'todas'}
+          onClick={() => setCategory('todas')}
         >
-          <ListItemText 
-            className={state.selectedSubcategory === 'Todas las categorías' ? 'orange' : ''} 
-            primary='Ver todas las categorías' 
+          <ListItemText
+            className={selectedCategory === 'todas' ? 'orange' : ''}
+            primary='Ver todas las categorías'
           />
         </ListItem>
-        {
-          Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
-            <span>
-              <ListItem 
-                button
-                onClick={() => setCategory(category)}
-              >
-                <ListItemIcon>
-                  {category === state.selectedCategory ? <ExpandLess /> :
-                    <ExpandMore />}
-                </ListItemIcon>
-                <ListItemText primary={category} />
-              </ListItem>
-              <Collapse 
-                in={category === state.selectedCategory} 
-                timeout="auto" unmountOnExit
-              >
-                <List component='div' disablePadding>
-                  {
-                    SOLUTION_CATEGORIES[category].map((subcategory, _) => (
-                      <ListItem
-                        button
-                        selected={subcategory === state.selectedSubcategory}
-                        onClick={() => setSubcategory(subcategory)}
-                      >
-                        <ListItemIcon></ListItemIcon>
-                        <ListItemText 
-                          className={subcategory === state.selectedSubcategory ? 'orange' : ''}
-                          primary={subcategory} 
-                        />
-                      </ListItem>
-                    ))
-                  }
-                </List>
-              </Collapse>
-            </span>
-          ))
-        }
+        {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
+          <span>
+            <ListItem button onClick={() => setCategory(category)}>
+              <ListItemIcon>
+                {category === selectedCategory ? (
+                  <ExpandLess />
+                ) : (
+                  <ExpandMore />
+                )}
+              </ListItemIcon>
+              <ListItemText primary={category} />
+            </ListItem>
+            <Collapse
+              in={category === selectedCategory}
+              timeout='auto'
+              unmountOnExit
+            >
+              <List component='div' disablePadding>
+                {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
+                  <ListItem
+                    button
+                    selected={subcategory === selectedSubcategory}
+                    onClick={() => setSubcategory(subcategory)}
+                  >
+                    <ListItemIcon></ListItemIcon>
+                    <ListItemText
+                      className={
+                        subcategory === selectedSubcategory ? 'orange' : ''
+                      }
+                      primary={subcategory}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </Collapse>
+          </span>
+        ))}
       </List>
     </Paper>
   );
