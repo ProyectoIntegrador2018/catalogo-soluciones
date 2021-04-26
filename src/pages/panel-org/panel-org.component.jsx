@@ -26,35 +26,53 @@ const PanelOrg = ({ solutions, currentUser, setNotification }) => {
   var render = true;
   if (!currentUser.approved) {
     render = false;
-    setNotification({
+    /*setNotification({
       severity: 'error',
       message: 'No puedes acceder porque tu cuenta no ha sido aprobada. Te notificaremos cuando sea aprobada.',
     })
-    history.push('/');
+    history.push('/');*/
   }
-  return render && (
-    <Panel
-      key={Math.random}
-      items={{
-        'Mis soluciones': {
-          icon: <ListIcon />,
-          component: <SolutionsList solutions={solutions} />,
-        },
-        'Nueva solución': {
-          icon: <AddIcon />,
-          component: <SolutionForm />,
-        },
-        'Mi organización': {
-          icon: <BusinessIcon />,
-          component: <EditOrgForm />,
-        },
-        'Mi usuario': {
-          icon: <PersonOutlineIcon />,
-          component: <EditUserForm />,
-        },
-      }}
-    />
-  );
+  if (render) {
+    return (
+      <Panel
+        key={Math.random}
+        items={{
+          'Mis soluciones': {
+            icon: <ListIcon />,
+            component: <SolutionsList solutions={solutions} />,
+          },
+          'Nueva solución': {
+            icon: <AddIcon />,
+            component: <SolutionForm />,
+          },
+          'Mi organización': {
+            icon: <BusinessIcon />,
+            component: <EditOrgForm />,
+          },
+          'Mi usuario': {
+            icon: <PersonOutlineIcon />,
+            component: <EditUserForm />,
+          },
+        }}
+      />
+    );
+  } else {
+    return (
+      <Panel
+        key={Math.random}
+        items={{
+          'Mi organización': {
+            icon: <BusinessIcon />,
+            component: <EditOrgForm />,
+          },
+          'Mi usuario': {
+            icon: <PersonOutlineIcon />,
+            component: <EditUserForm />,
+          },
+        }}
+      />
+    );
+  }
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -67,4 +85,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PanelOrg);
-
