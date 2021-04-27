@@ -53,7 +53,8 @@ const NewUserRequestItem = ({
       message: state.rejectReason,
       uid: id,
     });
-    removeOrganization(id);
+    // Add another option to remove permanently
+    //removeOrganization(id);
   };
 
   const handleChange = (event) => {
@@ -88,24 +89,24 @@ const NewUserRequestItem = ({
           </div>
         </AccordionDetails>
       </Accordion>
-      <CButton 
-        text='&#10004;' alertMessage='¿Seguro que deseas aprobar al usuario?' 
-        color='green' onClick={approveOrganization} 
+      <CButton
+        text='&#10004;'
+        alertMessage='¿Seguro que deseas aprobar al usuario?'
+        color='green'
+        onClick={approveOrganization}
       />
-      <CButton 
-        text='&#x2717;' color='red' 
-        onClick={() => setState({...state, open: true})} 
+      <CButton
+        text='&#x2717;'
+        color='red'
+        onClick={() => setState({ ...state, open: true })}
       />
       <CModal
         open={state.open}
-        onClose={() => setState({...state, open: false})}
+        onClose={() => setState({ ...state, open: false })}
       >
-        <Form
-          title='Motivo del rechazo'
-          onSubmit={rejectOrganization}
-        >
+        <Form title='Motivo del rechazo' onSubmit={rejectOrganization}>
           <span>Especifíca el mótivo del rechazo.</span>
-          <FormTextarea 
+          <FormTextarea
             type='text'
             name='rejectReason'
             value={state.rejectReason}
@@ -114,9 +115,10 @@ const NewUserRequestItem = ({
             required
           />
           <CButton text='Enviar' color='orange' type='submit' />
-          <CButton 
-            text='Cancelar' color='grey' 
-            onClick={() => setState({...state, open: false})} 
+          <CButton
+            text='Cancelar'
+            color='grey'
+            onClick={() => setState({ ...state, open: false })}
           />
         </Form>
       </CModal>
