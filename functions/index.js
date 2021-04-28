@@ -160,7 +160,6 @@ exports.sendUserRejectedEmail = functions.https.onRequest(
         body.email,
         body.message,
       );
-      firebase.auth().deleteUser(body.uid);
       transporter.sendMail(
         {
           from: 'Catálogo de Soluciones Digitales',
@@ -231,7 +230,7 @@ exports.sendSolutionRejectedEmail = functions.https.onRequest(
         (error) => {
           if (error) {
             functions.logger.log(error);
-            response.status(500).send(error);
+            response.status(400).send(error);
           } else {
             response.send({ data: 'success' });
           }

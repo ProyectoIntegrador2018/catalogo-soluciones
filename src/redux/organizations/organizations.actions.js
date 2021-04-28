@@ -14,3 +14,8 @@ export const adminApproveOrganization = (organizationId) => ({
   type: OrganizationsActionTypes.APPROVE_ORGANIZATION,
   payload: organizationId,
 });
+
+export const adminRejectOrganization = (organizationId) => ({
+  type: OrganizationsActionTypes.REJECT_ORGANIZATION,
+  payload: organizationId,
+});

@@ -26,7 +26,9 @@ const CatalogList = ({ data }) => {
     selectedSubcategory,
     searchQuery,
   ]);
+
   const getSolutions = React.useCallback(() => {
+    if (!selectedCategory) return [];
     const matchInArray = (string, expressions) => {
       for (var i = 0; i < expressions.length; i++) {
         if (expressions[i].toLowerCase().includes(string.toLowerCase())) {

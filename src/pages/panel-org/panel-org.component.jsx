@@ -2,7 +2,6 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { useHistory } from 'react-router-dom';
 
 import Panel from '../../components/panel/panel.component';
 import SolutionForm from '../../components/panel-org/solution-form/solution-form.component';
@@ -22,17 +21,7 @@ import BusinessIcon from '@material-ui/icons/Business';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 const PanelOrg = ({ solutions, currentUser, setNotification }) => {
-  let history = useHistory();
-  var render = true;
-  if (!currentUser.approved) {
-    render = false;
-    setNotification({
-      severity: 'error',
-      message: 'No puedes acceder porque tu cuenta no ha sido aprobada. Te notificaremos cuando sea aprobada.',
-    })
-    history.push('/');
-  }
-  return render && (
+  return (
     <Panel
       key={Math.random}
       items={{
@@ -42,7 +31,7 @@ const PanelOrg = ({ solutions, currentUser, setNotification }) => {
         },
         'Nueva solución': {
           icon: <AddIcon />,
-          component: <SolutionForm />,
+          component: <SolutionForm currentUser={currentUser} />,
         },
         'Mi organización': {
           icon: <BusinessIcon />,
@@ -67,4 +56,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PanelOrg);
-

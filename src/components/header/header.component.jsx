@@ -37,12 +37,12 @@ const HeaderContent = ({ currentUser, goTo }) => {
         </Button>
       )}
       {currentUser && currentUser.adminAccount && (
-        <Button onClick={() => goTo('panel-admin')}>
+        <Button onClick={() => goTo('/panel-admin')}>
           <SettingsIcon className='icon' /> Administrador
         </Button>
       )}
       {currentUser && currentUser.orgAccount && (
-        <Button onClick={() => goTo('panel-org')}>
+        <Button onClick={() => goTo('/panel-org')}>
           <SettingsIcon className='icon' /> Herramientas
         </Button>
       )}
