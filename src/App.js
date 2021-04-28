@@ -32,6 +32,9 @@ import {
 import { setOrganizations } from './redux/organizations/organizations.actions';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
+import Pending from './pages/account-status/pending.component';
+import Rejected from './pages/account-status/rejected.component';
+import ACCOUNT_STATUS from './constants/account-status';
 
 class App extends React.Component {
   unsubscribeFromAuth = null;
@@ -87,6 +90,25 @@ class App extends React.Component {
     this.unsubscribeFromAuth();
   }
 
+  pageAuthorizer(render) {
+    const callback = () => {
+      const { currentUser } = this.props;
+      if (!currentUser) return <Redirect to='/' />;
+      if (!currentUser.orgAccount) return render();
+      switch (currentUser.status) {
+        case ACCOUNT_STATUS.Approved:
+          return render();
+        case ACCOUNT_STATUS.Rejected:
+          return <Redirect to='/rejected' />;
+        case ACCOUNT_STATUS.Pending:
+          return <Redirect to='/pending' />;
+        default:
+          throw Error('Unknown status');
+      }
+    };
+    return callback;
+  }
+
   render() {
     return (
       <MuiThemeProvider theme={this.theme}>
@@ -97,27 +119,23 @@ class App extends React.Component {
             <Route
               exact
               path='/catalogo/:selectedCategory/:selectedSubcategory?'
-              render={() =>
-                this.props.currentUser ? <Catalogo /> : <Redirect to='/' />
-              }
+              render={this.pageAuthorizer(() => (
+                <Catalogo />
+              ))}
             />
             <Route
               exact
               path='/solution-inquiry'
-              render={() =>
-                this.props.currentUser ? (
-                  <SolutionInquiry />
-                ) : (
-                  <Redirect to='/' />
-                )
-              }
+              render={this.pageAuthorizer(() => (
+                <SolutionInquiry />
+              ))}
             />
             <Route
               exact
               path='/custom-inquiry'
-              render={() =>
-                this.props.currentUser ? <CustomInquiry /> : <Redirect to='/' />
-              }
+              render={this.pageAuthorizer(() => (
+                <CustomInquiry />
+              ))}
             />
             <Route
               exact
@@ -145,6 +163,8 @@ class App extends React.Component {
                 this.props.currentUser ? <Redirect to='/' /> : <SignUpOrgPage />
               }
             />
+            <Route exact path='/pending' render={() => <Pending />} />
+            <Route exact path='/rejected' render={() => <Rejected />} />
             <Route
               exact
               path='/panel-admin'

@@ -1,5 +1,5 @@
 import { OrganizationsActionTypes } from './organizations.types';
-import { approveOrganization } from './organizations.utils';
+import { approveOrganization, rejectOrganization } from './organizations.utils';
 
 const INITIAL_STATE = {
   allOrganizations: null,
@@ -23,6 +23,14 @@ const organizationsReducer = (state = INITIAL_STATE, action) => {
       return {
         ...state,
         allOrganizations: approveOrganization(
+          state.allOrganizations,
+          action.payload,
+        ),
+      };
+    case OrganizationsActionTypes.REJECT_ORGANIZATION:
+      return {
+        ...state,
+        allOrganizations: rejectOrganization(
           state.allOrganizations,
           action.payload,
         ),

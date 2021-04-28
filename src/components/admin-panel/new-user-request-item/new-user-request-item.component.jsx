@@ -10,14 +10,14 @@ import { Form, FormTextarea } from '../../form/form.component';
 
 import './new-user-request-item.styles.scss';
 import {
-  removeOrganization,
+  adminRejectOrganization,
   adminApproveOrganization,
 } from '../../../redux/organizations/organizations.actions';
 import { approveRequest, rejectRequest } from '../../../firebase/admin';
 
 const NewUserRequestItem = ({
   userRequest,
-  removeOrganization,
+  adminRejectOrganization,
   adminApproveOrganization,
 }) => {
   const {
@@ -53,7 +53,7 @@ const NewUserRequestItem = ({
       message: state.rejectReason,
       uid: id,
     });
-    removeOrganization(id);
+    adminRejectOrganization(id);
   };
 
   const handleChange = (event) => {
@@ -88,24 +88,31 @@ const NewUserRequestItem = ({
           </div>
         </AccordionDetails>
       </Accordion>
-      <CButton 
-        text='&#10004;' alertMessage='¿Seguro que deseas aprobar al usuario?' 
-        color='green' onClick={approveOrganization} 
+      <CButton
+        text='&#10004;'
+        alertMessage='¿Seguro que deseas aprobar al usuario?'
+        color='green'
+        onClick={approveOrganization}
       />
-      <CButton 
-        text='&#x2717;' color='red' 
-        onClick={() => setState({...state, open: true})} 
+      <CButton
+        text='&#x2717;'
+        color='red'
+        onClick={() => setState({ ...state, open: true })}
       />
       <CModal
         open={state.open}
-        onClose={() => setState({...state, open: false})}
+        onClose={() => setState({ ...state, open: false })}
       >
         <Form
           title='Motivo del rechazo'
-          onSubmit={rejectOrganization}
+          onSubmit={(e) => {
+            e.preventDefault();
+            rejectOrganization();
+            setState({ ...state, open: false });
+          }}
         >
           <span>Especifíca el mótivo del rechazo.</span>
-          <FormTextarea 
+          <FormTextarea
             type='text'
             name='rejectReason'
             value={state.rejectReason}
@@ -114,9 +121,10 @@ const NewUserRequestItem = ({
             required
           />
           <CButton text='Enviar' color='orange' type='submit' />
-          <CButton 
-            text='Cancelar' color='grey' 
-            onClick={() => setState({...state, open: false})} 
+          <CButton
+            text='Cancelar'
+            color='grey'
+            onClick={() => setState({ ...state, open: false })}
           />
         </Form>
       </CModal>
@@ -125,8 +133,8 @@ const NewUserRequestItem = ({
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  removeOrganization: (organizationId) =>
-    dispatch(removeOrganization(organizationId)),
+  adminRejectOrganization: (organizationId) =>
+    dispatch(adminRejectOrganization(organizationId)),
   adminApproveOrganization: (organizationId) =>
     dispatch(adminApproveOrganization(organizationId)),
 });

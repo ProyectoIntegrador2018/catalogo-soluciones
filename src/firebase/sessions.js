@@ -1,5 +1,6 @@
 import { auth, firestore, storage, functions } from './firebase';
 import firebase from 'firebase/app';
+import ACCOUNT_STATUS from '../constants/account-status';
 
 export const getUserRef = async (userAuth) => {
   if (!userAuth) return;
@@ -16,7 +17,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
     const { displayName, email } = userAuth;
     const createdAt = new Date();
     const adminAccount = false;
-    const approved = false;
+    const status = ACCOUNT_STATUS.Pending;
 
     try {
       await userRef.set({
@@ -24,7 +25,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
         email,
         createdAt,
         adminAccount,
-        approved,
+        status,
         ...additionalData,
       });
     } catch (error) {
@@ -52,12 +53,7 @@ const uploadFile = async (pathname, file) => {
 };
 
 export const signUp = async (params) => {
-  const {
-    email,
-    password,
-    displayName,
-    phoneNumber,
-  } = params;
+  const { email, password, displayName, phoneNumber } = params;
   return new Promise((resolve, reject) => {
     auth
       .createUserWithEmailAndPassword(email, password)

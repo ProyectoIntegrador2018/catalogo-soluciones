@@ -19,41 +19,45 @@ import './panel-org.styles.scss';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import BusinessIcon from '@material-ui/icons/Business';
+import ACCOUNT_STATUS from '../../constants/account-status';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 const PanelOrg = ({ solutions, currentUser, setNotification }) => {
   let history = useHistory();
   var render = true;
-  if (!currentUser.approved) {
+  if (!currentUser.status === ACCOUNT_STATUS.Approved) {
     render = false;
     setNotification({
       severity: 'error',
-      message: 'No puedes acceder porque tu cuenta no ha sido aprobada. Te notificaremos cuando sea aprobada.',
-    })
+      message:
+        'No puedes acceder porque tu cuenta no ha sido aprobada. Te notificaremos cuando sea aprobada.',
+    });
     history.push('/');
   }
-  return render && (
-    <Panel
-      key={Math.random}
-      items={{
-        'Mis soluciones': {
-          icon: <ListIcon />,
-          component: <SolutionsList solutions={solutions} />,
-        },
-        'Nueva solución': {
-          icon: <AddIcon />,
-          component: <SolutionForm />,
-        },
-        'Mi organización': {
-          icon: <BusinessIcon />,
-          component: <EditOrgForm />,
-        },
-        'Mi usuario': {
-          icon: <PersonOutlineIcon />,
-          component: <EditUserForm />,
-        },
-      }}
-    />
+  return (
+    render && (
+      <Panel
+        key={Math.random}
+        items={{
+          'Mis soluciones': {
+            icon: <ListIcon />,
+            component: <SolutionsList solutions={solutions} />,
+          },
+          'Nueva solución': {
+            icon: <AddIcon />,
+            component: <SolutionForm />,
+          },
+          'Mi organización': {
+            icon: <BusinessIcon />,
+            component: <EditOrgForm />,
+          },
+          'Mi usuario': {
+            icon: <PersonOutlineIcon />,
+            component: <EditUserForm />,
+          },
+        }}
+      />
+    )
   );
 };
 
@@ -67,4 +71,3 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(PanelOrg);
-

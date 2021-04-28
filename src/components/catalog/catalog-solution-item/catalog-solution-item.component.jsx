@@ -27,7 +27,7 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
 
   const goToSolutionInquiry = (data) => {
     history.push({
-      pathname: 'solution-inquiry',
+      pathname: '/solution-inquiry',
       state: {
         solutionName: data.solutionName,
         toEmail: data.email,
