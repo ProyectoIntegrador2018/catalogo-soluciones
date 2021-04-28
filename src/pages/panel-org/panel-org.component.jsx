@@ -2,7 +2,6 @@ import React from 'react';
 
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-import { useHistory } from 'react-router-dom';
 
 import Panel from '../../components/panel/panel.component';
 import SolutionForm from '../../components/panel-org/solution-form/solution-form.component';
@@ -19,48 +18,30 @@ import './panel-org.styles.scss';
 import ListIcon from '@material-ui/icons/List';
 import AddIcon from '@material-ui/icons/Add';
 import BusinessIcon from '@material-ui/icons/Business';
-import ACCOUNT_STATUS from '../../constants/account-status';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 const PanelOrg = ({ solutions, currentUser, setNotification }) => {
-  let history = useHistory();
-  const isApproved = currentUser.status === ACCOUNT_STATUS.Approved
-
-  const misSolucionesMaybe = isApproved ? {
-    'Mis soluciones': {
-      icon: <ListIcon />,
-      component: <SolutionsList solutions={solutions} />,
-    },
-    'Nueva solución': {
-      icon: <AddIcon />,
-      component: <SolutionForm />,
-    },
-  } : {}
-
-  if (currentUser.status === ACCOUNT_STATUS.Rejected) {
-    setNotification({
-      severity: 'error',
-      message:
-        'Tu cuenta fue rechazada por el administrador. Contactate con CSOFT Mty para tener la oportunidad de ser reevaluado.',
-    });
-  }
-
-  const items = {
-    ...misSolucionesMaybe,
-    'Mi organización': {
-      icon: <BusinessIcon />,
-      component: <EditOrgForm />,
-    },
-    'Mi usuario': {
-      icon: <PersonOutlineIcon />,
-      component: <EditUserForm />,
-    },
-  };
-
   return (
     <Panel
       key={Math.random}
-      items={items}
+      items={{
+        'Mis soluciones': {
+          icon: <ListIcon />,
+          component: <SolutionsList solutions={solutions} />,
+        },
+        'Nueva solución': {
+          icon: <AddIcon />,
+          component: <SolutionForm currentUser={currentUser} />,
+        },
+        'Mi organización': {
+          icon: <BusinessIcon />,
+          component: <EditOrgForm />,
+        },
+        'Mi usuario': {
+          icon: <PersonOutlineIcon />,
+          component: <EditUserForm />,
+        },
+      }}
     />
   );
 };

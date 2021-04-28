@@ -164,7 +164,11 @@ class App extends React.Component {
               }
             />
             <Route exact path='/pending' render={() => <Pending />} />
-            <Route exact path='/rejected' render={() => <Rejected />} />
+            <Route
+              exact
+              path='/rejected'
+              render={() => <Rejected currentUser={this.props.currentUser} />}
+            />
             <Route
               exact
               path='/panel-admin'

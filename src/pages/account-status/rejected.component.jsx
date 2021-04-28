@@ -1,7 +1,11 @@
 import React from 'react';
 import { Warning } from '@material-ui/icons';
+import Button from '@material-ui/core/Button';
+import { makePending } from '../../firebase/sessions';
+import { useHistory } from 'react-router-dom';
 
-const Rejected = () => {
+const Rejected = ({ currentUser }) => {
+  const history = useHistory();
   return (
     <div
       style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}
@@ -17,8 +21,16 @@ const Rejected = () => {
       </span>
       <br />
       <span>
-        Si crees que hubo un error, manda un correo a{' '}
-        <b>comunicacion@csoftmty.org</b>
+        <Button
+          style={{ border: '1px solid gray' }}
+          onClick={() => {
+            makePending(currentUser.id);
+            history.push('/pending');
+          }}
+        >
+          {' '}
+          Volver a pedir que me acepten{' '}
+        </Button>
       </span>
     </div>
   );

@@ -23,6 +23,7 @@ import {
   modifySolution,
   addSolution,
 } from '../../../redux/solutions/solutions.actions';
+import ACCOUNT_STATUS from '../../../constants/account-status';
 
 import SOLUTION_CATEGORIES from '../../../constants/solution-categories';
 
@@ -55,6 +56,16 @@ class SolutionForm extends React.Component {
 
   handleSubmit = async (event) => {
     event.preventDefault();
+    const { currentUser } = this.props;
+    if (currentUser) {
+      if (currentUser.status === ACCOUNT_STATUS.Rejected) {
+        this.props.history.push('/rejected');
+        return;
+      } else if (currentUser.status === ACCOUNT_STATUS.Pending) {
+        this.props.history.push('/pending');
+        return;
+      }
+    }
 
     const {
       solutionName,
@@ -99,8 +110,7 @@ class SolutionForm extends React.Component {
         modifySolution(solutionToEdit);
         setNotification({
           severity: 'info',
-          message:
-            'Se han guardado los cambios a la solución.',
+          message: 'Se han guardado los cambios a la solución.',
         });
       });
       // Update solution in state.
@@ -244,7 +254,11 @@ class SolutionForm extends React.Component {
           accept='image/jpeg, image/jpg, image/png'
         />
         {this.props.solution && flyer && typeof flyer === 'string' && (
-          <img src={flyer} className='edit-flyer' alt='Si no se muestra la foto favor de recargar la página.' />
+          <img
+            src={flyer}
+            className='edit-flyer'
+            alt='Si no se muestra la foto favor de recargar la página.'
+          />
         )}
         <CButton
           text={this.props.solution ? 'Guardar cambios' : 'Crear solución'}

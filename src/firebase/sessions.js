@@ -199,6 +199,19 @@ export const updateOrg = async (data, id) => {
   });
 };
 
+export const makePending = async (id) => {
+  firestore
+    .collection('users')
+    .doc(id)
+    .set({ status: ACCOUNT_STATUS.Pending }, { merge: true })
+    .then(() => {
+      console.log('Document succesffully updated!');
+    })
+    .catch((err) => {
+      console.log('There was an error!', err);
+    });
+};
+
 export const changePass = async (oldPass, newPass) => {
   return new Promise((resolve, reject) => {
     const credential = firebase.auth.EmailAuthProvider.credential(
