@@ -24,40 +24,44 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 const PanelOrg = ({ solutions, currentUser, setNotification }) => {
   let history = useHistory();
-  var render = true;
-  if (!currentUser.status === ACCOUNT_STATUS.Approved) {
-    render = false;
+  const isApproved = currentUser.status !== ACCOUNT_STATUS.Pending
+
+  const misSolucionesMaybe = isApproved ? {
+    'Mis soluciones': {
+      icon: <ListIcon />,
+      component: <SolutionsList solutions={solutions} />,
+    },
+    'Nueva solución': {
+      icon: <AddIcon />,
+      component: <SolutionForm />,
+    },
+  } : {}
+
+  if (currentUser.status === ACCOUNT_STATUS.Rejected) {
     setNotification({
       severity: 'error',
       message:
-        'No puedes acceder porque tu cuenta no ha sido aprobada. Te notificaremos cuando sea aprobada.',
+        'Tu cuenta fue rechazada por el administrador. Contactate con CSOFT Mty para tener la oportunidad de ser reevaluado.',
     });
-    history.push('/');
   }
+
+  const items = {
+    ...misSolucionesMaybe,
+    'Mi organización': {
+      icon: <BusinessIcon />,
+      component: <EditOrgForm />,
+    },
+    'Mi usuario': {
+      icon: <PersonOutlineIcon />,
+      component: <EditUserForm />,
+    },
+  };
+
   return (
-    render && (
-      <Panel
-        key={Math.random}
-        items={{
-          'Mis soluciones': {
-            icon: <ListIcon />,
-            component: <SolutionsList solutions={solutions} />,
-          },
-          'Nueva solución': {
-            icon: <AddIcon />,
-            component: <SolutionForm />,
-          },
-          'Mi organización': {
-            icon: <BusinessIcon />,
-            component: <EditOrgForm />,
-          },
-          'Mi usuario': {
-            icon: <PersonOutlineIcon />,
-            component: <EditUserForm />,
-          },
-        }}
-      />
-    )
+    <Panel
+      key={Math.random}
+      items={items}
+    />
   );
 };
 
