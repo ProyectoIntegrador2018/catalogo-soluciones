@@ -24,7 +24,7 @@ import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 
 const PanelOrg = ({ solutions, currentUser, setNotification }) => {
   let history = useHistory();
-  const isApproved = currentUser.status !== ACCOUNT_STATUS.Pending
+  const isApproved = currentUser.status === ACCOUNT_STATUS.Approved
 
   const misSolucionesMaybe = isApproved ? {
     'Mis soluciones': {
