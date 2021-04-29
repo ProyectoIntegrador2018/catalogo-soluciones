@@ -24,6 +24,7 @@ class SignUp extends React.Component {
       password: '',
       confirmPassword: '',
       phoneNumber: '',
+      orgName: '',
     };
   }
 
@@ -36,6 +37,7 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
+      orgName,
     } = this.state;
 
     const { setNotification } = this.props;
@@ -69,6 +71,7 @@ class SignUp extends React.Component {
         password,
         displayName,
         phoneNumber,
+        orgName,
       });
 
       this.setState({
@@ -77,6 +80,7 @@ class SignUp extends React.Component {
         password: '',
         confirmPassword: '',
         phoneNumber: '',
+        orgName: '',
       });
 
       setNotification({
@@ -115,6 +119,7 @@ class SignUp extends React.Component {
       password,
       confirmPassword,
       phoneNumber,
+      orgName,
     } = this.state;
     return (
       <Form title='Crear nueva cuenta' onSubmit={this.handleSubmit}>
@@ -153,6 +158,14 @@ class SignUp extends React.Component {
           value={phoneNumber}
           onChange={this.handleChange}
           label='Telefono de contacto'
+          required
+        />
+        <FormInput
+          type='text'
+          name='orgName'
+          value={orgName}
+          onChange={this.handleChange}
+          label='Organización a la que perteneces'
           required
         />
         <FormInput

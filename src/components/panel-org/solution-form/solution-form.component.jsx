@@ -207,8 +207,8 @@ class SolutionForm extends React.Component {
           <FormOption value='' label='' disabled hidden />
           {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
             <optgroup label={category}>
-              {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
-                <FormOption value={subcategory} label={subcategory} />
+              {SOLUTION_CATEGORIES[category].map((subcategory, i) => (
+                <FormOption key={i} value={subcategory} label={subcategory} />
               ))}
             </optgroup>
           ))}

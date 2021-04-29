@@ -33,10 +33,11 @@ const CatalogSolutionList = ({ solutions, page, setPage, currentUser }) => {
         {solutions.length ? 
           <span>
             {solutions.slice((page - 1) * 5, (page - 1) * 5 + 5)
-              .map((solution, _) => (
+              .map((solution, i) => (
                 <CatalogSolutionItem 
                   solution={solution} 
                   currentUser={currentUser}
+                  key={i}
                 />
               ))}
           </span>

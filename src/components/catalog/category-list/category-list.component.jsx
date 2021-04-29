@@ -41,8 +41,8 @@ const CategoryList = ({ selectSubcategory }) => {
             primary='Ver todas las categorías'
           />
         </ListItem>
-        {Object.keys(SOLUTION_CATEGORIES).map((category, _) => (
-          <span>
+        {Object.keys(SOLUTION_CATEGORIES).map((category, i) => (
+          <span key={i}>
             <ListItem button onClick={() => setCategory(category)}>
               <ListItemIcon>
                 {category === selectedCategory ? (
@@ -59,8 +59,9 @@ const CategoryList = ({ selectSubcategory }) => {
               unmountOnExit
             >
               <List component='div' disablePadding>
-                {SOLUTION_CATEGORIES[category].map((subcategory, _) => (
+                {SOLUTION_CATEGORIES[category].map((subcategory, i) => (
                   <ListItem
+                    key={i}
                     button
                     selected={subcategory === selectedSubcategory}
                     onClick={() => setSubcategory(subcategory)}
