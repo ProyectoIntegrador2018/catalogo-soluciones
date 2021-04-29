@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { createStructuredSelector } from 'reselect';
 
 import { setNotification } from '../../redux/notification/notification.actions';
+import { selectCurrentUser } from '../../redux/user/user.selectors';
 
-import { functions } from '../../firebase/firebase';
+import { creatNewEnquiry } from '../../firebase/enquiries';
 
 import {
   Form,
@@ -12,7 +14,7 @@ import {
   FormInput,
   FormTextarea,
 } from '../form/form.component';
-import { Button } from '@material-ui/core';
+import { Button, CircularProgress } from '@material-ui/core';
 
 import './solution-inquiry.styles.scss';
 
@@ -24,20 +26,21 @@ class SolutionInquiry extends React.Component {
       !this.props.location.state ||
       !this.props.location.state.toEmail ||
       !this.props.location.state.solutionName ||
-      !this.props.location.state.orgName
+      !this.props.location.state.orgName ||
+      !this.props.location.state.organizationID
     ) {
       this.state = { shouldRender: false };
       this.props.history.push('/');
     } else {
       this.state = {
         shouldRender: true,
-        name: '',
         toEmail: this.props.location.state.toEmail,
-        fromEmail: '',
-        inquiringOrg: '',
         solutionName: this.props.location.state.solutionName,
         orgName: this.props.location.state.orgName,
+        organizationID: this.props.location.state.organizationID,
         message: '',
+
+        loading: false,
       };
     }
   }
@@ -46,39 +49,53 @@ class SolutionInquiry extends React.Component {
     event.preventDefault();
 
     const {
-      name,
-      inquiringOrg,
-      fromEmail,
       message,
       toEmail,
+      organizationID,
+      orgName,
       solutionName,
     } = this.state;
 
-    const { setNotification } = this.props;
+    const { setNotification, currentUser } = this.props;
 
-    const sendContactEmail = functions.httpsCallable('sendContactEmail');
-    sendContactEmail({
-      toEmail,
-      fromEmail,
-      name,
-      service: solutionName,
-      org: inquiringOrg,
-      message,
-    })
-      .then(() => {
-        setNotification({
-          severity: 'info',
-          message:
-            'Se ha enviado el mensaje. Pronto recibira una respuesta por correo.',
-        });
-        this.props.history.push('/');
-      })
-      .catch((error) => {
-        setNotification({
-          severity: 'info',
-          message: 'Error al enviar mensaje. Intente nuevamente.',
-        });
+    const {id, orgName: enquiringOrg, email, displayName } = currentUser || {};
+
+    if (!enquiringOrg || !email || !displayName) {
+      setNotification({
+        severity: 'warning',
+        message: 'Error al enviar mensaje. Intente nuevamente.',
       });
+    };
+
+    this.setState({ loading: true });
+
+    creatNewEnquiry({
+      organizationID,
+      contactID: id,
+      toEmail,
+      fromEmail: email,
+      orgName,
+      service: solutionName,
+      name: displayName,
+      enquiringOrg,
+      message,
+    }).then(() => {
+      this.setState({ loading: false });
+      setNotification({
+        severity: 'info',
+        message:
+          'Se ha enviado el mensaje. Pronto recibiras una respuesta por correo.',
+      });
+      this.props.history.push('/');
+    })
+    .catch((error) => {
+      console.error(error);
+      this.setState({ loading: false });
+      setNotification({
+        severity: 'warning',
+        message: 'Error al enviar mensaje. Intente nuevamente.',
+      });
+    });
   };
 
   handleChange = (event) => {
@@ -90,12 +107,10 @@ class SolutionInquiry extends React.Component {
   render() {
     const {
       shouldRender,
-      name,
-      inquiringOrg,
-      fromEmail,
       solutionName,
       orgName,
       message,
+      loading,
     } = this.state;
 
     return (
@@ -119,30 +134,6 @@ class SolutionInquiry extends React.Component {
               readOnly
             />
             <FormSubTitle subtitle='Mensaje de contacto' />
-            <FormInput
-              type='text'
-              name='name'
-              value={name}
-              onChange={this.handleChange}
-              label='Nombre de quién envía el mensaje'
-              required
-            />
-            <FormInput
-              type='text'
-              name='inquiringOrg'
-              value={inquiringOrg}
-              onChange={this.handleChange}
-              label='Nombre de su organización'
-              required
-            />
-            <FormInput
-              type='email'
-              name='fromEmail'
-              value={fromEmail}
-              onChange={this.handleChange}
-              label='Correo electrónico de contacto'
-              required
-            />
             <FormTextarea
               type='text'
               name='message'
@@ -153,7 +144,9 @@ class SolutionInquiry extends React.Component {
             />
 
             <Button variant='contained' color='primary' type='submit'>
-              Enviar mensaje
+              {loading ? (
+                <CircularProgress color="inherit" />
+              ): 'Enviar mensaje' }
             </Button>
           </Form>
         </div>
@@ -162,8 +155,12 @@ class SolutionInquiry extends React.Component {
   }
 }
 
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser,
+});
+
 const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(null, mapDispatchToProps)(withRouter(SolutionInquiry));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SolutionInquiry));

@@ -14,12 +14,12 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import './catalog-solution-item.styles.scss';
 
 const MultiLine = ({ title, text }) => (
-  <p>
+  <div>
     {title}
-    {text.split('\n').map((str) => (
-      <div style={{ paddingLeft: '2em' }}>{str}</div>
+    {text.split('\n').map((str, i) => (
+      <p key={i} style={{ paddingLeft: '2em' }}>{str}</p>
     ))}
-  </p>
+  </div>
 );
 
 const CatalogSolutionItem = ({ solution, currentUser }) => {
@@ -32,6 +32,7 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
         solutionName: data.solutionName,
         toEmail: data.email,
         orgName: data.organization,
+        organizationID: data.organizationID
       },
     });
   };

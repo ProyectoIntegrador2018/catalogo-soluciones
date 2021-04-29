@@ -30,6 +30,7 @@ import {
   pairOrganizationsWithSolutions,
 } from './redux/solutions/solutions.actions';
 import { setOrganizations } from './redux/organizations/organizations.actions';
+import { setEnquiries } from './redux/enquiries/enquiries.actions';
 
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core';
 import Pending from './pages/account-status/pending.component';
@@ -44,6 +45,7 @@ class App extends React.Component {
       setCurrentUser,
       setSolutions,
       setOrganizations,
+      setEnquiries,
       pairOrganizationsWithSolutions,
     } = this.props;
 
@@ -58,6 +60,10 @@ class App extends React.Component {
         setOrganizations(organizations.filter((org) => org.orgAccount));
       });
     });
+
+    getCatalogData('enquiries').then((enquiries) => {
+      setEnquiries(enquiries);
+    }) 
 
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
       if (userAuth && userAuth.emailVerified) {
@@ -213,6 +219,7 @@ const mapDispatchToProps = (dispatch) => ({
   setOrganizations: (organizations) =>
     dispatch(setOrganizations(organizations)),
   setSolutions: (solutions) => dispatch(setSolutions(solutions)),
+  setEnquiries: (enquiries) => dispatch(setEnquiries(enquiries)),
   pairOrganizationsWithSolutions: (organizations) =>
     dispatch(pairOrganizationsWithSolutions(organizations)),
 });

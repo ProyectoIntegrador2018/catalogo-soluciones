@@ -53,7 +53,7 @@ const uploadFile = async (pathname, file) => {
 };
 
 export const signUp = async (params) => {
-  const { email, password, displayName, phoneNumber } = params;
+  const { email, password, displayName, phoneNumber, orgName } = params;
   return new Promise((resolve, reject) => {
     auth
       .createUserWithEmailAndPassword(email, password)
@@ -62,6 +62,7 @@ export const signUp = async (params) => {
         createUserProfileDocument(user, {
           displayName,
           phoneNumber,
+          orgName,
           orgAccount: false,
         });
         auth.signOut();
