@@ -36,7 +36,7 @@ const PanelOrg = ({ solutions, currentUser, myEnquiries, setNotification }) => {
           icon: <AddIcon />,
           component: <SolutionForm currentUser={currentUser} />,
         },
-        'Solicitudes': {
+        'Seguimiento de contacto': {
           icon: <QuestionAnswerIcon />,
           component: <EnquiriesList enquiries={myEnquiries} />,
         },

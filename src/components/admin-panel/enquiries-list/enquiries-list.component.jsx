@@ -6,21 +6,21 @@ import './enquiries-list.styles.scss';
 
 const EnquiriesList = ({ enquiries }) => {
   return (
-    <div className='enquiries-list'>
-      <h1>Seguimiento de contacto a tus soluciones</h1>
+    <div className='enquiries-admin-list'>
+      <h1>Seguimiento de contacto a soluciones</h1>
       {enquiries.length > 0 ? (
         <div className='enquiries-header'>
-          <div className='header-block-small'>
+          <div className='header-block'>
             <span>Solución solicitada</span>
           </div>
-          <div className='header-block-small'>
+          <div className='header-block'>
             <span>Contacto</span>
           </div>
-          <div className='header-block-small'>
+          <div className='header-block'>
             <span>Organización</span>
           </div>
-          <div className='header-action-button'>
-            <span>Solicitud respondida</span>
+          <div className='header-block'>
+            <span>Estaus</span>
           </div>
         </div>
       ) : (
