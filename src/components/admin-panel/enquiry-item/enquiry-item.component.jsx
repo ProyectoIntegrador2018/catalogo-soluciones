@@ -14,6 +14,8 @@ const EnquiryItem = ({ enquiry }) => {
     enquiringOrg,
     fromEmail,
     
+    orgName,
+    toEmail,
     service,
 
     message,
@@ -42,8 +44,10 @@ const EnquiryItem = ({ enquiry }) => {
             <p>{fromEmail}</p>
             <h4>Mensaje:</h4>
             <p>{message}</p>
-            <h4>Estatus:</h4>
-            <p>{answered ? 'Contestada' : 'Pendiente de contestar'}</p>
+            <h4>Organización contactada:</h4>
+            <p>{orgName}</p>
+            <h4>Correo de organización:</h4>
+            <p>{toEmail}</p>
           </div>
         </AccordionDetails>
       </Accordion>
