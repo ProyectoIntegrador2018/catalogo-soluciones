@@ -32,11 +32,23 @@ const PanelAdmin = ({ organizations, solutions, setNotification }) => {
           icon: <PersonOutlineIcon />,
           component: <NewPassForm setNotification={setNotification} />,
         },
+        '': {
+          icon: (
+            <a
+              href='https://console.firebase.google.com/u/1/project/catalogo-soluciones/overview'
+              className='social-media'
+              target='_blank'
+              rel='noreferrer'
+            >
+              Analitica Firebase
+            </a>
+          ),
+          component: null,
+        },
       }}
     />
   );
 };
-
 const mapStateToProps = createStructuredSelector({
   organizations: selectUnapprovedOrganizations,
   solutions: selectUnapprovedSolutions,
@@ -46,7 +58,4 @@ const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps,
-)(PanelAdmin);
+export default connect(mapStateToProps, mapDispatchToProps)(PanelAdmin);
