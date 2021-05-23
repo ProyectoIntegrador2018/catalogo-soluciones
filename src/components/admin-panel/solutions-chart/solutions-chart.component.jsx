@@ -36,7 +36,7 @@ const SolutionsChart = ({ solutions, allEnquiries }) => {
           frequencies={frequencies}
           onBarSelect={onBarSelect}
           preferredColor={chartColors[0]}
-          itemName='consulta(s)'
+          itemName='consulta(s) de'
         />
       </div>
     );

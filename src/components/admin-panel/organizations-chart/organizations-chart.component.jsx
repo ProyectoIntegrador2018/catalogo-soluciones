@@ -37,7 +37,7 @@ const OrganizationsChart = ({ organizations, allEnquiries }) => {
           frequencies={frequencies}
           onBarSelect={onBarSelect}
           preferredColor={chartColors[1]}
-          itemName='consulta(s)'
+          itemName='consulta(s) a'
         />
       </div>
     );

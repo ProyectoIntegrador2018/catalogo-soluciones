@@ -19,7 +19,7 @@ export const CustomChart = ({
   frequencies,
   onBarSelect,
   preferredColor,
-  itemName = 'solucion(es)',
+  itemName = 'solucion(es) de',
 }) => {
   var colors = [];
   if (!preferredColor) {
@@ -62,7 +62,7 @@ export const CustomChart = ({
         title: (tooltipItem, data) => {
           const { index } = tooltipItem[0];
           const count = data['datasets'][0]['data'][index];
-          return `${count} ${itemName} de ${data['labels'][index]}`;
+          return `${count} ${itemName} ${data['labels'][index]}`;
         },
         label: (tooltipItem, data) => '',
         afterLabel: (tooltipItem, data) => 'Click para verla(s)',
