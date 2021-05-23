@@ -11,8 +11,7 @@ import Panel from '../../components/panel/panel.component';
 import NewUsersRequestsList from '../../components/admin-panel/new-user-requests-list/new-users-requests-list.component';
 import NewSolutionsList from '../../components/admin-panel/new-solutions-list/new-solution-list.component';
 import NewPassForm from '../../components/new-pass-form/new-pass-form.component';
-import EnquiriesList from '../../components/admin-panel/enquiries-list/enquiries-list.component';
-
+import EnquiriesOptions from '../../components/admin-panel/enquiries-options/enquiries-options.component';
 
 import './panel-admin.styles.scss';
 
@@ -20,7 +19,12 @@ import { PlaylistAddCheck } from '@material-ui/icons';
 import PersonOutlineIcon from '@material-ui/icons/PersonOutline';
 import QuestionAnswerIcon from '@material-ui/icons/QuestionAnswer';
 
-const PanelAdmin = ({ organizations, solutions, allEnquiries, setNotification }) => {
+const PanelAdmin = ({
+  organizations,
+  solutions,
+  allEnquiries,
+  setNotification,
+}) => {
   return (
     <Panel
       items={{
@@ -34,8 +38,8 @@ const PanelAdmin = ({ organizations, solutions, allEnquiries, setNotification })
         },
         'Seguimiento de contacto': {
           icon: <QuestionAnswerIcon />,
-          component: <EnquiriesList enquiries={allEnquiries} />,
-        }, 
+          component: <EnquiriesOptions enquiries={allEnquiries} />,
+        },
         'Mi usuario': {
           icon: <PersonOutlineIcon />,
           component: <NewPassForm setNotification={setNotification} />,

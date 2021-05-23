@@ -4,10 +4,10 @@ import EnquiryItem from '../enquiry-item/enquiry-item.component';
 
 import './enquiries-list.styles.scss';
 
-const EnquiriesList = ({ enquiries }) => {
+const EnquiriesList = ({ enquiries, displayTitle = true }) => {
   return (
     <div className='enquiries-admin-list'>
-      <h1>Seguimiento de contacto a soluciones</h1>
+      {displayTitle && <h1>Seguimiento de contacto a soluciones</h1>}
       {enquiries.length > 0 ? (
         <div className='enquiries-header'>
           <div className='header-block'>
