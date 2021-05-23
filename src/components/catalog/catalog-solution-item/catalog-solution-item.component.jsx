@@ -17,7 +17,9 @@ const MultiLine = ({ title, text }) => (
   <div>
     {title}
     {text.split('\n').map((str, i) => (
-      <p key={i} style={{ paddingLeft: '2em' }}>{str}</p>
+      <p key={i} style={{ paddingLeft: '2em' }}>
+        {str}
+      </p>
     ))}
   </div>
 );
@@ -32,7 +34,8 @@ const CatalogSolutionItem = ({ solution, currentUser }) => {
         solutionName: data.solutionName,
         toEmail: data.email,
         orgName: data.organization,
-        organizationID: data.organizationID
+        organizationID: data.organizationID,
+        solutionId: data.id,
       },
     });
   };
