@@ -1,0 +1,18 @@
+.enquiry-admin-item {
+  width: 100%;
+  display: flex;
+  min-height: 100px;
+  border-bottom: 1px solid darkgrey;
+  padding: 15px 0;
+  font-size: 20px;
+  align-items: center;
+
+  .accordion {
+    width: 100%;
+    min-height: 80px;
+
+    .header {
+      width: 25%;
+    }
+  }
+}

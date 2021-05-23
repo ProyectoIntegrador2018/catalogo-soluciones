@@ -26,6 +26,7 @@ class SolutionInquiry extends React.Component {
       !this.props.location.state ||
       !this.props.location.state.toEmail ||
       !this.props.location.state.solutionName ||
+      !this.props.location.state.solutionId ||
       !this.props.location.state.orgName ||
       !this.props.location.state.organizationID
     ) {
@@ -36,6 +37,7 @@ class SolutionInquiry extends React.Component {
         shouldRender: true,
         toEmail: this.props.location.state.toEmail,
         solutionName: this.props.location.state.solutionName,
+        solutionId: this.props.location.state.solutionId,
         orgName: this.props.location.state.orgName,
         organizationID: this.props.location.state.organizationID,
         message: '',
@@ -54,18 +56,19 @@ class SolutionInquiry extends React.Component {
       organizationID,
       orgName,
       solutionName,
+      solutionId,
     } = this.state;
 
     const { setNotification, currentUser } = this.props;
 
-    const {id, orgName: enquiringOrg, email, displayName } = currentUser || {};
+    const { id, orgName: enquiringOrg, email, displayName } = currentUser || {};
 
     if (!enquiringOrg || !email || !displayName) {
       setNotification({
         severity: 'warning',
         message: 'Error al enviar mensaje. Intente nuevamente.',
       });
-    };
+    }
 
     this.setState({ loading: true });
 
@@ -76,26 +79,28 @@ class SolutionInquiry extends React.Component {
       fromEmail: email,
       orgName,
       service: solutionName,
+      serviceId: solutionId,
       name: displayName,
       enquiringOrg,
       message,
-    }).then(() => {
-      this.setState({ loading: false });
-      setNotification({
-        severity: 'info',
-        message:
-          'Se ha enviado el mensaje. Pronto recibiras una respuesta por correo.',
-      });
-      this.props.history.push('/');
     })
-    .catch((error) => {
-      console.error(error);
-      this.setState({ loading: false });
-      setNotification({
-        severity: 'warning',
-        message: 'Error al enviar mensaje. Intente nuevamente.',
+      .then(() => {
+        this.setState({ loading: false });
+        setNotification({
+          severity: 'info',
+          message:
+            'Se ha enviado el mensaje. Pronto recibiras una respuesta por correo.',
+        });
+        this.props.history.push('/');
+      })
+      .catch((error) => {
+        console.error(error);
+        this.setState({ loading: false });
+        setNotification({
+          severity: 'warning',
+          message: 'Error al enviar mensaje. Intente nuevamente.',
+        });
       });
-    });
   };
 
   handleChange = (event) => {
@@ -145,8 +150,10 @@ class SolutionInquiry extends React.Component {
 
             <Button variant='contained' color='primary' type='submit'>
               {loading ? (
-                <CircularProgress color="inherit" />
-              ): 'Enviar mensaje' }
+                <CircularProgress color='inherit' />
+              ) : (
+                'Enviar mensaje'
+              )}
             </Button>
           </Form>
         </div>
@@ -163,4 +170,7 @@ const mapDispatchToProps = (dispatch) => ({
   setNotification: (notification) => dispatch(setNotification(notification)),
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(SolutionInquiry));
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withRouter(SolutionInquiry));

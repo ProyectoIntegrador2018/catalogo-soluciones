@@ -9,28 +9,27 @@ export const creatNewEnquiry = async (params) => {
     fromEmail,
     orgName,
     service,
+    serviceId,
     name,
     enquiringOrg,
     message,
   } = params;
 
   try {
-
-    const enquiryId = await firestore
-      .collection('enquiries')
-      .add({
-        organizationID,
-        contactID,
-        toEmail,
-        fromEmail,
-        orgName,
-        service,
-        name,
-        enquiringOrg,
-        message,
-        created: firebase.firestore.Timestamp.now(),
-        answered: false,
-      });
+    const enquiryId = await firestore.collection('enquiries').add({
+      organizationID,
+      contactID,
+      toEmail,
+      fromEmail,
+      orgName,
+      service,
+      serviceId,
+      name,
+      enquiringOrg,
+      message,
+      created: firebase.firestore.Timestamp.now(),
+      answered: false,
+    });
 
     const sendContactEmail = functions.httpsCallable('sendContactEmail');
     await sendContactEmail({
@@ -44,17 +43,13 @@ export const creatNewEnquiry = async (params) => {
     });
 
     return enquiryId;
-  } catch(e) {
+  } catch (e) {
     throw e;
   }
 };
 
 export const toggleAnswered = (params) => {
-  const {
-    id,
-    answered,
-  } = params;
+  const { id, answered } = params;
 
   return firestore.collection('enquiries').doc(id).update({ answered });
-
 };
